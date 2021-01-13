@@ -59,25 +59,25 @@ const resolvers = {
       const url = new URL(context.headers.referer).origin;
       // This will give us the base domain that the request came from. Locally, that would be http://localhost:3001, since the GraphQL Playground is running on port 3001.
 
-      const order = new Order({ products: args.products });
-      const { products } = await order.populate("products").execPopulate();
-      // Remember, the checkout() query expects an array of product IDs. We'll pass this array into a new instance of an Order Mongoose model. The Order model will make it much easier to convert these IDs into fully populated product objects.
+      const order = new Order({ songs: args.songs });
+      const { songs } = await order.populate("songs").execPopulate();
+      // Remember, the checkout() query expects an array of song IDs. We'll pass this array into a new instance of an Order Mongoose model. The Order model will make it much easier to convert these IDs into fully populated song objects.
 
       const line_items = [];
 
-      for (let i = 0; i < products.length; i++) {
-        // generate product id
-        const product = await stripe.products.create({
-          name: products[i].name,
-          description: products[i].description,
-          images: [`${url}/images/${products[i].image}`],
+      for (let i = 0; i < songs.length; i++) {
+        // generate song id
+        const song = await stripe.songs.create({
+          name: songs[i].name,
+          description: songs[i].description,
+          images: [`${url}/images/${songs[i].image}`],
           // These image thumbnails won't display on the Stripe checkout page when testing locally, because Stripe can't download images that are being served from your personal computer's localhost. You will only see these images when you deploy the app to Heroku.
         });
 
-        // generate price id using the product id
+        // generate price id using the song id
         const price = await stripe.prices.create({
-          product: product.id,
-          unit_amount: products[i].price * 100,
+          song: song.id,
+          unit_amount: songs[i].price * 100,
           currency: "usd",
         });
 
