@@ -25,8 +25,8 @@ const songSchema = new Schema({
   },
   genre: {
     type: Schema.Types.ObjectId,
-    ref: 'Genre',
-    required: true
+    ref: "Genre",
+    required: true,
   },
   tags: [
     {
@@ -34,6 +34,20 @@ const songSchema = new Schema({
       trim: true,
     },
   ],
+  song_url: {
+    type: String,
+  },
+  s3_object_key: {
+    type: String,
+  },
+  filePath: {
+    type: String,
+    required: true,
+  },
+  likes: {
+    type: Number,
+    required: true,
+  },
 });
 
 const Song = mongoose.model("Song", songSchema);

@@ -1,9 +1,17 @@
+// import aws from 'aws-sdk';
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Song, Genre, Order } = require("../models");
+const { Artist, User, Song, Genre, Order } = require("../models");
 const { signToken } = require("../utils/auth");
+
+
+const s3Bucket = process.env.S3_BUCKET;
 
 const resolvers = {
   Query: {
+    artists: async () => {
+      return Artist.find()
+      .select("-__v -password");
+    },
     genres: async () => {
       return await Genre.find();
     },

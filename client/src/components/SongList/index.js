@@ -65,7 +65,7 @@ function filterSongs() {
 
   return (
     <div className="my-2">
-      <h2>Our Songs:</h2>
+      <h2>Songs:</h2>
       {state.songs.length ? (
         <div className="flex-row">
             {filterSongs().map(song => (
