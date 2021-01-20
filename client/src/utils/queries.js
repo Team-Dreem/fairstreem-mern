@@ -4,13 +4,14 @@ export const QUERY_SONGS = gql`
   query getSongs($genre: ID) {
     songs(genre: $genre) {
       _id
-      name
+      title
+      artist
       description
-      price
-      quantity
       image
+      price
       genre {
         _id
+        name
       }
     }
   }

@@ -11,23 +11,12 @@ import spinner from "../../assets/spinner.gif"
 
 
 function SongList() {
-// function SongList({ currentGenre }) {
-//   const { loading, data } = useQuery(QUERY_SONGS);
-
-//   const songs = data?.songs || [];
-
-//   function filterSongs() {
-//     if (!currentGenre) {
-//       return songs;
-//     }
-
-//     return songs.filter(song => song.genre._id === currentGenre);
-//   }
 const [state, dispatch] = useStoreContext();
 
 const { currentGenre } = state;
 
 const { loading, data } = useQuery(QUERY_SONGS);
+console.log("SongList DATA:", data);
 
 useEffect(() => {
   // if there's data to be stored
@@ -72,13 +61,14 @@ function filterSongs() {
                 <SongItem
                   key= {song._id}
                   _id={song._id}
+                  avatar={song.avatar}
                   title={song.title}
                   artist={song.artist}
                   description={song.description}
                   image={song.image}
                   price={song.price}
-                  genre={song.genre}
-                  tags={song.tags}
+                  // genre={song.genre}
+                  // tags={song.tags}
                 />
             ))}
         </div>

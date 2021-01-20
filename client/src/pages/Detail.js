@@ -15,19 +15,6 @@ import spinner from "../assets/spinner.gif";
 import Cart from "../components/Cart";
 
 function Detail() {
-  // const { id } = useParams();
-
-  // const [currentSong, setCurrentSong] = useState({})
-
-  // const { loading, data } = useQuery(QUERY_SONGS);
-
-  // const songs = data?.songs || [];
-
-  // useEffect(() => {
-  //   if (songs.length) {
-  //     setCurrentSong(songs.find(song => song._id === id));
-  //   }
-  // }, [songs, id]);
   const [state, dispatch] = useStoreContext();
   const { id } = useParams();
 
