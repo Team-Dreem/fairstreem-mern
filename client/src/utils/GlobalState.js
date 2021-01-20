@@ -17,7 +17,6 @@ const StoreProvider = ({ value = [], ...props }) => {
     currentGenre: "",
   });
   // use this to confirm it works!
-  console.log(state);
   return <Provider value={[state, dispatch]} {...props} />;
 };
 // With this function, StoreProvider, we instantiate our initial global state with the useSongReducer() function we created earlier. Because that wraps it around the useReducer() Hook from React, every time we run this useSongReducer() function, we receive the following two items in return:

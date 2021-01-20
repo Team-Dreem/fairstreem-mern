@@ -19,6 +19,7 @@ function Detail() {
   const { id } = useParams();
 
   const [currentSong, setCurrentSong] = useState({});
+ 
 
   const { loading, data } = useQuery(QUERY_SONGS);
 
@@ -100,7 +101,7 @@ function Detail() {
         <div className="container my-1">
           <Link to="/">← Back to Songs</Link>
 
-          <h2>{currentSong.name}</h2>
+          <h2>{currentSong.title}</h2>
 
           <p>{currentSong.description}</p>
 
@@ -117,7 +118,7 @@ function Detail() {
 
           <img
             src={`/images/${currentSong.image}`}
-            alt={currentSong.name}
+            alt={currentSong.title}
           />
         </div>
       ) : null}

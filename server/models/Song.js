@@ -46,7 +46,6 @@ const songSchema = new Schema({
   },
   likes: {
     type: Number,
-    required: true,
   },
 });
 
