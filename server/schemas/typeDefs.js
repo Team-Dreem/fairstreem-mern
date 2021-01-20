@@ -1,9 +1,6 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-  type Subscription {
-    userAdded: User!
-  }
 
   type Genre {
     _id: ID
@@ -91,7 +88,7 @@ const typeDefs = gql`
     ): User
     updateSong(
       _id: ID!
-      name: String
+      title: String
       description: String
       image: String
       price: Int
@@ -99,12 +96,6 @@ const typeDefs = gql`
       tags: [String]
     ): Song
     login(email: String!, password: String!): Auth
-  }
-
-  schema {
-    query: Query
-    mutation: Mutation
-    subscription: Subscription
   }
 `;
 

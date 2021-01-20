@@ -61,7 +61,6 @@ function filterSongs() {
                 <SongItem
                   key= {song._id}
                   _id={song._id}
-                  avatar={song.avatar}
                   title={song.title}
                   artist={song.artist}
                   description={song.description}
