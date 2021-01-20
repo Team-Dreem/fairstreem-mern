@@ -1,12 +1,13 @@
 const db = require("./connection");
 const faker = require("faker");
-const { Artist, User, Song, Genre } = require("../models");
+const { Artist, User, Genre, Song } = require("../models");
 
 db.once("open", async () => {
   await Artist.deleteMany();
+  await User.deleteMany();
   await Genre.deleteMany();
   await Song.deleteMany();
-  await User.deleteMany();
+  
 
   const genres = await Genre.insertMany([
     { name: "Rock/Alternative" },
@@ -70,6 +71,14 @@ db.once("open", async () => {
   // console.log("songs seeded");
 
   await User.deleteMany();
+  await User.create({
+    avatar: "../../public/images/default.png",
+    username: "test",
+    firstName: "Test",
+    lastName: "User",
+    email: "test@test.com",
+    password: "12345",
+  });
 
   await User.create({
     avatar: "../../public/images/default.png",
@@ -77,7 +86,7 @@ db.once("open", async () => {
     firstName: "Pamela",
     lastName: "Washington",
     email: "pamela@testmail.com",
-    password: "password12345",
+    password: "12345",
     orders: [
       {
         songs: [songs[0]._id],
@@ -91,7 +100,7 @@ db.once("open", async () => {
     firstName: "Elijah",
     lastName: "Holt",
     email: "eholt@testmail.com",
-    password: "password12345",
+    password: "12345",
   });
 
   // create user data
@@ -110,7 +119,7 @@ db.once("open", async () => {
 
   const createdUsers = await User.collection.insertMany(userData);
 
-  // console.log("users seeded");
+  console.log("users seeded", userData);
 
   // create artist data
   const artistData = [];
