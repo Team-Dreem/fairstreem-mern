@@ -10,6 +10,7 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import {QUERY_ARTIST} from '../utils/queries'
 
 import Auth from '../utils/auth';
+import Button from '@material-ui/core/Button'
 
 
 
@@ -35,7 +36,7 @@ function ArtistProfile() {
         <>
             <Grid container justify='center'>
             {/* {artistData.artistName} */}
-                <h1>ARTIST NAME </h1>
+                <h1>ARTIST NAME <span><Button>like</Button></span> </h1>
             </Grid>
 
             <Grid container justify="center">
