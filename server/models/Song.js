@@ -40,10 +40,10 @@ const songSchema = new Schema({
   s3_object_key: {
     type: String,
   },
-  filePath: {
-    type: String,
-    required: true,
-  },
+  // filePath: {
+  //   type: String,
+  //   required: true,
+  // },
   likes: {
     type: Number,
   },

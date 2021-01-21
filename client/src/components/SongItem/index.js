@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import { pluralize } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
+import "./style.css";
 
 function SongItem(item) {
   const [state, dispatch] = useStoreContext();
 
-  const { image, title, _id, price, artist } = item;
+  const { image, title, _id, price, artist, song_url } = item;
 
   const { cart } = state;
 
@@ -42,6 +43,9 @@ function SongItem(item) {
         <img alt={title} src={`/images/${image}`} />
         <p>{title}</p>
       </Link>
+      <audio className="audio" controls>
+        <source src={song_url} type="audio/mp3" />
+      </audio>
       <div>
         <div>
           by {artist} 
