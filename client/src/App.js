@@ -12,6 +12,7 @@ import Nav from "./components/Nav";
 import { StoreProvider } from "./utils/GlobalState";
 import OrderHistory from "./pages/OrderHistory";
 import Success from "./pages/Success";
+import ArtistProfile from "./pages/ArtistProfile";
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -39,6 +40,8 @@ function App() {
               <Route exact path="/orderHistory" component={OrderHistory} />
               <Route exact path="/songs/:id" component={Detail} />
               <Route exact path="/success" component={Success} />
+              <Route exact path="/artistprofile" component={ArtistProfile} />
+
               <Route component={NoMatch} />
             </Switch>
           </StoreProvider>
