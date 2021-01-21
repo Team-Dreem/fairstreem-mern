@@ -115,6 +115,12 @@ const resolvers = {
 
       return { token, user };
     },
+    addArtist: async (parent, args) => {
+      const artist = await Artist.create(args);
+      const token = signToken(artist);
+
+      return { token, artist };
+    },
     addOrder: async (parent, { songs }, context) => {
       console.log(context);
       if (context.user) {
