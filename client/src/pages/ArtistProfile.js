@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button'
 
 import SongCard from '../components/SongCard'
-import SongTable from '../components/SongTable'
+
 import SongTableSimple from '../components/SongTableSimple'
 
 import { useMutation, useQuery } from '@apollo/react-hooks';
@@ -26,7 +26,6 @@ function ArtistProfile() {
     const {loading, data} = useQuery(QUERY_ONE_ARTIST, {
         variables: { artistName: artistName }
       })
-      console.log(data, "hellooo???");
       
     const artist = data?.artist
 
@@ -47,9 +46,7 @@ function ArtistProfile() {
 
             <Grid container justify="center">
                 <Grid item md={6} spacing={2}>
-                    {/* pass in image src as {artist.avatar} */}
-                    <img src="" />
-
+                    <img src={artist.avatar} />
                 </Grid>
 
                 <Grid item md={6} spacing={2}>
@@ -67,8 +64,6 @@ function ArtistProfile() {
                 <SongCard></SongCard>
                 <SongCard></SongCard>
                 <SongCard></SongCard>
-                {/* pass props to songTable artist={artist} */}
-                <SongTable ></SongTable>
                 <SongTableSimple artist={artist}></SongTableSimple>
 
             </Grid>

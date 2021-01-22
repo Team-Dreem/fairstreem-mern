@@ -19,38 +19,37 @@ const useStyles = makeStyles({
 
 
 export default function SongTableSimple(props) {
-//use when data is received
-    // const { artist } = props;
-    // const songs = artist.songs
+    //use when data is received
+    const { artist } = props;
+    const songs = artist.songs
 
     const classes = useStyles();
 
-    function createData(name, album, playcount, purchase) {
-        return { name, album, playcount, purchase };
+    function createData( playBtn, name, album, playcount, purchase) {
+        return { playBtn, name, album, playcount, purchase };
     }
 
     function buyClick() {
         console.log("buy clicked");
         //add to cart function here
-
+        console.log(artist);
+        console.log('SONGS', songs);
     }
-//un-comment when data is received
-//could create play button in map that has a data property of the bucket id (song.s3_object_key) or audio tag with id as src at first
-    // const rows = songs.map((song) => {
-    //     createData(
-        // <Button>
-        //<PlayArrowIcon></PlayArrowIcon>
-       // </Button>,
-        //song.title, song.description, song.likes, <Button onClick={buyClick}>Buy</Button>)
-    // })
 
-    const rows = [
-        createData('Frozen yoghurt', 159, 6.0, <Button onClick={buyClick}>Buy</Button>),
-        createData('Ice cream sandwich', 237, 9.0, <Button onClick={buyClick}>Buy</Button>),
-        createData('Eclair', 262, 16.0, <Button onClick={buyClick}>Buy</Button>),
-        createData('Cupcake', 305, 3.7, <Button onClick={buyClick}>Buy</Button>),
-        createData('Gingerbread', 356, 16.0, <Button onClick={buyClick}>Buy</Button>),
-    ];
+    function playClick(){
+        console.log("play clicked");
+        
+    }
+  
+    const rows = songs.map((song)=>{
+        return createData(
+            <Button>
+            <PlayArrowIcon onClick={playClick}></PlayArrowIcon>
+            </Button>,
+            song.title, 1, 2, <Button onClick={buyClick}>Buy</Button>) 
+    })
+
+    console.log(rows);
 
     return (
         <TableContainer component={Paper}>
@@ -71,9 +70,7 @@ export default function SongTableSimple(props) {
                                 {row.name}
                             </TableCell> */}
                             <TableCell align="center">
-                            <Button>
-                                <PlayArrowIcon></PlayArrowIcon>
-                            </Button>
+                                {row.playBtn}
                             </TableCell>
                             <TableCell align="left">{row.name}</TableCell>
                             <TableCell align="right">{row.album}</TableCell>

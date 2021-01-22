@@ -15,6 +15,7 @@ const resolvers = {
     //find one artist
     artist: async (parent, {artistName})=>{
       return await Artist.findOne({artistName})
+      // .populate('songs')
     },
     genres: async () => {
       return await Genre.find();
