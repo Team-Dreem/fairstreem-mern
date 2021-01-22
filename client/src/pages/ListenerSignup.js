@@ -5,6 +5,8 @@ import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
 import { FormControl, TextField, Button } from "@material-ui/core";
 import Container from '@material-ui/core/Container';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 
 
 
@@ -87,6 +89,48 @@ function Signup(props) {
             shrink: true,
           }}
           variant="outlined"
+          margin="normal"
+          fullWidth />
+
+<Divider component="div" />
+      <div>
+        <Typography
+          color="textSecondary"
+          display="block"
+          variant="caption"
+        >
+          Optional Information
+        </Typography>
+      </div>
+
+      <TextField
+          id="bio"
+          name="bio"
+          type="bio"
+          onChange={handleChange}
+          margin="normal"
+          label="Bio"
+          variant="outlined"
+          multiline
+          rowsMax={4}
+          placeholder="Tell us about you"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          fullWidth />
+
+<TextField
+          id="picture"
+          name="picture"
+          type="picture"
+          onChange={handleChange}
+          // class="outlined-basic" 
+          label="Upload a Picture"
+          variant="outlined"
+          placeholder="Your Picture"
+          InputLabelProps={{
+            shrink: true,
+          }}
           margin="normal"
           fullWidth />
 

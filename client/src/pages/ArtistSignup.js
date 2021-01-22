@@ -48,6 +48,7 @@ function Signup(props) {
       <FormControl onSubmit={handleFormSubmit}>
 
         <TextField
+        color="primary"
           id="username"
           name="username"
           type="username"
@@ -166,6 +167,23 @@ function Signup(props) {
           }}
           margin="normal"
           fullWidth />
+
+<TextField
+          id="socialmedia"
+          name="socialmedia"
+          type="socialmedia"
+          onChange={handleChange}
+          margin="normal"
+          label="Social Media"
+          variant="outlined"
+          multiline
+          rowsMax={4}
+          placeholder="List your social media pages"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          fullWidth />
+
 
         <Button variant="contained">Submit</Button>
         {/* 
