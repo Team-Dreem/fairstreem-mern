@@ -38,7 +38,6 @@ function Signup(props) {
 
   return (
 
-    // <div className="">
     <Container maxWidth="sm">
 
       <Link to="/login">← Go to Login</Link>
@@ -54,7 +53,6 @@ function Signup(props) {
           type="username"
           onChange={handleChange}
           margin="normal"
-          // class="outlined-basic" 
           label="Enter a Username"
           variant="outlined"
           placeholder="Username"
@@ -68,7 +66,6 @@ function Signup(props) {
           name="email"
           type="email"
           onChange={handleChange}
-          // class="outlined-basic" 
           label="Enter your Email Address"
           variant="outlined"
           placeholder="email@test.com"
@@ -83,7 +80,6 @@ function Signup(props) {
           name="password"
           type="password"
           onChange={handleChange}
-          // class="outlined-basic" 
           label="Enter a Password"
           placeholder="*****"
           InputLabelProps={{
@@ -92,13 +88,6 @@ function Signup(props) {
           variant="outlined"
           margin="normal"
           fullWidth />
-
-{/* <InputLabel
-          margin="normal"
-          id="musicgenre"
-          shrink id="musicgenre"
-          htmlFor="musicgenre">Music Genre
-        </InputLabel> */}
 
 <InputLabel
           margin="normal"
@@ -158,7 +147,6 @@ function Signup(props) {
           name="picture"
           type="picture"
           onChange={handleChange}
-          // class="outlined-basic" 
           label="Upload a Picture"
           variant="outlined"
           placeholder="Your Picture"
@@ -186,10 +174,7 @@ function Signup(props) {
 
 
         <Button variant="contained">Submit</Button>
-        {/* 
-      <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
-        </div>   */}
+ 
       </FormControl>
 
     </Container>
