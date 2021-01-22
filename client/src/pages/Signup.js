@@ -23,7 +23,6 @@ function Signup(props) {
           password: formState.password,
           aboutme: formState.aboutme,
           avatar: formState.picture,
-          colorScheme: formState.color,
           // firstName: formState.firstName,
           // lastName: formState.lastName,
         },
@@ -42,7 +41,6 @@ function Signup(props) {
           aboutme: formState.aboutme,
           avatar: formState.picture,
           socialMedia: formState.social,
-          colorScheme: formState.color,
           // firstName: formState.firstName,
           // lastName: formState.lastName,
         },
@@ -154,16 +152,6 @@ function Signup(props) {
             name="picture"
             type="picture"
             id="picture"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="color">Color Scheme:</label>
-          <input
-            placeholder="red/white/blue"
-            name="color"
-            type="color"
-            id="color"
             onChange={handleChange}
           />
         </div>

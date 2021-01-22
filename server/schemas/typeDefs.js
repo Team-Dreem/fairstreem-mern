@@ -51,7 +51,6 @@ const typeDefs = gql`
     password: String!
     email: String!
     aboutme: String
-    colorScheme: String
     friends: [User]
     orders: [Order]
   }
@@ -64,7 +63,6 @@ const typeDefs = gql`
     password: String!
     genre: String!
     aboutme: String
-    colorScheme: String
     socialMedia: String
     songs: [Song]
     followers: [User]
