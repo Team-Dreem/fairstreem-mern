@@ -17,7 +17,6 @@ db.once("open", async () => {
     followers: [],
   });
 
-
   const genres = await Genre.insertMany([
     { name: "Rock/Alternative" },
     { name: "R&B" },
