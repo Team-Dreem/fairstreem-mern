@@ -137,7 +137,7 @@ nav {
   font-size: 80px;
   font-weight: 200;
   margin: auto;
-  padding-top: 30px;
+  padding-top: 70px;
   width: 50%;
   text-align: center;
 }
@@ -150,6 +150,17 @@ nav {
   padding-top: 15px;
   width: 50%;
   text-align: center;
+}
+
+.search-bar {
+  margin: auto;
+  padding-top: 100px;
+  width: 50%;
+}
+
+.search-bar .MuiInput-input:focus {
+  border: none;
+  box-shadow: none !important;
 }
 /* Hero End */
 

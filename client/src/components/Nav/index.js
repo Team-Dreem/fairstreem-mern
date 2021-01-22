@@ -45,18 +45,18 @@ function Nav() {
       <h1>
         <Link to="/">
           <div id='bars'>
-            <div class='bar'></div>
-            <div class='bar'></div>
-            <div class='bar'></div>
-            <div class='bar'></div>
-            <div class='bar'></div>
-            <div class='bar'></div>
-            <div class='bar'></div>
-            <div class='bar'></div>
-            <div class='bar'></div>
-            <div class='bar'></div>
+            <div className='bar'></div>
+            <div className='bar'></div>
+            <div className='bar'></div>
+            <div className='bar'></div>
+            <div className='bar'></div>
+            <div className='bar'></div>
+            <div className='bar'></div>
+            <div className='bar'></div>
+            <div className='bar'></div>
+            <div className='bar'></div>
           </div>
-          <div class='name'><span id="fair">fair</span><span id="streem">streem</span></div>
+          <div className='name'><span id="fair">fair</span><span id="streem">streem</span></div>
         </Link>
       </h1>
 
