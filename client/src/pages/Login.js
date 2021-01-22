@@ -3,6 +3,10 @@ import { useMutation } from '@apollo/react-hooks';
 import { Link } from "react-router-dom";
 import { LOGIN } from "../utils/mutations"
 import Auth from "../utils/auth";
+import TextField from '@material-ui/core/TextField';
+import { FormControl, Button } from "@material-ui/core";
+import Container from '@material-ui/core/Container';
+
 
 function Login(props) {
   const [formState, setFormState] = useState({ email: '', password: '' })
@@ -28,45 +32,58 @@ function Login(props) {
   };
 
   return (
-    <div className="container my-1">
-      <Link to="/signup">
+    <Container maxWidth="sm">
+
+
+      {/* <Link to="/signup">
         ← Go to Signup
-      </Link>
+      </Link> */}
 
       <h2>Login</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email address:</label>
-          <input
-            placeholder="youremail@test.com"
-            name="email"
-            type="email"
-            id="email"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
-          <input
-            placeholder="******"
-            name="password"
-            type="password"
-            id="pwd"
-            onChange={handleChange}
-          />
-        </div>
+      <FormControl onSubmit={handleFormSubmit}>
+
+        <TextField
+          id="email"
+          name="email"
+          type="email"
+          onChange={handleChange}
+          // class="outlined-basic" 
+          label="Enter your Email Address"
+          variant="outlined"
+          placeholder="email@test.com"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          margin="normal"
+          fullWidth />
+
+        <TextField
+          id="pwd"
+          name="password"
+          type="password"
+          onChange={handleChange}
+          // class="outlined-basic" 
+          label="Enter a Password"
+          placeholder="*****"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          margin="normal"
+          fullWidth />
+
         {
           error ? <div>
             <p className="error-text" >The provided credentials are incorrect</p>
           </div> : null
         }
-        <div className="flex-row flex-end">
-          <button type="submit">
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+
+        <Button type="submit" variant="contained">Submit</Button>
+
+
+      </FormControl>
+
+    </Container>
   );
 }
 
