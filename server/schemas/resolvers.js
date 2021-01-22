@@ -15,16 +15,16 @@ const resolvers = {
     genres: async () => {
       return await Genre.find();
     },
-    songs: async (parent, { genre, name }) => {
+    songs: async (parent, { genre, title }) => {
       const params = {};
 
       if (genre) {
         params.genre = genre;
       }
 
-      if (name) {
-        params.name = {
-          $regex: name,
+      if (title) {
+        params.title = {
+          $regex: title,
         };
       }
 
@@ -75,16 +75,17 @@ const resolvers = {
 
       for (let i = 0; i < songs.length; i++) {
         // generate song id
-        const song = await stripe.songs.create({
-          name: songs[i].name,
+        const product = await stripe.products.create({
+          name: songs[i].title,
           description: songs[i].description,
           images: [`${url}/images/${songs[i].image}`],
           // These image thumbnails won't display on the Stripe checkout page when testing locally, because Stripe can't download images that are being served from your personal computer's localhost. You will only see these images when you deploy the app to Heroku.
         });
+        console.log("resolver product:", product);
 
         // generate price id using the song id
         const price = await stripe.prices.create({
-          song: song.id,
+          product: product.id,
           unit_amount: songs[i].price * 100,
           currency: "usd",
         });
@@ -122,7 +123,8 @@ const resolvers = {
       return { token, artist };
     },
     addOrder: async (parent, { songs }, context) => {
-      console.log(context);
+      console.log("context.user", context.user);
+      console.log("songs in addOrder arg", songs);
       if (context.user) {
         const order = new Order({ songs });
 
@@ -144,15 +146,15 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
-    updateSong: async (parent, { _id, quantity }) => {
-      const decrement = Math.abs(quantity) * -1;
+    // updateSong: async (parent, { _id, quantity }) => {
+    //   const decrement = Math.abs(quantity) * -1;
 
-      return await Song.findByIdAndUpdate(
-        _id,
-        { $inc: { quantity: decrement } },
-        { new: true }
-      );
-    },
+    //   return await Song.findByIdAndUpdate(
+    //     _id,
+    //     { $inc: { quantity: decrement } },
+    //     { new: true }
+    //   );
+    // },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 

@@ -1,0 +1,5 @@
+.audio {
+    width: 100%;
+    object-fit: scale-down;
+    margin-top: 10px;
+}

@@ -111,15 +111,6 @@ const typeDefs = gql`
       email: String
       password: String
     ): User
-    updateSong(
-      _id: ID!
-      title: String
-      description: String
-      image: String
-      price: Int
-      genre: String
-      tags: [String]
-    ): Song
     login(email: String!, password: String!): Auth
     artistLogin(email: String!, password: String!):Auth
   }

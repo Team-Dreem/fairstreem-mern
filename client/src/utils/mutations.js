@@ -30,7 +30,7 @@ export const ADD_ORDER = gql`
       purchaseDate
       songs {
         _id
-      name
+      title
       description
       price
       genre {

@@ -21,8 +21,6 @@ db.once("open", async () => {
     { name: "Other" },
   ]);
 
-  // console.log("genres seeded");
-
   const songs = await Song.insertMany([
     {
       title: "Catharsis",
@@ -68,8 +66,6 @@ db.once("open", async () => {
     },
   ]);
 
-  // console.log("songs seeded");
-
   await User.deleteMany();
   await User.create({
     avatar: "../../public/images/default.png",
@@ -87,11 +83,6 @@ db.once("open", async () => {
     lastName: "Washington",
     email: "pamela@testmail.com",
     password: "12345",
-    orders: [
-      {
-        songs: [songs[0]._id],
-      },
-    ],
   });
 
   await User.create({
@@ -135,8 +126,6 @@ db.once("open", async () => {
 
   const createdArtists = await Artist.collection.insertMany(artistData);
 
-  // console.log("artists seeded");
-
   // create friends
   for (let i = 0; i < 100; i += 1) {
     const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
@@ -153,8 +142,6 @@ db.once("open", async () => {
 
     await User.updateOne({ _id: userId }, { $addToSet: { friends: friendId } });
   }
-
-  // console.log("friends seeded");
 
   // create songs
   let createdSongs = [];

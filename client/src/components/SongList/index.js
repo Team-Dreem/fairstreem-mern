@@ -16,7 +16,6 @@ const [state, dispatch] = useStoreContext();
 const { currentGenre } = state;
 
 const { loading, data } = useQuery(QUERY_SONGS);
-console.log("SongList DATA:", data);
 
 useEffect(() => {
   // if there's data to be stored
