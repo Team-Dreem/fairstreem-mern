@@ -1,4 +1,5 @@
 import {
+  UPDATE_ARTISTS,
   UPDATE_SONGS,
   UPDATE_GENRES,
   UPDATE_CURRENT_GENRE,
@@ -14,6 +15,11 @@ import { useReducer } from "react";
 
 export const reducer = (state, action) => {
   switch (action.type) {
+    case UPDATE_ARTISTS:
+      return {
+        ...state,
+        artists: [...action.artists],
+      };
     // if action type value is the value of `UPDATE_SONGS`, return a new state object with an updated songs array
     case UPDATE_SONGS:
       return {

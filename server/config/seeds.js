@@ -10,8 +10,44 @@ db.once("open", async () => {
   
   await Artist.create({
     avatar: "../../public/images/default.png",
-    artistName: "test-Artist",
-    email: "artist@artist.com",
+    artistName: "Test",
+    email: "test@artist.com",
+    password: "12345",
+    songs: ["600a28d52e97ee7ae2cf63a5"],
+    followers: [],
+  });
+
+  await Artist.create({
+    avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611111773027",
+    artistName: "Jeff Johnston",
+    email: "jeffjohnston@artist.com",
+    password: "12345",
+    songs: ["600a28d52e97ee7ae2cf63a5"],
+    followers: [],
+  });
+
+  await Artist.create({
+    avatar: "../../../public/images/default.png",
+    artistName: "Feed",
+    email: "feed@artist.com",
+    password: "12345",
+    songs: ["600a28d52e97ee7ae2cf63a5"],
+    followers: [],
+  });
+
+  await Artist.create({
+    avatar: "../../public/images/default.png",
+    artistName: "Reboot",
+    email: "reboot@artist.com",
+    password: "12345",
+    songs: ["600a28d52e97ee7ae2cf63a5"],
+    followers: [],
+  });
+
+  await Artist.create({
+    avatar: "../../public/images/default.png",
+    artistName: "Concrete Hat",
+    email: "concrete_hat@artist.com",
     password: "12345",
     songs: ["600a28d52e97ee7ae2cf63a5"],
     followers: [],
@@ -105,7 +141,7 @@ db.once("open", async () => {
   // create user data
   const userData = [];
 
-  for (let i = 0; i < 50; i += 1) {
+  for (let i = 0; i < 10; i += 1) {
     const avatar = faker.internet.avatar();
     const username = faker.internet.userName();
     const firstName = faker.name.firstName();
@@ -118,12 +154,12 @@ db.once("open", async () => {
 
   const createdUsers = await User.collection.insertMany(userData);
 
-  console.log("users seeded", userData);
+  // console.log("users seeded", userData);
 
   // create artist data
   const artistData = [];
 
-  for (let i = 0; i < 10; i += 1) {
+  for (let i = 0; i < 50; i += 1) {
     const avatar = faker.internet.avatar();
     const artistName = faker.random.words();
     const email = faker.internet.email(artistName);
@@ -135,7 +171,7 @@ db.once("open", async () => {
   const createdArtists = await Artist.collection.insertMany(artistData);
 
   // create friends
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 10; i += 1) {
     const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
     const { _id: userId } = createdUsers.ops[randomUserIndex];
 

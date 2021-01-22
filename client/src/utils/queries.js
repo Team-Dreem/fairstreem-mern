@@ -116,9 +116,10 @@ export const QUERY_USER = gql`
 }
 `;
 
-export const QUERY_ARTIST = gql`
-  {
-    artist {
+export const QUERY_ARTISTS = gql`
+  query getArtists($artistName: String!){
+    artists(artistName: $artistName) {
+      _id
       avatar
       artistName
       email
@@ -126,9 +127,6 @@ export const QUERY_ARTIST = gql`
       songs {
         _id
         title
-        description
-        price
-        image
       }
       followers {
         _id

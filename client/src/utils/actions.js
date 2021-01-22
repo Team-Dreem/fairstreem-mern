@@ -1,6 +1,7 @@
 export const UPDATE_SONGS = "UPDATE_SONGS";
 export const UPDATE_GENRES = "UPDATE_GENRES";
 export const UPDATE_CURRENT_GENRE = "UPDATE_CURRENT_GENRE";
+export const UPDATE_ARTISTS = "UPDATE_ARTISTS";
 
 // With these three actions, we're defining how three parts of our state will be maintained and updated:
 
