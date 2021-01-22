@@ -8,9 +8,20 @@ const s3Bucket = process.env.S3_BUCKET;
 
 const resolvers = {
   Query: {
+    // artist: async (parent, args, context) => {
+    //     const user = await Artist.findById(context.user._id).populate({
+    //       path: "orders.songs",
+    //       populate: "genre",
+    //     });
+
+    //     user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
+
+    //     return user;
+
+    //   throw new AuthenticationError("Not logged in");
+    // },
     artists: async () => {
-      return Artist.find()
-      .select("-__v -password");
+      return Artist.find().select("-__v -password");
     },
     genres: async () => {
       return await Genre.find();
@@ -34,8 +45,7 @@ const resolvers = {
       return await Song.findById(_id).populate("genre");
     },
     users: async () => {
-      return User.find()
-      .select("-__v -password");
+      return User.find().select("-__v -password");
     },
     user: async (parent, args, context) => {
       if (context.user) {
@@ -121,12 +131,13 @@ const resolvers = {
       console.log("songs in addOrder arg", songs);
       if (context.user) {
         const order = new Order({ songs });
-
+        console.log("order", order);
         await User.findByIdAndUpdate(context.user._id, {
           $push: { orders: order },
         });
-
-        return order;
+        const populatedOrder = await Order.findById(order._id).populate("songs");
+        console.log("popOrder:", populatedOrder);
+        return populatedOrder;
       }
 
       throw new AuthenticationError("Not logged in");

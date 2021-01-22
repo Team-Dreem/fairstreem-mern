@@ -10,7 +10,8 @@ function SongItem(item) {
   const [state, dispatch] = useStoreContext();
 
   const { image, title, _id, price, artist, song_url } = item;
-  console.log("song_url:", song_url);
+  // console.log("song_url:", song_url);
+  // console.log("title:", title);
   const { cart } = state;
 
   const addToCart = () => {
