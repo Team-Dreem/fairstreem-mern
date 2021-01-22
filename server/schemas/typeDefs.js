@@ -121,6 +121,7 @@ const typeDefs = gql`
       tags: [String]
     ): Song
     login(email: String!, password: String!): Auth
+    artistLogin(email: String!, password: String!):Auth
   }
 `;
 

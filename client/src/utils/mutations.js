@@ -12,6 +12,18 @@ export const LOGIN = gql`
 `;
 
 
+export const ARTIST_LOGIN = gql`
+  mutation artistLogin($email: String!, $password: String!) {
+    artistLogin(email: $email, password: $password) {
+      token
+      user {
+        _id
+      }
+    }
+  }
+`;
+
+
 export const ADD_ORDER = gql`
   mutation addOrder($songs: [ID]!) {
     addOrder(songs: $songs) {

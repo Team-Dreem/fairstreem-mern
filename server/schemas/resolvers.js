@@ -170,6 +170,23 @@ const resolvers = {
 
       return { token, user };
     },
+    artistLogin: async (parent, { email, password }) => {
+      const artist = await Artist.findOne({ email });
+
+      if (!artist) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+
+      const correctPw = await artist.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+
+      const token = signToken(artist);
+
+      return { token, artist };
+    },
   },
 };
 

@@ -17,7 +17,7 @@ function Signup(props) {
     {
       mutationResponse = await addUser({
         variables: {
-          accountType: formState.acctType,
+          // accountType: formState.acctType,
           username: formState.username,
           email: formState.email,
           password: formState.password,
@@ -33,7 +33,7 @@ function Signup(props) {
     {
       mutationResponse = await addArtist({
         variables: {
-          accountType: formState.acctType,
+          // accountType: formState.acctType,
           artistName: formState.username,
           email: formState.email,
           password: formState.password,
