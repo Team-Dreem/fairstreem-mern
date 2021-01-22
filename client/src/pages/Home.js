@@ -5,10 +5,9 @@ import Cart from "../components/Cart";
 
 const Home = () => {
   return (
-    <div className="container">
-      <GenreMenu />
-      <SongList />
-      <Cart />
+    <div className="hero">
+      <h1>Listen. Connect. Support.</h1>
+      <h3>Listen to new music while directly supporting the artists who create it.</h3>
     </div>
   );
 };
