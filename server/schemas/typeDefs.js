@@ -8,8 +8,8 @@ const typeDefs = gql`
   }
 
   type Song {
-    _id: ID!
-    title: String!
+    _id: ID
+    title: String
     artist: String
     description: String
     image: String
@@ -60,6 +60,7 @@ const typeDefs = gql`
   }
 
   type Query {
+    artist(artistName: String): Artist
     artists: [Artist]
     genres: [Genre]
     songs(genre: ID, name: String): [Song]
@@ -68,7 +69,9 @@ const typeDefs = gql`
     users: [User]
     order(_id: ID!): Order
     checkout(songs: [ID]!): Checkout
+
   }
+
 
   type Mutation {
     addUser(

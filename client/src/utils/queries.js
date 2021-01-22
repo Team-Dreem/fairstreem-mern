@@ -137,3 +137,15 @@ export const QUERY_ARTIST = gql`
     }
   }
 `;
+
+export const QUERY_ONE_ARTIST = gql`
+query artist($artistName: String){
+  artist(artistName: $artistName){
+    avatar
+    songs{
+      title
+      
+    }
+  }
+}
+`

@@ -12,6 +12,10 @@ const resolvers = {
       return Artist.find()
       .select("-__v -password");
     },
+    //find one artist
+    artist: async (parent, {artistName})=>{
+      return await Artist.findOne({artistName})
+    },
     genres: async () => {
       return await Genre.find();
     },
