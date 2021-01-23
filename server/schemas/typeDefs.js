@@ -90,6 +90,13 @@ const typeDefs = gql`
       password: String
     ): User
     login(email: String!, password: String!): Auth
+    addSong(
+      title: String
+      artist: String
+      description: String
+      price: Int
+      song_url: String
+    ): Song
   }
 `;
 

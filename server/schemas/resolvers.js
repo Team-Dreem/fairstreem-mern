@@ -145,6 +145,13 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+    //claire's draft- feel free to change
+    addSong: async (parent, args, context) => {
+      if(context.user) {
+        return await Song.create(args)
+      }
+      throw new AuthenticationError("you need to be logged in")
+    },
     // updateSong: async (parent, { _id, quantity }) => {
     //   const decrement = Math.abs(quantity) * -1;
 
