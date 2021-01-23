@@ -35,9 +35,7 @@ export const QUERY_SONGS_BY_GENRE = gql`
       genre {
         _id
       }
-      tags {
-        tag
-      }
+      tags 
       song_url
     }
   }
@@ -55,9 +53,7 @@ export const QUERY_SONGS = gql`
       genre {
         _id
       }
-      tags {
-        tag
-      }
+      tags 
       song_url
     }
   }

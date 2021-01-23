@@ -18,18 +18,27 @@ const useStyles = makeStyles({
   },
 });
 
-function SongTableSimple(item) {
+function SongTableSimple(props) {
   const [state, dispatch] = useStoreContext();
-  const { image, title, _id, price, artist, tags, song_url } = item;
+  const { image, title, _id, price, artist, tags, song_url } = props;
   //use when data is received
 
   const { currentArtist } = state;
 
+  const songs = [];
+
   const addToRow = () => {
-      const songItem = currentArtist.find((song) => song.artist === _id);
-      console.log("songItem", songItem)
-  }
-  
+    state.songs.forEach(song => {
+        if (song.artist === currentArtist) {
+            console.log("ArraySong", song)
+            songs.push(song)
+            console.log("songs", songs)
+        };
+   
+    });
+    // const songItem = currentArtist.find((song) => song.artist === _id);
+    // console.log("songItem", songItem);
+  };
 
   const classes = useStyles();
 
@@ -54,6 +63,17 @@ function SongTableSimple(item) {
     console.log("play clicked");
   }
 
+  const rows = songs.map((song) => {
+    return createData(
+      <Button>
+        <PlayArrowIcon onClick={playClick}></PlayArrowIcon>
+      </Button>,
+      song.title,
+      1,
+      2,
+      <Button onClick={buyClick}>Buy</Button>
+    );
+  });
 
 //   const rows = item.map((song) => {
 //     return createData(
@@ -67,38 +87,37 @@ function SongTableSimple(item) {
 //     );
 //   });
 
-//   console.log(rows);
+  //   console.log(rows);
 
-  return ( null )
+  return (
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead align="right">
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell align="left">Title</TableCell>
+            <TableCell align="right">Album</TableCell>
+            <TableCell align="right">Playcount</TableCell>
+            <TableCell align="right">Purchase</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow key={row.name}>
+              {/* <TableCell component="th" scope="row">
+                                {row.name}
+                            </TableCell> */}
+              <TableCell align="center">{row.playBtn}</TableCell>
+              <TableCell align="left">{row.name}</TableCell>
+              <TableCell align="right">{row.album}</TableCell>
+              <TableCell align="right">{row.playcount}</TableCell>
+              <TableCell align="right">{row.purchase}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
 }
-//     <TableContainer component={Paper}>
-//       <Table className={classes.table} aria-label="simple table">
-//         <TableHead align="right">
-//           <TableRow>
-//             <TableCell></TableCell>
-//             <TableCell align="left">Title</TableCell>
-//             <TableCell align="right">Album</TableCell>
-//             <TableCell align="right">Playcount</TableCell>
-//             <TableCell align="right">Purchase</TableCell>
-//           </TableRow>
-//         </TableHead>
-//         <TableBody>
-//           {rows.map((row) => (
-//             <TableRow key={row.name}>
-//               {/* <TableCell component="th" scope="row">
-//                                 {row.name}
-//                             </TableCell> */}
-//               <TableCell align="center">{row.playBtn}</TableCell>
-//               <TableCell align="left">{row.name}</TableCell>
-//               <TableCell align="right">{row.album}</TableCell>
-//               <TableCell align="right">{row.playcount}</TableCell>
-//               <TableCell align="right">{row.purchase}</TableCell>
-//             </TableRow>
-//           ))}
-//         </TableBody>
-//       </Table>
-//     </TableContainer>
-//   );
-// }
 
 export default SongTableSimple;

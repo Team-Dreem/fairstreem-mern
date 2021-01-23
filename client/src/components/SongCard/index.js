@@ -9,8 +9,10 @@ import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import Button from '@material-ui/core/Button'
+import { useStoreContext } from "../../utils/GlobalState";
 
 const Styles = makeStyles((theme) => ({
+  
     root: {
       display: 'flex',
       padding: '1rem',
@@ -43,6 +45,8 @@ const Styles = makeStyles((theme) => ({
   }));
 
 function SongCard(){
+  const [state, dispatch] = useStoreContext();
+  
     const theme = useTheme()
     const classes = Styles();
 
@@ -52,7 +56,7 @@ function SongCard(){
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Typography component="h5" variant="h5">
-            Live From Space
+           {state.currentArtist}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
             Mac Miller

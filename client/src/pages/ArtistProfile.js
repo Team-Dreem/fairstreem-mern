@@ -12,7 +12,7 @@ import Button from "@material-ui/core/Button";
 import SongCard from "../components/SongCard";
 import SongListByArtist from "../components/SongListByArtist";
 
-// import SongTableSimple from "../components/SongTableSimple";
+import SongTableSimple from "../components/SongTableSimple";
 
 import { useQuery } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
@@ -111,11 +111,11 @@ function ArtistProfile() {
           </Grid>
 
           <Grid container>
+            <SongCard> <SongTableSimple artist={currentArtist.artistName}></SongTableSimple></SongCard>
             <SongCard></SongCard>
             <SongCard></SongCard>
             <SongCard></SongCard>
-            <SongCard></SongCard>
-            {/* <SongTableSimple artist={currentArtist.songs}></SongTableSimple> */}
+            {/* <SongTableSimple artist={currentArtist.artistName}></SongTableSimple> */}
           </Grid>
           <Grid container justify="center">
             <h1>COMMENT FEED</h1>
