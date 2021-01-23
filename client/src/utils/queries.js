@@ -137,3 +137,13 @@ export const QUERY_ARTIST = gql`
     }
   }
 `;
+
+export const QUERY_SEARCH = gql`
+  query Search($term: String!) {
+    search(term: $term) {
+      artistName,
+      avatar,
+      _id
+    }
+  }
+`;

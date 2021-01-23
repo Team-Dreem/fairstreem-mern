@@ -10,7 +10,13 @@ const resolvers = {
   Query: {
     artists: async () => {
       return Artist.find()
-      .select("-__v -password");
+        .select("-__v -password");
+    },
+    search: async (parent, { term }, context) => {
+      return Artist.find({
+          artistName: new RegExp(`.*${term}.*`, 'i')
+        })
+        .select("-__v -password");
     },
     genres: async () => {
       return await Genre.find();
