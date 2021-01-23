@@ -91,7 +91,6 @@ const typeDefs = gql`
       password: String!
       aboutme: String
       avatar: String
-      colorScheme: String
     ): Auth
     addArtist(
       artistName: String!
@@ -101,7 +100,6 @@ const typeDefs = gql`
       aboutme: String
       socialMedia: String
       avatar: String
-      colorScheme: String
     ): Auth
     addOrder(songs: [ID]!): Order
     updateUser(
