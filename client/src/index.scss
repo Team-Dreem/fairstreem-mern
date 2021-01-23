@@ -166,7 +166,8 @@ nav {
 
 .search-bar {
   margin: auto;
-  padding-top: 100px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   width: 50%;
 }
 
@@ -175,6 +176,13 @@ nav {
   box-shadow: none !important;
 }
 /* Hero End */
+
+// Grid start
+.grid {
+  margin: auto;
+  width: 80%;
+  padding-bottom: 100px;
+}
 
 h1,
 h2,
