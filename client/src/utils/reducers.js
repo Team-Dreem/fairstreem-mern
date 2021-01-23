@@ -44,7 +44,7 @@ export const reducer = (state, action) => {
       case UPDATE_CURRENT_ARTIST:
       return {
         ...state,
-        currentArtist: action.currentArtist,
+        currentArtist: { ...action.currentArtist },
       };
       case UPDATE_CURRENT_USER:
       return {
@@ -108,6 +108,6 @@ export const reducer = (state, action) => {
   }
 };
 
-export function useSongReducer(initialState) {
+export function useAppReducer(initialState) {
   return useReducer(reducer, initialState);
 }

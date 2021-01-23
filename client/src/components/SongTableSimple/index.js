@@ -25,14 +25,14 @@ function SongTableSimple(props) {
 
   const { currentArtist } = state;
 
-  const songs = [];
+  const artistSongs = [];
 
   const addToRow = () => {
     state.songs.forEach(song => {
-        if (song.artist === currentArtist) {
+        if (song.artist === artist) {
             console.log("ArraySong", song)
-            songs.push(song)
-            console.log("songs", songs)
+            artistSongs.push(song)
+            console.log("songs", artistSongs)
         };
    
     });
@@ -45,7 +45,7 @@ function SongTableSimple(props) {
   function createData(playBtn, name, album, playcount, purchase) {
     return { playBtn, name, album, playcount, purchase };
   }
-  console.log(currentArtist);
+  console.log("ST_ARTIST", currentArtist);
   console.log("title", title);
   console.log("image", image);
   console.log("_id", _id);
@@ -63,7 +63,7 @@ function SongTableSimple(props) {
     console.log("play clicked");
   }
 
-  const rows = songs.map((song) => {
+  const rows = artistSongs.map((song) => {
     return createData(
       <Button>
         <PlayArrowIcon onClick={playClick}></PlayArrowIcon>

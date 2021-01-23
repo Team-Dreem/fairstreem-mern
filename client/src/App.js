@@ -41,8 +41,8 @@ function App() {
               <Route exact path="/orderHistory" component={OrderHistory} />
               <Route exact path="/songs/:id" component={Detail} />
               <Route exact path="/success" component={Success} />
-              <Route exact path="/artist/:id" component={ArtistProfile} />
-              <Route exact path="/artist/:id/songs" component={SongListByArtist} />
+              <Route exact path="/artist/:artistId" component={ArtistProfile} />
+              <Route exact path="/artist/:artistId/songs" component={SongListByArtist} />
 
               <Route component={NoMatch} />
             </Switch>

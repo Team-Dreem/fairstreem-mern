@@ -22,45 +22,28 @@ import { useParams } from "react-router-dom";
 function ArtistProfile() {
   const [state, dispatch] = useStoreContext();
   //useParams retrieves username from URL
-  const { id } = useParams();
+  const { artistId } = useParams();
 
-  const [currentArtist, setCurrentArtist] = useState({});
-  //   console.log("USEPARAMS", useParams());
-
-  //   const { loading, data } = useQuery(QUERY_ONE_ARTIST, {
-  //     variables: { artistName: artistName },
-  //   });
   const { loading, data } = useQuery(QUERY_ARTISTS);
 
-  const { artists } = state;
-// console.log('artists', artists);
-  //   const artist = data?.artist;
+  const currentArtist = state.artists.find((artist) => artist._id === artistId);
 
   useEffect(() => {
-    // already in global store
-    if (artists.length) {
-      setCurrentArtist(
-        artists.find(artist => artist._id === id)
-      );
-      dispatch({
-          type: UPDATE_CURRENT_ARTIST,
-          currentArtist: id,
-      })
-    }
-    // retrieved from server
-    else if (data) {
-        console.log("data", data)
+    if (data && !currentArtist) {
       dispatch({
         type: UPDATE_ARTISTS,
-        artists: data.artists
+        artists: data.artists,
       });
-
       data.artists.forEach((artist) => {
         idbPromise("artists", "put", artist);
       });
-    }
-    // get cache from idb
-    else if (!loading) {
+    } else if (currentArtist) {
+      dispatch({
+        type: UPDATE_CURRENT_ARTIST,
+        currentArtist,
+      });
+      // get cache from idb
+    } else if (!loading) {
       idbPromise("artists", "get").then((indexedArtists) => {
         dispatch({
           type: UPDATE_ARTISTS,
@@ -68,7 +51,46 @@ function ArtistProfile() {
         });
       });
     }
-  }, [artists, data, loading, dispatch, id]);
+
+    return () => {
+      dispatch({
+        type: UPDATE_CURRENT_ARTIST,
+        currentArtist: {},
+      });
+    };
+  }, [loading, currentArtist, dispatch, data, artistId]);
+
+  //   useEffect(() => {
+  //     // already in global store
+  //     if (artists.length) {
+  //       setCurrentArtist(artists.find((artist) => artist._id === id));
+  //       dispatch({
+  //         type: UPDATE_CURRENT_ARTIST,
+  //         currentArtist: id,
+  //       });
+  //     }
+  //     // retrieved from server
+  //     else if (data) {
+  //       console.log("data", data);
+  //       dispatch({
+  //         type: UPDATE_ARTISTS,
+  //         artists: data.artists,
+  //       });
+
+  //       data.artists.forEach((artist) => {
+  //         idbPromise("artists", "put", artist);
+  //       });
+  //     }
+  //     // get cache from idb
+  //     else if (!loading) {
+  //       idbPromise("artists", "get").then((indexedArtists) => {
+  //         dispatch({
+  //           type: UPDATE_ARTISTS,
+  //           artists: indexedArtists,
+  //         });
+  //       });
+  //     }
+  //   }, [artists, data, loading, dispatch, id]);
 
   //   console.log("ARTISTS", artists);
   //   console.log("currentArtist", currentArtist);
@@ -111,7 +133,12 @@ function ArtistProfile() {
           </Grid>
 
           <Grid container>
-            <SongCard> <SongTableSimple artist={currentArtist.artistName}></SongTableSimple></SongCard>
+            <SongCard>
+              {" "}
+              <SongTableSimple
+                artist={currentArtist}
+              ></SongTableSimple>
+            </SongCard>
             <SongCard></SongCard>
             <SongCard></SongCard>
             <SongCard></SongCard>
