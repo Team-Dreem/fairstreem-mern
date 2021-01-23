@@ -10,11 +10,15 @@ const { Provider } = StoreContext;
 
 const StoreProvider = ({ value = [], ...props }) => {
   const [state, dispatch] = useSongReducer({
+    genres: [],
+    artists: [],
+    users: [],
     songs: [],
     cart: [],
     cartOpen: false,
-    genres: [],
     currentGenre: "",
+    currentArtist: "",
+    currentUser: "",
   });
   // use this to confirm it works!
   return <Provider value={[state, dispatch]} {...props} />;

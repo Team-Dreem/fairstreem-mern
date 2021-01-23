@@ -9,9 +9,9 @@ const songSchema = new Schema({
     trim: true,
   },
   artist: {
-    type: String,
-    required: true,
-    trim: true,
+    type: Schema.Types.ObjectId,
+    ref: 'Artist',
+    required: true
   },
   description: {
     type: String,

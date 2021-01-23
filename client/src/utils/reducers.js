@@ -1,8 +1,12 @@
 import {
-  UPDATE_ARTISTS,
-  UPDATE_SONGS,
   UPDATE_GENRES,
+  UPDATE_ARTISTS,
+  UPDATE_USERS,
+  UPDATE_SONGS,
   UPDATE_CURRENT_GENRE,
+  UPDATE_CURRENT_ARTIST,
+  UPDATE_CURRENT_USER,
+  UPDATE_CURRENT_SONG,
   ADD_TO_CART,
   ADD_MULTIPLE_TO_CART,
   REMOVE_FROM_CART,
@@ -36,6 +40,21 @@ export const reducer = (state, action) => {
       return {
         ...state,
         currentGenre: action.currentGenre,
+      };
+      case UPDATE_CURRENT_ARTIST:
+      return {
+        ...state,
+        currentArtist: action.currentArtist,
+      };
+      case UPDATE_CURRENT_USER:
+      return {
+        ...state,
+        currentUser: action.currentUser,
+      };
+      case UPDATE_CURRENT_SONG:
+      return {
+        ...state,
+        currentSong: action.currentSong,
       };
     case ADD_TO_CART:
       return {

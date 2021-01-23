@@ -60,8 +60,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    artist(artistName: String): Artist
-    artists(artistName: String): [Artist]
+    artist: Artist
+    artists(_id: ID, artistName: String): [Artist]
     genres: [Genre]
     songs(genre: ID, name: String): [Song]
     song(_id: ID!): Song

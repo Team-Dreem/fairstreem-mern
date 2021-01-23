@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useStoreContext } from "../utils/GlobalState";
 import { UPDATE_ARTISTS } from "../utils/actions";
-import { QUERY_ARTISTS, QUERY_ONE_ARTIST } from "../utils/queries";
+import { QUERY_ARTISTS } from "../utils/queries";
 import { idbPromise } from "../utils/helpers";
 import spinner from "../assets/spinner.gif";
 
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+// import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 
 import SongCard from "../components/SongCard";
 
-import SongTableSimple from "../components/SongTableSimple";
+// import SongTableSimple from "../components/SongTableSimple";
 
-import { useMutation, useQuery } from "@apollo/react-hooks";
-import { Link, Redirect, useParams } from "react-router-dom";
+import { useQuery } from "@apollo/react-hooks";
+import { useParams } from "react-router-dom";
 
-import Auth from "../utils/auth";
+// import Auth from "../utils/auth";
 
 function ArtistProfile() {
   const [state, dispatch] = useStoreContext();
   //useParams retrieves username from URL
-  const { artistName } = useParams();
+  const { id } = useParams();
 
   const [currentArtist, setCurrentArtist] = useState({});
-  console.log("USEPARAMS", useParams());
+  //   console.log("USEPARAMS", useParams());
 
   //   const { loading, data } = useQuery(QUERY_ONE_ARTIST, {
   //     variables: { artistName: artistName },
@@ -39,14 +39,15 @@ function ArtistProfile() {
     // already in global store
     if (artists.length) {
       setCurrentArtist(
-        artists.find((artist) => artist.artistName === artistName)
+        artists.find(artist => artist._id === id)
       );
     }
     // retrieved from server
     else if (data) {
+        console.log("data", data)
       dispatch({
         type: UPDATE_ARTISTS,
-        artists: data.artists,
+        artists: data.artists
       });
 
       data.artists.forEach((artist) => {
@@ -58,18 +59,18 @@ function ArtistProfile() {
       idbPromise("artists", "get").then((indexedArtists) => {
         dispatch({
           type: UPDATE_ARTISTS,
-          products: indexedArtists,
+          artists: indexedArtists,
         });
       });
     }
-  }, [artists, data, loading, dispatch, artistName]);
+  }, [artists, data, loading, dispatch, id]);
 
-  console.log("ARTISTS", artists);
-  console.log("currentArtist", currentArtist);
-  console.log("currentArtist.songs", currentArtist.songs);
-//   if (loading) {
-//     return <h2>LOADING...</h2>;
-//   }
+  //   console.log("ARTISTS", artists);
+  //   console.log("currentArtist", currentArtist);
+  //   console.log("currentArtist.songs", currentArtist.songs);
+  //   if (loading) {
+  //     return <h2>LOADING...</h2>;
+  //   }
 
   return (
     <>
@@ -85,12 +86,12 @@ function ArtistProfile() {
             </h1>
           </Grid>
 
-          <Grid container justify="center">
-            <Grid item md={6} spacing={2}>
+          <Grid container justify="center" spacing={2}>
+            <Grid item md={6}>
               <img src={currentArtist.avatar} />
             </Grid>
 
-            <Grid item md={6} spacing={2}>
+            <Grid item md={6}>
               <p>
                 {/* {artist.bio} */}
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -109,7 +110,7 @@ function ArtistProfile() {
             <SongCard></SongCard>
             <SongCard></SongCard>
             <SongCard></SongCard>
-            <SongTableSimple artist={currentArtist.songs}></SongTableSimple>
+            {/* <SongTableSimple artist={currentArtist.songs}></SongTableSimple> */}
           </Grid>
           <Grid container justify="center">
             <h1>COMMENT FEED</h1>

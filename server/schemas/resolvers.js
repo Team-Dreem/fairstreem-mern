@@ -8,9 +8,20 @@ const s3Bucket = process.env.S3_BUCKET;
 
 const resolvers = {
   Query: {
-    artists: async () => {
-      return Artist.find()
-      .select("-__v -password");
+    artists: async (parent, { _id, artistName }) => {
+      const params = {};
+
+      if (_id) {
+        params._id = _id;
+      }
+
+      if (artistName) {
+        params.artistName= {
+          $regex: artistName,
+        };
+      }
+
+      return await Artist.find(params).populate("");
     },
     //find one artist
     artist: async (parent, {artistName})=>{

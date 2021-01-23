@@ -1,5 +1,5 @@
 import React from "react";
-import SongList from "../components/SongList";
+import SongListByGenre from "../components/SongListByGenre";
 import GenreMenu from "../components/GenreMenu";
 import Cart from "../components/Cart";
 
@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className="container">
       <GenreMenu />
-      <SongList />
+      <SongListByGenre />
       <Cart />
     </div>
   );

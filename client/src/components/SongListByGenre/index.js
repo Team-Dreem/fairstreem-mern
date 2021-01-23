@@ -10,7 +10,7 @@ import spinner from "../../assets/spinner.gif"
 
 
 
-function SongList() {
+function SongListByGenre() {
 const [state, dispatch] = useStoreContext();
 
 const { currentGenre } = state;
@@ -79,7 +79,7 @@ function filterSongs() {
   );
 }
 
-export default SongList;
+export default SongListByGenre;
 
 // Again, we immediately execute the useStoreContext() function to retrieve the current global state object and the dipatch() method to update state. We then destructure the currentGenre data out of the state object so we can use it in the filterSongs() function.
 
