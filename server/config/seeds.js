@@ -9,6 +9,7 @@ db.once("open", async () => {
   await Song.deleteMany();
   
   await Artist.create({
+    _id: "600b1de66ea21cf63a4db76c",
     avatar: "../../public/images/default.png",
     artistName: "Test",
     email: "test@artist.com",
@@ -18,6 +19,7 @@ db.once("open", async () => {
   });
 
   await Artist.create({
+    _id: "600b1de66ea21cf63a4db76d",
     avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611111773027",
     artistName: "Jeff Johnston",
     email: "jeffjohnston@artist.com",
@@ -25,6 +27,16 @@ db.once("open", async () => {
     songs: ["600a28d52e97ee7ae2cf63a5"],
     followers: [],
   });
+
+  await Artist.create({
+  _id: "600b1de66ea21cf63a4db76e",
+  avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611111773027",
+  artistName: "Jeff Warren Johnston",
+  email: "jeffwarrenjohnston@artist.com",
+  password: "12345",
+  songs: ["600b1de76ea21cf63a4db77b", "600b1de76ea21cf63a4db77c"],
+  followers: [],
+});
 
   await Artist.create({
     avatar: "../../../public/images/default.png",
@@ -67,8 +79,9 @@ db.once("open", async () => {
 
   const songs = await Song.insertMany([
     {
+      _id: "600b1de76ea21cf63a4db77a",
       title: "Catharsis",
-      artist: "Jeff Johnston",
+      artist: "600b1de66ea21cf63a4db76d",
       description:
         "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
       image: "JeffJohnston.jpg",
@@ -81,8 +94,9 @@ db.once("open", async () => {
       likes: 6,
     },
     {
+      _id: "600b1de76ea21cf63a4db77b",
       title: "Wild Eyes",
-      artist: "Jeff Warren Johnston",
+      artist: "600b1de66ea21cf63a4db76e",
       description:
         "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
       image: "Wild_Eyes.jpg",
@@ -95,8 +109,9 @@ db.once("open", async () => {
       likes: 6,
     },
     {
+      _id: "600b1de76ea21cf63a4db77c",
       title: "El Toro",
-      artist: "Jeff Warren Johnston",
+      artist: "600b1de66ea21cf63a4db76e",
       description:
         "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
       image: "El_Toro.jpg",
@@ -196,9 +211,9 @@ db.once("open", async () => {
     const randomArtistIndex = Math.floor(
       Math.random() * createdArtists.ops.length
     );
-    const { artistName, _id: artistId } = createdArtists.ops[randomArtistIndex];
-    console.log("ARTISTNAME:", artistName);
-    const artist = artistName;
+    const { _id: artistId } = createdArtists.ops[randomArtistIndex];
+    console.log("artistId:", artistId);
+    const artist = artistId;
     const description = faker.lorem.words(Math.round(Math.random() * 20) + 1);
     const image = faker.random.image();
     const price = faker.commerce.price();

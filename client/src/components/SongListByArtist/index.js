@@ -4,8 +4,9 @@ import { useStoreContext } from "../../utils/GlobalState";
 import { useQuery } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
 import SongListItem from "../SongListItem";
-import { QUERY_ARTISTS, QUERY_SONGS } from "../../utils/queries";
-import { UPDATE_ARTISTS } from "../../utils/actions";
+import SongTableSimple from "../SongTableSimple";
+import { QUERY_SONGS } from "../../utils/queries";
+import { UPDATE_SONGS } from "../../utils/actions";
 import spinner from "../../assets/spinner.gif";
 
 function SongListByArtist() {
@@ -47,13 +48,40 @@ const { currentArtist } = state;
 
 const { loading, data } = useQuery(QUERY_SONGS);
 
+useEffect(() => {
+    // if there's data to be stored
+    if (data) {
+      // let's store it in the global state object
+      dispatch({
+        type: UPDATE_SONGS,
+        songs: data.songs
+      });
+  
+      // but let's also take each song and save it to IndexedDB using the helper function 
+      data.songs.forEach((song) => {
+        idbPromise('songs', 'put', song);
+      });
+        // add else if to check if `loading` is undefined in `useQuery()` Hook
+      } else if (!loading) {
+        // since we're offline, get all of the data from the `songs` store
+        idbPromise('songs', 'get').then((songs) => {
+          // use retrieved data to set global state for offline browsing
+          dispatch({
+            type: UPDATE_SONGS,
+            songs: songs
+          });
+        });
+      }
+    }, [data, loading, dispatch]);
+
   function filterSongs() {
     if (!currentArtist) {
       return state.songs;
     }
 
-    return state.songs.filter((song) => song.artist === currentArtist._id);
+    return state.songs.filter((song) => song.artist === currentArtist);
   }
+  console.log("state.songs", state.songs)
 
   return (
     <div className="my-2">
@@ -61,7 +89,7 @@ const { loading, data } = useQuery(QUERY_SONGS);
       {state.songs.length ? (
         <div className="flex-row">
           {filterSongs().map((song) => (
-            <SongListItem
+            <SongTableSimple
               key={song._id}
               _id={song._id}
               title={song.title}
