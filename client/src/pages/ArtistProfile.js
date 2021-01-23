@@ -5,8 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button'
 
 import SongCard from '../components/SongCard'
-
 import SongTableSimple from '../components/SongTableSimple'
+import AddSongModal from '../components/AddSongModal'
 
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import {QUERY_ONE_ARTIST} from '../utils/queries'
@@ -41,12 +41,13 @@ function ArtistProfile() {
         <>
             <Grid container justify='center'>
             {/* {artist.artistName} */}
-                <h1>{artistName} <span><Button>like</Button></span> </h1>
+                <h1>{artistName} 
+                {Auth.loggedIn && <span><Button>like</Button></span>} </h1>
             </Grid>
 
             <Grid container justify="center">
                 <Grid item md={6} spacing={2}>
-                    <img src={artist.avatar} />
+                    <img src="" />
                 </Grid>
 
                 <Grid item md={6} spacing={2}>
@@ -64,6 +65,7 @@ function ArtistProfile() {
                 <SongCard></SongCard>
                 <SongCard></SongCard>
                 <SongCard></SongCard>
+                <AddSongModal></AddSongModal>
                 <SongTableSimple artist={artist}></SongTableSimple>
 
             </Grid>
