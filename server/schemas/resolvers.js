@@ -21,13 +21,13 @@ const resolvers = {
         };
       }
 
-      return await Artist.find(params).populate("");
+      return await Artist.find(params).populate("Artist");
     },
     //find one artist
-    artist: async (parent, {artistName})=>{
-      return await Artist.findOne({artistName})
-      // .populate('songs')
-    },
+    // artist: async (parent, {artistName})=>{
+    //   return await Artist.findOne({artistName})
+    //   // .populate('songs')
+    // },
     genres: async () => {
       return await Genre.find();
     },

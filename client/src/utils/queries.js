@@ -117,8 +117,8 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_ARTISTS = gql`
-  query getArtists($artist: ID){
-    artists(artist: $artist) {
+  query getArtists($_id: ID){
+    artists(_id: $_id) {
       _id
       avatar
       artistName

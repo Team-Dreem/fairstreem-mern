@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useStoreContext } from "../utils/GlobalState";
-import { UPDATE_ARTISTS } from "../utils/actions";
+import { UPDATE_ARTISTS, UPDATE_CURRENT_ARTIST } from "../utils/actions";
 import { QUERY_ARTISTS } from "../utils/queries";
 import { idbPromise } from "../utils/helpers";
 import spinner from "../assets/spinner.gif";
@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
 import SongCard from "../components/SongCard";
+import SongListByArtist from "../components/SongListByArtist";
 
 // import SongTableSimple from "../components/SongTableSimple";
 
@@ -32,7 +33,7 @@ function ArtistProfile() {
   const { loading, data } = useQuery(QUERY_ARTISTS);
 
   const { artists } = state;
-
+// console.log('artists', artists);
   //   const artist = data?.artist;
 
   useEffect(() => {
@@ -41,6 +42,10 @@ function ArtistProfile() {
       setCurrentArtist(
         artists.find(artist => artist._id === id)
       );
+      dispatch({
+          type: UPDATE_CURRENT_ARTIST,
+          currentArtist: id,
+      })
     }
     // retrieved from server
     else if (data) {
@@ -88,7 +93,7 @@ function ArtistProfile() {
 
           <Grid container justify="center" spacing={2}>
             <Grid item md={6}>
-              <img src={currentArtist.avatar} />
+              <img alt="artist" src={currentArtist.avatar} />
             </Grid>
 
             <Grid item md={6}>
@@ -115,6 +120,7 @@ function ArtistProfile() {
           <Grid container justify="center">
             <h1>COMMENT FEED</h1>
           </Grid>
+          <SongListByArtist />
         </div>
       ) : null}
       {loading ? <img src={spinner} alt="loading" /> : null}
