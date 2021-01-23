@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { idbPromise } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
 import { useQuery } from "@apollo/react-hooks";
-import { useParams } from "react-router-dom";
-import SongListItem from "../SongListItem";
 import SongTableSimple from "../SongTableSimple";
 import { QUERY_SONGS } from "../../utils/queries";
 import { UPDATE_SONGS } from "../../utils/actions";
@@ -11,77 +9,45 @@ import spinner from "../../assets/spinner.gif";
 
 function SongListByArtist() {
   const [state, dispatch] = useStoreContext();
-//   const [currentArtist, setCurrentArtist] = useState({});
-const { currentArtist } = state;
+  const { currentArtist } = state;
 
   console.log("currentArtist", currentArtist);
-//   const { loading, data } = useQuery(QUERY_ARTISTS);
-//   const { artists } = state;
-//   const { id } = useParams();
+  const { loading, data } = useQuery(QUERY_SONGS);
 
-//   useEffect(() => {
-//     // already in global store
-//     if (artists.length) {
-//       setCurrentArtist(artists.find((artist) => artist._id === id));
-//     }
-//     // retrieved from server
-//     else if (data) {
-//       dispatch({
-//         type: UPDATE_ARTISTS,
-//         artists: data.artists,
-//       });
-
-//       data.artists.forEach((artist) => {
-//         idbPromise("artists", "put", artist);
-//       });
-//     }
-//     // get cache from idb
-//     else if (!loading) {
-//       idbPromise("artists", "get").then((indexedArtists) => {
-//         dispatch({
-//           type: UPDATE_ARTISTS,
-//           ARTISTs: indexedArtists,
-//         });
-//       });
-//     }
-//   }, [artists, data, loading, dispatch, id]);
-
-const { loading, data } = useQuery(QUERY_SONGS);
-
-useEffect(() => {
+  useEffect(() => {
     // if there's data to be stored
     if (data) {
       // let's store it in the global state object
       dispatch({
         type: UPDATE_SONGS,
-        songs: data.songs
+        songs: data.songs,
       });
-  
-      // but let's also take each song and save it to IndexedDB using the helper function 
+
+      // but let's also take each song and save it to IndexedDB using the helper function
       data.songs.forEach((song) => {
-        idbPromise('songs', 'put', song);
+        idbPromise("songs", "put", song);
       });
-        // add else if to check if `loading` is undefined in `useQuery()` Hook
-      } else if (!loading) {
-        // since we're offline, get all of the data from the `songs` store
-        idbPromise('songs', 'get').then((songs) => {
-          // use retrieved data to set global state for offline browsing
-          dispatch({
-            type: UPDATE_SONGS,
-            songs: songs
-          });
+      // add else if to check if `loading` is undefined in `useQuery()` Hook
+    } else if (!loading) {
+      // since we're offline, get all of the data from the `songs` store
+      idbPromise("songs", "get").then((songs) => {
+        // use retrieved data to set global state for offline browsing
+        dispatch({
+          type: UPDATE_SONGS,
+          songs: songs,
         });
-      }
-    }, [data, loading, dispatch]);
+      });
+    }
+  }, [data, loading, dispatch]);
 
   function filterSongs() {
-    if (!currentArtist) {
-      return state.songs;
-    }
+    // if (!currentArtist) {
+    //   return state.songs;
+    // }
 
     return state.songs.filter((song) => song.artist === currentArtist);
   }
-  console.log("state.songs", state.songs)
+  // console.log("state.songs", state.songs);
 
   return (
     <div className="my-2">
@@ -98,8 +64,7 @@ useEffect(() => {
               image={song.image}
               price={song.price}
               song_url={song.song_url}
-              // artist={song.artist}
-              // tags={song.tags}
+              tags={song.tags}
             />
           ))}
         </div>

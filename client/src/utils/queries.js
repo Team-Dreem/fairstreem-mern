@@ -17,7 +17,6 @@ export const QUERY_ME = gql`
       orders {
         songs {
           _id
-          title
         }
       }
     }
@@ -25,28 +24,6 @@ export const QUERY_ME = gql`
 `;
 
 export const QUERY_SONGS_BY_GENRE = gql`
-  query song($genre: ID) {
-    songs(genre: $genre) {
-      _id
-      title
-      artist
-      description
-      image
-      price
-      genre {
-        _id
-        name
-      }
-      tags {
-        name
-      }
-      song_url
-      s3_object_key
-    }
-  }
-`;
-
-export const QUERY_SONGS = gql`
   query getSongs($genre: ID) {
     songs(genre: $genre) {
       _id
@@ -58,20 +35,30 @@ export const QUERY_SONGS = gql`
       genre {
         _id
       }
+      tags {
+        tag
+      }
+      song_url
     }
   }
 `;
 
-export const QUERY_ALL_SONGS = gql`
+export const QUERY_SONGS = gql`
   {
     songs {
       _id
       title
+      artist
       description
+      image
       price
       genre {
-        name
+        _id
       }
+      tags {
+        tag
+      }
+      song_url
     }
   }
 `;
@@ -141,8 +128,8 @@ query artist($artistName: String){
   artist(artistName: $artistName){
     avatar
     songs{
-      title
-      
+      _id  
+      title 
     }
   }
 }

@@ -31,21 +31,24 @@ const resolvers = {
     genres: async () => {
       return await Genre.find();
     },
-    songs: async (parent, { genre, title }) => {
-      const params = {};
-
-      if (genre) {
-        params.genre = genre;
-      }
-
-      if (title) {
-        params.title = {
-          $regex: title,
-        };
-      }
-
-      return await Song.find(params).populate("genre");
+    songs: async () => {
+      return await Song.find();
     },
+    // songs: async (parent, { genre, title }) => {
+    //   const params = {};
+
+    //   if (genre) {
+    //     params.genre = genre;
+    //   }
+
+    //   if (title) {
+    //     params.title = {
+    //       $regex: title,
+    //     };
+    //   }
+
+    //   return await Song.find(params).populate("genre");
+    // },
     song: async (parent, { _id }) => {
       return await Song.findById(_id).populate("genre");
     },

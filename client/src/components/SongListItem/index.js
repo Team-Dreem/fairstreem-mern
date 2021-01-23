@@ -12,7 +12,7 @@ import { UPDATE_SONGS } from "../../utils/actions";
 function SongListItem(item) {
   const [state, dispatch] = useStoreContext();
 
-  const { image, title, _id, price, artist, description, song_url } = item;
+  const { image, title, _id, price, artist, description, tags, song_url } = item;
 
   const { currentArtist } = state;
 

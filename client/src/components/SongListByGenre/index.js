@@ -65,8 +65,8 @@ function filterSongs() {
                   description={song.description}
                   image={song.image}
                   price={song.price}
-                  // genre={song.genre}
-                  // tags={song.tags}
+                  song_url={song.song_url}
+                  tags={song.tags}
                 />
             ))}
         </div>

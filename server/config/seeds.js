@@ -88,9 +88,7 @@ db.once("open", async () => {
       price: 0.99,
       genre: genres[0]._id,
       tags: "indie",
-      song_url: "empty",
-      s3_object_key: "empty",
-      filePath: "fake_url",
+      song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611278736518.mp3",
       likes: 6,
     },
     {
@@ -104,8 +102,6 @@ db.once("open", async () => {
       genre: genres[2]._id,
       tags: "outlaw",
       song_url: "empty",
-      s3_object_key: "empty",
-      filePath: "fake_url",
       likes: 6,
     },
     {
@@ -119,8 +115,6 @@ db.once("open", async () => {
       genre: genres[2]._id,
       tags: "outlaw",
       song_url: "empty",
-      s3_object_key: "empty",
-      filePath: "fake_url",
       likes: 6,
     },
   ]);
@@ -219,9 +213,7 @@ db.once("open", async () => {
     const price = faker.commerce.price();
     const genre = genres[Math.floor(Math.random() * genres.length)]._id;
     const tags = faker.lorem.word();
-    const song_url = faker.internet.url();
-    const s3_object_key = faker.internet.password();
-    const filePath = faker.internet.url();
+    const song_url = "https://fairstreem.s3.us-east-2.amazonaws.com/1611278736518.mp3";
     const likes = faker.random.number(Math.round(Math.random() * 20) + 1);
 
     // songData.push({ title, artist, description, image, price, genre, tags, song_url, s3_object_key });
@@ -235,8 +227,6 @@ db.once("open", async () => {
       genre,
       tags,
       song_url,
-      s3_object_key,
-      filePath,
       likes
     });
 

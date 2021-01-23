@@ -17,8 +17,6 @@ const typeDefs = gql`
     genre: Genre
     tags: [String]
     song_url: String
-    s3_object_key: String
-    filePath: String!
     likes: Int!
   }
 
