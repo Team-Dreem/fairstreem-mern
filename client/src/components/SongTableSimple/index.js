@@ -28,7 +28,7 @@ function SongTableSimple() {
   const [state, dispatch] = useStoreContext();
 
   const { currentArtist } = state;
-  
+
   //use when data is received
   const { loading, data } = useQuery(QUERY_SONGS);
 console.log("data", data);
@@ -152,7 +152,7 @@ console.log("data", data);
         </Table>
       </TableContainer>
       {/* <h2>Songs Sent to SongCard:</h2> */}
-      <h2>{currentArtist.artistName}'s Songs':</h2>
+      <h2>{currentArtist.artistName}'s Songs:</h2>
       {state.songs.length ? (
         <div className="flex-row">
           {filterSongs().map((song) => (
