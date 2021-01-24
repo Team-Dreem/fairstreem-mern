@@ -9,7 +9,7 @@ import "./style.css";
 function SongItem(item) {
   const [state, dispatch] = useStoreContext();
 
-  const { image, title, _id, price, artist, song_url } = item;
+  const { image, title, _id, price, artistId, song_url } = item;
 
   const { cart } = state;
 
@@ -48,7 +48,7 @@ function SongItem(item) {
       </audio>
       <div>
         <div>
-          by {artist} 
+          by {state.currentArtist.artistName} 
         </div>
         <span>${price}</span>
       </div>

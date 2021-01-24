@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div className="container">
-      <Link to="/artist/600b1de66ea21cf63a4db76d">Jeff's Artist Page</Link>
+      <Link to="/artists/Jeff%20Johnston/600b1de66ea21cf63a4db76d">Jeff's Artist Page</Link>
       <GenreMenu />
       <SongListByGenre />
       <Cart />

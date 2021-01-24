@@ -8,7 +8,7 @@ const songSchema = new Schema({
     required: true,
     trim: true,
   },
-  artist: {
+  artistId: {
     type: Schema.Types.ObjectId,
     ref: 'Artist',
     required: true,

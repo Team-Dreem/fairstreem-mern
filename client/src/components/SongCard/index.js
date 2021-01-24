@@ -1,4 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useStoreContext } from "../../utils/GlobalState";
+import { useQuery } from "@apollo/react-hooks";
+import { QUERY_SONGS } from "../../utils/queries";
+import { UPDATE_SONGS } from "../../utils/actions";
+import { idbPromise } from "../../utils/helpers";
+import spinner from "../../assets/spinner.gif";
+
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -10,7 +17,6 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import Button from "@material-ui/core/Button";
 
-import { useStoreContext } from "../../utils/GlobalState";
 import { QUERY_ARTISTS } from "../../utils/queries";
 import { UPDATE_ARTISTS, UPDATE_CURRENT_ARTIST } from "../../utils/actions";
 
@@ -46,19 +52,55 @@ const Styles = makeStyles((theme) => ({
   },
 }));
 
-const SongCard = ({ _id, title, artist, description, image, price, song_url, tags = '' }) => {
+const SongCard = () => {
   const [state, dispatch] = useStoreContext();
+const { currentArtist } = state;
 
-  // const { image, title, _id, price, artist, tags, song_url } = props;
+console.log("currentArtist", currentArtist);
+const { loading, data } = useQuery(QUERY_SONGS);
+
+useEffect(() => {
+  // if there's data to be stored
+  if (data) {
+    // let's store it in the global state object
+    dispatch({
+      type: UPDATE_SONGS,
+      songs: data.songs,
+    });
+
+    // but let's also take each song and save it to IndexedDB using the helper function
+    data.songs.forEach((song) => {
+      idbPromise("songs", "put", song);
+    });
+    // add else if to check if `loading` is undefined in `useQuery()` Hook
+  } else if (!loading) {
+    // since we're offline, get all of the data from the `songs` store
+    idbPromise("songs", "get").then((songs) => {
+      // use retrieved data to set global state for offline browsing
+      dispatch({
+        type: UPDATE_SONGS,
+        songs: songs,
+      });
+    });
+  }
+}, [data, loading, dispatch]);
+
+function filterSongs() {
+  return state.songs.filter((song) => song.artistId === currentArtist._id);
+}
+console.log("filterSongs", filterSongs());
+console.log("currenArtist._id", currentArtist._id);
+
+  // const { image, title, _id, price, artistId, tags, song_url } = props;
   console.log("SongCardArtist", state.currentArtist);
-  console.log("title", title);
-  console.log("image", image);
-  console.log("_id", _id);
-  console.log("price", price);
-  console.log("artist", artist);
-  console.log("description", description);
-  console.log("song_url", song_url);
-  console.log("tags", tags);
+  // console.log("title", title);
+  // console.log("image", image);
+  // console.log("_id", _id);
+  // console.log("price", price);
+  // console.log("artistId", artistId);
+  // console.log("description", description);
+  // console.log("song_url", song_url);
+  // console.log("tags", tags);
 
   const theme = useTheme();
   const classes = Styles();
@@ -69,10 +111,10 @@ const SongCard = ({ _id, title, artist, description, image, price, song_url, tag
         <div className={classes.details}>
           <CardContent className={classes.content}>
             <Typography component="h5" variant="h5">
-              {state.currentArtist.artistName}
+              {title}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              {title}
+              Title: {title}
             </Typography>
           </CardContent>
           <div className={classes.controls}>

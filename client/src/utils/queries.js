@@ -106,6 +106,7 @@ export const QUERY_ARTISTS = gql`
       _id
       avatar
       artistName
+      bio
       email
       password
       songs {

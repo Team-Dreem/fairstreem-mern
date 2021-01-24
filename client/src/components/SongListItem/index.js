@@ -12,9 +12,10 @@ import { UPDATE_SONGS } from "../../utils/actions";
 function SongListItem(item) {
   const [state, dispatch] = useStoreContext();
 
-  const { image, title, _id, price, artist, description, tags, song_url } = item;
+  const { image, title, _id, price, artistId, description, tags, song_url } = item;
 
   const { currentArtist } = state;
+  
 
   const { loading, data } = useQuery(QUERY_SONGS);
 
@@ -49,7 +50,7 @@ function SongListItem(item) {
       return state.songs;
     }
 
-    return state.songs.filter((song) => song.artist._id === currentArtist);
+    return state.songs.filter((song) => song.artistId === currentArtist._id);
   }
   return (
     <div className="card px-1 py-1">
@@ -61,7 +62,7 @@ function SongListItem(item) {
         <source src={song_url} type="audio/mp3" />
       </audio>
       <div>
-        <div>by {artist}</div>
+        <div>by {currentArtist.artistName}</div>
         <span>${price}</span>
       </div>
       <div>{description}</div>

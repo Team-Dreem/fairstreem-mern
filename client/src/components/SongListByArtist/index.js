@@ -3,6 +3,7 @@ import { idbPromise } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
 import { useQuery } from "@apollo/react-hooks";
 import SongTableSimple from "../SongTableSimple";
+import SongCard from "../SongCard";
 import { QUERY_SONGS } from "../../utils/queries";
 import { UPDATE_SONGS } from "../../utils/actions";
 import spinner from "../../assets/spinner.gif";
@@ -47,7 +48,7 @@ function SongListByArtist() {
   }, [data, loading, dispatch]);
 
   function filterSongs() {
-    return state.songs.filter((song) => song.artist === currentArtist._id);
+    return state.songs.filter((song) => song.artistId === currentArtist._id);
   }
   console.log("filterSongs", filterSongs());
   console.log("currenArtist._id", currentArtist._id);
@@ -58,11 +59,11 @@ function SongListByArtist() {
       {state.songs.length ? (
         <div className="flex-row">
           {filterSongs().map((song) => (
-            <SongTableSimple
+            <SongCard
               key={song._id}
               _id={song._id}
               title={song.title}
-              artist={song.artist}
+              artistId={song.artistId}
               description={song.description}
               image={song.image}
               price={song.price}

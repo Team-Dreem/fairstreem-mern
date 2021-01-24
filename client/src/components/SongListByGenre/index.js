@@ -61,7 +61,7 @@ function filterSongs() {
                   key= {song._id}
                   _id={song._id}
                   title={song.title}
-                  artist={song.artist}
+                  artistId={song.artistId}
                   description={song.description}
                   image={song.image}
                   price={song.price}

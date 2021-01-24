@@ -10,7 +10,7 @@ const typeDefs = gql`
   type Song {
     _id: ID
     title: String
-    artist: String
+    artistId: String
     description: String
     image: String
     price: Float
@@ -46,6 +46,7 @@ const typeDefs = gql`
     _id: ID
     avatar: String
     artistName: String!
+    bio: String
     email: String
     password: String
     songs: [Song]

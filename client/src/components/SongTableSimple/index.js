@@ -29,7 +29,7 @@ function SongTableSimple(props) {
     title,
     _id,
     price,
-    artist,
+    artistId,
     description,
     tags,
     song_url,
@@ -41,7 +41,7 @@ function SongTableSimple(props) {
   const { loading, data } = useQuery(QUERY_SONGS);
 
   const artistSongs = state.songs.filter(
-    (song) => song.artist === currentArtist._id
+    (song) => song.artistId === currentArtist._id
   );
 
   console.log("artistSongs", artistSongs);
@@ -56,7 +56,7 @@ function SongTableSimple(props) {
   // console.log("image", image);
   // console.log("_id", _id);
   // console.log("price", price);
-  // console.log("artist", artist);
+  // console.log("artistId", artistId);
   // console.log("description", description);
   // console.log("song_url", song_url);
   // console.log("tags", tags);
@@ -99,7 +99,7 @@ function SongTableSimple(props) {
   //   console.log(rows);
 
   function filterSongs() {
-    return state.songs.filter((song) => song.artist === currentArtist);
+    return state.songs.filter((song) => song.artistId === currentArtist._id);
   }
 
   return (
@@ -139,7 +139,7 @@ function SongTableSimple(props) {
               key={song._id}
               _id={song._id}
               title={song.title}
-              artist={song.artist}
+              artistId={song.artistId}
               description={song.description}
               image={song.image}
               price={song.price}

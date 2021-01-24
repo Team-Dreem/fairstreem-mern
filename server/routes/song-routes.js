@@ -51,7 +51,7 @@ router.post('api/song-upload', (req, res) => {
 
         Song.create({
             title: req.body.title,
-            artist: req.body.artist,
+            artistId: req.body.artistId,
             description: req.body.description,
             image: req.body.image,
             price: req.body.price,
