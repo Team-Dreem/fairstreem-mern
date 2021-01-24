@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { QUERY_SONGS } from "../../utils/queries";
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,32 +24,65 @@ const useStyles = makeStyles({
 
 function SongTableSimple(props) {
   const [state, dispatch] = useStoreContext();
-  const { image, title, _id, price, artist, description, tags, song_url } = props;
-  //use when data is received
-  const { loading, data: songData } = useQuery(QUERY_SONGS);
+  const {
+    image,
+    title,
+    _id,
+    price,
+    artist,
+    description,
+    tags,
+    song_url,
+  } = props;
 
+  // const [currentSong, setCurrentSong] = useState({});
   const { currentArtist } = state;
 
-  const artistSongs = songData?.songs || [];
+  //use when data is received
+  const { loading, data } = useQuery(QUERY_SONGS);
+
+  // useEffect(() => {
+  //   if (data && !currentSong) {
+  //     dispatch({
+  //       type: UPDATE_SONGS,
+  //       songs: data.songs,
+  //     });
+  //   } else if (currentSong) {
+  //     dispatch({
+  //       type: UPDATE_CURRENT_SONG,
+  //       currentSong,
+  //     });
+  //   }
+
+  //   return () => {
+  //     dispatch({
+  //       type: UPDATE_CURRENT_SONG,
+  //       currentSong: {},
+  //     });
+  //   };
+  // }, [loading, currentSong, dispatch, data]);
+
+  const artistSongs = state.songs.filter(
+    (song) => song.artist === currentArtist._id
+  );
+
+  console.log("artistSongs", artistSongs);
 
   // if (!artistSongs?.length) {
   //   return <h3>There are no songs for this artist!</h3>;
   // }
 
   const addToRow = () => {
-    state.songs.forEach(song => {
-        if (song.artist === artist) {
-            console.log("ArraySong", song)
-            artistSongs.push(song)
-            console.log("songs", artistSongs)
-        };
-   
+    state.songs.forEach((song) => {
+      if (song.artist === artist) {
+        console.log("ArraySong", song);
+        artistSongs.push(song);
+        console.log("songs", artistSongs);
+      }
     });
     // const songItem = currentArtist.find((song) => song.artist === _id);
     // console.log("songItem", songItem);
   };
-
- 
 
   const classes = useStyles();
 
@@ -89,17 +122,17 @@ function SongTableSimple(props) {
 
   console.log("rows", rows);
 
-//   const rows = item.map((song) => {
-//     return createData(
-//       <Button>
-//         <PlayArrowIcon onClick={playClick}></PlayArrowIcon>
-//       </Button>,
-//       song.title,
-//       1,
-//       2,
-//       <Button onClick={buyClick}>Buy</Button>
-//     );
-//   });
+  //   const rows = item.map((song) => {
+  //     return createData(
+  //       <Button>
+  //         <PlayArrowIcon onClick={playClick}></PlayArrowIcon>
+  //       </Button>,
+  //       song.title,
+  //       1,
+  //       2,
+  //       <Button onClick={buyClick}>Buy</Button>
+  //     );
+  //   });
 
   //   console.log(rows);
 
@@ -108,7 +141,7 @@ function SongTableSimple(props) {
   }
 
   return (
-<div>
+    <div>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead align="right">
@@ -136,7 +169,7 @@ function SongTableSimple(props) {
           </TableBody>
         </Table>
       </TableContainer>
-      <h2>Songs:</h2>
+      <h2>Songs Sent to SongCard:</h2>
       {state.songs.length ? (
         <div className="flex-row">
           {filterSongs().map((song) => (
@@ -157,7 +190,7 @@ function SongTableSimple(props) {
         <h3>You haven't added any songs yet!</h3>
       )}
       {loading ? <img src={spinner} alt="loading" /> : null}
-</div>
+    </div>
   );
 }
 

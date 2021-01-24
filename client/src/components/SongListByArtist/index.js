@@ -50,10 +50,11 @@ function SongListByArtist() {
     return state.songs.filter((song) => song.artist === currentArtist._id);
   }
   console.log("filterSongs", filterSongs());
+  console.log("currenArtist._id", currentArtist._id);
 
   return (
     <div className="my-2">
-      <h2>THIS IS JEFF'S COMPONENT:</h2>
+      <h2>Sent By Jeff To SongTableSimple:</h2>
       {state.songs.length ? (
         <div className="flex-row">
           {filterSongs().map((song) => (
