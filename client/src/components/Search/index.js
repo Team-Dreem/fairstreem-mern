@@ -5,6 +5,7 @@ import { QUERY_SEARCH } from "../../utils/queries";
 import { Grid } from "@material-ui/core";
 import SearchCard from "../SearchCard";
 import { makeStyles } from "@material-ui/core/styles";
+import GenreMenu from "../GenreMenu";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -45,6 +46,7 @@ function Search () {
           onCancelSearch={() => setSearchTerm(undefined)}
           />
         </div>
+        <GenreMenu />
 
         <div className={classes.root + ' grid'}>
        <Grid container spacing={2}>

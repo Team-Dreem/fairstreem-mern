@@ -5,7 +5,7 @@ $headerHeight: 60px;
   --secondary: #F3A847;
   --tertiary: #B12704;
   --light: #fafafa;
-  --dark: rgb(104, 104, 104);
+  --dark: #1b1b1b;
   --error: rgb(228, 46, 1);
   --backgroundColor: #fafafa;
   --heroGradient: linear-gradient(
@@ -164,11 +164,13 @@ nav {
   width: 50%;
   text-align: center;
 }
+/* Hero End */
 
+// Search Start
 .search-bar {
   margin: auto;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 100px;
+  padding-bottom: 10px;
   width: 50%;
 }
 
@@ -176,7 +178,14 @@ nav {
   border: none;
   box-shadow: none !important;
 }
-/* Hero End */
+
+.genre-menu {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  padding-bottom: 50px;
+}
+// Search end
 
 // Grid start
 .grid {
@@ -190,7 +199,7 @@ nav {
     white-space: nowrap;
   }
 }
-
+// Grid End
 
 
 h1,
