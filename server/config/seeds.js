@@ -8,6 +8,14 @@ db.once("open", async () => {
   await Genre.deleteMany();
   await Song.deleteMany();
   
+  await Artist.create({
+    avatar: "../../public/images/default.png",
+    artistName: "test-Artist",
+    email: "artist@artist.com",
+    password: "12345",
+    songs: ["600a28d52e97ee7ae2cf63a5"],
+    followers: [],
+  });
 
   const genres = await Genre.insertMany([
     { name: "Rock/Alternative" },

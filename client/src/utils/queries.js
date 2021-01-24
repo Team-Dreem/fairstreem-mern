@@ -55,6 +55,7 @@ export const QUERY_SONGS = gql`
       description
       image
       price
+      song_url
       genre {
         _id
       }
@@ -69,6 +70,7 @@ export const QUERY_ALL_SONGS = gql`
       title
       description
       price
+      song_url
       genre {
         name
       }

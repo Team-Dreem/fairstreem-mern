@@ -30,7 +30,6 @@ const typeDefs = gql`
     tags: [String]
     song_url: String
     s3_object_key: String
-    filePath: String!
     likes: Int!
   }
 

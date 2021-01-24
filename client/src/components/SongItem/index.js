@@ -10,7 +10,8 @@ function SongItem(item) {
   const [state, dispatch] = useStoreContext();
 
   const { image, title, _id, price, artist, song_url } = item;
-
+  // console.log("song_url:", song_url);
+  // console.log("title:", title);
   const { cart } = state;
 
   const addToCart = () => {
@@ -44,7 +45,7 @@ function SongItem(item) {
         <p>{title}</p>
       </Link>
       <audio className="audio" controls>
-        <source src={song_url} type="audio/mp3" />
+        <source src={song_url} type="audio/mpeg" />
       </audio>
       <div>
         <div>
