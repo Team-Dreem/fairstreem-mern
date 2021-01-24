@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function SongList() {
+function SongListByGenre() {
 const [state, dispatch] = useStoreContext();
 
 const { currentGenre } = state;
@@ -55,8 +55,9 @@ function filterSongs() {
     return state.songs;
   }
 
-  return state.songs.filter(song => song.genre._id === currentGenre);
+  return state.songs.filter(song => song.genre._id === currentGenre._id);
 }
+console.log("currentGenre", currentGenre);
 
   return (
     <div className={classes.root + ' grid'}>
@@ -81,7 +82,7 @@ function filterSongs() {
   );
 }
 
-export default SongList;
+export default SongListByGenre;
 
 // Again, we immediately execute the useStoreContext() function to retrieve the current global state object and the dipatch() method to update state. We then destructure the currentGenre data out of the state object so we can use it in the filterSongs() function.
 

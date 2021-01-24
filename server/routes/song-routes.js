@@ -51,14 +51,14 @@ router.post('api/song-upload', (req, res) => {
 
         Song.create({
             title: req.body.title,
-            artist: req.body.artist,
+            artistId: req.body.artistId,
             description: req.body.description,
             image: req.body.image,
             price: req.body.price,
             genre: req.body.genre,
             tags: req.body.tags,
             song_url: data.Location,
-            s3_object_key: data.Key,
+            // s3_object_key: data.Key,
           })
             .then(dbSongData => res.redirect('/songs/' + req.body._id))
             .catch(err => {

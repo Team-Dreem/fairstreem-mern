@@ -45,7 +45,6 @@ router.post("/song-upload", function (req, res) {
       genre: req.body.genre,
       tags: req.body.tags,
       song_url: req.file.location,
-      s3_object_key: req.file.key,
     })
       // .then((dbSongData) => res.redirect("/songs" + req.body._id))
       .catch((err) => {
@@ -65,6 +64,7 @@ router.post("/song-upload", function (req, res) {
       tags: req.body.tags,
       song_url: req.file.location,
       s3_object_key: req.file.key,
+      // "s3_object_key:": req.file.key, Make sure it was ok to omit this!
     });
   });
 });

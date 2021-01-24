@@ -36,18 +36,44 @@ const resolvers = {
     songs: async (parent, { genre, title }) => {
       const params = {};
 
-      if (genre) {
-        params.genre = genre;
+      if (_id) {
+        params._id = _id;
       }
 
-      if (title) {
-        params.title = {
-          $regex: title,
+      if (artistName) {
+        params.artistName= {
+          $regex: artistName,
         };
       }
 
-      return await Song.find(params).populate("genre");
+      return await Artist.find(params).populate("Artist");
     },
+    //find one artist
+    // artist: async (parent, {artistName})=>{
+    //   return await Artist.findOne({artistName})
+    //   // .populate('songs')
+    // },
+    genres: async () => {
+      return await Genre.find();
+    },
+    songs: async () => {
+      return await Song.find();
+    },
+    // songs: async (parent, { genre, title }) => {
+    //   const params = {};
+
+    //   if (genre) {
+    //     params.genre = genre;
+    //   }
+
+    //   if (title) {
+    //     params.title = {
+    //       $regex: title,
+    //     };
+    //   }
+
+    //   return await Song.find(params).populate("genre");
+    // },
     song: async (parent, { _id }) => {
       return await Song.findById(_id).populate("genre");
     },
