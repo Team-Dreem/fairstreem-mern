@@ -7,6 +7,7 @@ import {
   UPDATE_CURRENT_GENRE,
 } from "../../utils/actions";
 import { QUERY_GENRES } from "../../utils/queries";
+import { Button, ButtonGroup } from "@material-ui/core";
 
 // function GenreMenu({ setGenre }) {
 function GenreMenu() {
@@ -54,19 +55,17 @@ function GenreMenu() {
   };
 
   return (
-    <div>
-      <h2>Choose a Genre:</h2>
+    <div className="genre-menu">
+      <ButtonGroup variant="text" aria-label="text primary button group">
       {genres.map((item) => (
-        <button
-          key={item._id}
-          onClick={() => {
-            // setGenre(item._id);
-            handleClick(item._id);
-          }}
-        >
-          {item.name}
-        </button>
+          <Button key={item._id}
+            onClick={() => {
+              handleClick(item._id);
+            }}>
+            {item.name}
+          </Button>
       ))}
+      </ButtonGroup>
     </div>
   );
 }

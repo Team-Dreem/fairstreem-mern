@@ -74,6 +74,7 @@ const typeDefs = gql`
 
   type Query {
     artists: [Artist]
+    search(term: String!): [Artist]
     genres: [Genre]
     songs(genre: ID, name: String): [Song]
     song(_id: ID!): Song

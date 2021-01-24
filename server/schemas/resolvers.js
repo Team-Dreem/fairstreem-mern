@@ -21,7 +21,14 @@ const resolvers = {
     //   throw new AuthenticationError("Not logged in");
     // },
     artists: async () => {
-      return Artist.find().select("-__v -password");
+      return Artist.find()
+        .select("-__v -password");
+    },
+    search: async (parent, { term }, context) => {
+      return Artist.find({
+          artistName: new RegExp(`.*${term}.*`, 'i')
+        })
+        .select("-__v -password");
     },
     genres: async () => {
       return await Genre.find();
