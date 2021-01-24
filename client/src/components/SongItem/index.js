@@ -9,7 +9,7 @@ import "./style.css";
 function SongItem(item) {
   const [state, dispatch] = useStoreContext();
 
-  const { image, title, _id, price, artistId, song_url } = item;
+  const { image, title, _id, price, song_url } = item;
 
   const { cart } = state;
 

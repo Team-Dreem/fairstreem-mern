@@ -19,6 +19,8 @@ function GenreMenu() {
   //Now when we use this component, we immediately call upon the useStoreContext() Hook to retrieve the current state from the global state object and the dispatch() method to update state. Because we only need the genres array out of our global state, we simply destructure it out of state so we can use it to provide to our returning JSX.
   const { loading, data: genreData } = useQuery(QUERY_GENRES);
 
+  
+
   useEffect(() => {
     // if genreData exists or has changed from the response of useQuery, then run dispatch()
     if (genreData) {
@@ -38,6 +40,13 @@ function GenreMenu() {
         });
       });
     }
+
+    // return () => {
+    //   dispatch({
+    //     type: UPDATE_CURRENT_GENRE,
+    //     currentGenre: {},
+    //   });
+    // };
   }, [genreData, loading, dispatch]);
 
   // Now when this component loads and the response from the useQuery() Hook returns, the useEffect() Hook notices that genreData is not undefined anymore and runs the dispatch() function, setting our genre data to the global state!
@@ -46,10 +55,10 @@ function GenreMenu() {
 
   // But the beauty of the useEffect() Hook is that it not only runs on component load, but also when some form of state changes in that component. So when useQuery() finishes, and we have data in genreData, the useEffect() Hook runs again and notices that genreData exists! Because of that, it does its job and executes the dispatch() function.
 
-  const handleClick = (id) => {
+  const handleClick = (currentGenreObject) => {
     dispatch({
       type: UPDATE_CURRENT_GENRE,
-      currentGenre: id,
+      currentGenre: currentGenreObject,
     });
   };
 
@@ -61,7 +70,7 @@ function GenreMenu() {
           key={item._id}
           onClick={() => {
             // setGenre(item._id);
-            handleClick(item._id);
+            handleClick({id: item._id});
           }}
         >
           {item.name}

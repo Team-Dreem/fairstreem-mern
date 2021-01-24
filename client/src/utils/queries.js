@@ -46,7 +46,7 @@ export const QUERY_SONGS = gql`
     songs {
       _id
       title
-      artist
+      artistId
       description
       image
       price

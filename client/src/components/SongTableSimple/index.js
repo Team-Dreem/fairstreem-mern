@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { idbPromise } from "../../utils/helpers";
+import { useStoreContext } from "../../utils/GlobalState";
 import { useQuery } from "@apollo/react-hooks";
+import SongCard from "../SongCard";
 import { QUERY_SONGS } from "../../utils/queries";
+import { UPDATE_SONGS } from "../../utils/actions";
+import spinner from "../../assets/spinner.gif";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,10 +17,6 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import Button from "@material-ui/core/Button";
-import spinner from "../../assets/spinner.gif";
-
-import { useStoreContext } from "../../utils/GlobalState";
-import SongCard from "../SongCard";
 
 const useStyles = makeStyles({
   table: {
@@ -22,23 +24,55 @@ const useStyles = makeStyles({
   },
 });
 
-function SongTableSimple(props) {
-  const [state] = useStoreContext();
-  const {
-    image,
-    title,
-    _id,
-    price,
-    artistId,
-    description,
-    tags,
-    song_url,
-  } = props;
+function SongTableSimple() {
+  const [state, dispatch] = useStoreContext();
+  // const {
+  //   image,
+  //   title,
+  //   _id,
+  //   price,
+  //   artistId,
+  //   description,
+  //   tags,
+  //   song_url,
+  // } = props;
 
   const { currentArtist } = state;
 
   //use when data is received
   const { loading, data } = useQuery(QUERY_SONGS);
+console.log("data", data);
+  useEffect(() => {
+    // if there's data to be stored
+    if (data) {
+      // let's store it in the global state object
+      dispatch({
+        type: UPDATE_SONGS,
+        songs: data.songs,
+      });
+
+      // but let's also take each song and save it to IndexedDB using the helper function
+      data.songs.forEach((song) => {
+        idbPromise("songs", "put", song);
+      });
+      // add else if to check if `loading` is undefined in `useQuery()` Hook
+    } else if (!loading) {
+      // since we're offline, get all of the data from the `songs` store
+      idbPromise("songs", "get").then((songs) => {
+        // use retrieved data to set global state for offline browsing
+        dispatch({
+          type: UPDATE_SONGS,
+          songs: songs,
+        });
+      });
+    }
+  }, [data, loading, dispatch]);
+
+  function filterSongs() {
+    return state.songs.filter((song) => song.artistId === currentArtist._id);
+  }
+  console.log("filterSongs", filterSongs());
+  console.log("currenArtist._id", currentArtist._id);
 
   const artistSongs = state.songs.filter(
     (song) => song.artistId === currentArtist._id
@@ -98,10 +132,6 @@ function SongTableSimple(props) {
 
   //   console.log(rows);
 
-  function filterSongs() {
-    return state.songs.filter((song) => song.artistId === currentArtist._id);
-  }
-
   return (
     <div>
       <TableContainer component={Paper}>
@@ -132,6 +162,7 @@ function SongTableSimple(props) {
         </Table>
       </TableContainer>
       {/* <h2>Songs Sent to SongCard:</h2> */}
+      <h2>{currentArtist.artistName}'s Songs':</h2>
       {state.songs.length ? (
         <div className="flex-row">
           {filterSongs().map((song) => (
@@ -149,7 +180,7 @@ function SongTableSimple(props) {
           ))}
         </div>
       ) : (
-        <h3>You haven't added any songs yet!</h3>
+        <h3>{currentArtist.artistName} hasn't added any songs yet!</h3>
       )}
       {loading ? <img src={spinner} alt="loading" /> : null}
     </div>

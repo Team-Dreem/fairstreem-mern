@@ -12,7 +12,6 @@ const StoreProvider = ({ value = [], ...props }) => {
   const [state, dispatch] = useAppReducer({
     genres: [],
     artists: [],
-    users: [],
     songs: [],
     cart: [],
     cartOpen: false,

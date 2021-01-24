@@ -48,8 +48,9 @@ function filterSongs() {
     return state.songs;
   }
 
-  return state.songs.filter(song => song.genre._id === currentGenre);
+  return state.songs.filter(song => song.genre._id === currentGenre._id);
 }
+console.log("currentGenre", currentGenre);
 
   return (
     <div className="my-2">

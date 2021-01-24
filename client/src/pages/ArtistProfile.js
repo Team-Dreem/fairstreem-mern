@@ -56,11 +56,10 @@ function ArtistProfile() {
       dispatch({
         type: UPDATE_CURRENT_ARTIST,
         currentArtist: {},
+        // this clears the currenArist object when leaving page(** this mimics "component unmount" **)
       });
     };
   }, [loading, currentArtist, dispatch, data, artistId]);
-
-  
 
   //   useEffect(() => {
   //     // already in global store
@@ -135,19 +134,18 @@ function ArtistProfile() {
           </Grid>
 
           <Grid container>
-            <SongCard>
-              {" "}
-              <SongTableSimple artist={currentArtist}></SongTableSimple>
-            </SongCard>
+            {/* <SongCard>
+              {" "} */}
+            <SongTableSimple />
+            {/* </SongCard>
             <SongCard></SongCard>
             <SongCard></SongCard>
-            <SongCard></SongCard>
+            <SongCard></SongCard> */}
             {/* <SongTableSimple artist={currentArtist.artistName}></SongTableSimple> */}
           </Grid>
           <Grid container justify="center">
             <h1>COMMENT FEED</h1>
           </Grid>
-          <SongListByArtist />
         </div>
       ) : null}
       {loading ? <img src={spinner} alt="loading" /> : null}
