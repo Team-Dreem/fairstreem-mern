@@ -63,9 +63,8 @@ function filterSongs() {
       <Grid container spacing={2}>
         {state.songs.length ? (
           filterSongs().map(song => (
-              <Grid item sm={3}>
+              <Grid item sm={3} key={song._id}>
                 <SongItem
-                  key= {song._id}
                   _id={song._id}
                   artist={song.artist}
                   image={song.image}

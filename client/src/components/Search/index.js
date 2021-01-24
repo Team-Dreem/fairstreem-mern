@@ -2,31 +2,37 @@ import React, { useState, useEffect } from "react";
 import SearchBar from "material-ui-search-bar";
 import { useApolloClient } from "@apollo/react-hooks";
 import { QUERY_SEARCH } from "../../utils/queries";
-import { Grid } from "@material-ui/core";
-import SearchCard from "../SearchCard";
-import { makeStyles } from "@material-ui/core/styles";
+import SearchResults from "../SearchResults";
 import GenreMenu from "../GenreMenu";
 import SongList from "../SongList";
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1
-    }
-}))
+import { useStoreContext } from '../../utils/GlobalState';
+import { UPDATE_CURRENT_GENRE } from "../../utils/actions";
 
 function Search () {
     const [results, setResults] = useState([]);
     const [searchTerm, setSearchTerm] = useState();
     const apolloClient = useApolloClient();
-    const classes = useStyles();
+    const [state, dispatch] = useStoreContext();
+
+    const { currentGenre } = state;
 
     useEffect(() => {
         if (!searchTerm) {
+            dispatch({
+                type: UPDATE_CURRENT_GENRE,
+                currentGenre: null,
+              });
+              
             setResults([]);
             return;
         }
 
         const timeoutId = setTimeout(() => {
+            dispatch({
+                type: UPDATE_CURRENT_GENRE,
+                currentGenre: null,
+              });
+
             apolloClient
                 .query({ query: QUERY_SEARCH, variables: { term: searchTerm }})
                 .then(results => {
@@ -37,26 +43,20 @@ function Search () {
         return () => {
             clearTimeout(timeoutId);
         };
-    }, [searchTerm, apolloClient]);
+    }, [searchTerm, apolloClient, dispatch]);
 
     return (
         <>
-        <div className="search-bar">
-          <SearchBar
-          onChange={setSearchTerm}
-          onCancelSearch={() => setSearchTerm(undefined)}
-          />
-        </div>
-        <GenreMenu />
-        <SongList />
+            <div className="search-bar">
+                <SearchBar
+                    onChange={setSearchTerm}
+                    onCancelSearch={() => setSearchTerm(undefined)} />
+            </div>
 
-        <div className={classes.root + ' grid'}>
-       <Grid container spacing={2}>
-           { results.map(result => <Grid item sm={3} key={ result._id }>
-               <SearchCard data={result} />
-            </Grid>)}
-       </Grid>
-       </div>
+            <GenreMenu />
+
+            { !searchTerm && currentGenre && <SongList /> }
+            { searchTerm && <SearchResults results={results} /> }
         </>
     )
 };

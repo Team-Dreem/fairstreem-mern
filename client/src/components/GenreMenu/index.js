@@ -60,10 +60,8 @@ function GenreMenu() {
       {genres.map((item) => (
           <Button key={item._id}
             onClick={() => {
-              // setGenre(item._id);
               handleClick(item._id);
-            }}
-            >
+            }}>
             {item.name}
           </Button>
       ))}
