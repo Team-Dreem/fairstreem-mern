@@ -14,6 +14,12 @@ function SongListByArtist() {
   console.log("currentArtist", currentArtist);
   const { loading, data } = useQuery(QUERY_SONGS);
 
+  // const songs = data?.songs || [];
+
+  // if (!songs?.length) {
+  //   return <h3>There are no song in this artist page!</h3>;
+  // }
+
   useEffect(() => {
     // if there's data to be stored
     if (data) {
@@ -41,17 +47,13 @@ function SongListByArtist() {
   }, [data, loading, dispatch]);
 
   function filterSongs() {
-    // if (!currentArtist) {
-    //   return state.songs;
-    // }
-
-    return state.songs.filter((song) => song.artist === currentArtist);
+    return state.songs.filter((song) => song.artist === currentArtist._id);
   }
-  // console.log("state.songs", state.songs);
+  console.log("filterSongs", filterSongs());
 
   return (
     <div className="my-2">
-      <h2>Songs:</h2>
+      <h2>THIS IS JEFF'S COMPONENT:</h2>
       {state.songs.length ? (
         <div className="flex-row">
           {filterSongs().map((song) => (

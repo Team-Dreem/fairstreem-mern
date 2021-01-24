@@ -1,4 +1,6 @@
 import React from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { QUERY_SONGS } from "../../utils/queries";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -9,8 +11,10 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import Button from "@material-ui/core/Button";
+import spinner from "../../assets/spinner.gif";
 
 import { useStoreContext } from "../../utils/GlobalState";
+import SongCard from "../SongCard";
 
 const useStyles = makeStyles({
   table: {
@@ -20,12 +24,17 @@ const useStyles = makeStyles({
 
 function SongTableSimple(props) {
   const [state, dispatch] = useStoreContext();
-  const { image, title, _id, price, artist, tags, song_url } = props;
+  const { image, title, _id, price, artist, description, tags, song_url } = props;
   //use when data is received
+  const { loading, data: songData } = useQuery(QUERY_SONGS);
 
   const { currentArtist } = state;
 
-  const artistSongs = [];
+  const artistSongs = songData?.songs || [];
+
+  // if (!artistSongs?.length) {
+  //   return <h3>There are no songs for this artist!</h3>;
+  // }
 
   const addToRow = () => {
     state.songs.forEach(song => {
@@ -40,6 +49,8 @@ function SongTableSimple(props) {
     // console.log("songItem", songItem);
   };
 
+ 
+
   const classes = useStyles();
 
   function createData(playBtn, name, album, playcount, purchase) {
@@ -51,6 +62,7 @@ function SongTableSimple(props) {
   console.log("_id", _id);
   console.log("price", price);
   console.log("artist", artist);
+  console.log("description", description);
   console.log("song_url", song_url);
   console.log("tags", tags);
 
@@ -75,6 +87,8 @@ function SongTableSimple(props) {
     );
   });
 
+  console.log("rows", rows);
+
 //   const rows = item.map((song) => {
 //     return createData(
 //       <Button>
@@ -89,34 +103,61 @@ function SongTableSimple(props) {
 
   //   console.log(rows);
 
+  function filterSongs() {
+    return state.songs.filter((song) => song.artist === currentArtist);
+  }
+
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead align="right">
-          <TableRow>
-            <TableCell></TableCell>
-            <TableCell align="left">Title</TableCell>
-            <TableCell align="right">Album</TableCell>
-            <TableCell align="right">Playcount</TableCell>
-            <TableCell align="right">Purchase</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              {/* <TableCell component="th" scope="row">
-                                {row.name}
-                            </TableCell> */}
-              <TableCell align="center">{row.playBtn}</TableCell>
-              <TableCell align="left">{row.name}</TableCell>
-              <TableCell align="right">{row.album}</TableCell>
-              <TableCell align="right">{row.playcount}</TableCell>
-              <TableCell align="right">{row.purchase}</TableCell>
+<div>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead align="right">
+            <TableRow>
+              <TableCell></TableCell>
+              <TableCell align="left">Title</TableCell>
+              <TableCell align="right">Album</TableCell>
+              <TableCell align="right">Playcount</TableCell>
+              <TableCell align="right">Purchase</TableCell>
             </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.name}>
+                {/* <TableCell component="th" scope="row">
+                                  {row.name}
+                              </TableCell> */}
+                <TableCell align="center">{row.playBtn}</TableCell>
+                <TableCell align="left">{row.name}</TableCell>
+                <TableCell align="right">{row.album}</TableCell>
+                <TableCell align="right">{row.playcount}</TableCell>
+                <TableCell align="right">{row.purchase}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <h2>Songs:</h2>
+      {state.songs.length ? (
+        <div className="flex-row">
+          {filterSongs().map((song) => (
+            <SongCard
+              key={song._id}
+              _id={song._id}
+              title={song.title}
+              artist={song.artist}
+              description={song.description}
+              image={song.image}
+              price={song.price}
+              song_url={song.song_url}
+              tags={song.tags}
+            />
           ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        </div>
+      ) : (
+        <h3>You haven't added any songs yet!</h3>
+      )}
+      {loading ? <img src={spinner} alt="loading" /> : null}
+</div>
   );
 }
 

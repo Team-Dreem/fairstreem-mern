@@ -49,12 +49,12 @@ export const reducer = (state, action) => {
       case UPDATE_CURRENT_USER:
       return {
         ...state,
-        currentUser: action.currentUser,
+        currentUser: { ...action.currentUser },
       };
       case UPDATE_CURRENT_SONG:
       return {
         ...state,
-        currentSong: action.currentSong,
+        currentSong: { ...action.currentSong },
       };
     case ADD_TO_CART:
       return {

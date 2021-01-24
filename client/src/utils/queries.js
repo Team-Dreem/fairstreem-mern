@@ -42,7 +42,7 @@ export const QUERY_SONGS_BY_GENRE = gql`
 `;
 
 export const QUERY_SONGS = gql`
-  {
+  query songs {
     songs {
       _id
       title
@@ -52,6 +52,7 @@ export const QUERY_SONGS = gql`
       price
       genre {
         _id
+        name
       }
       tags 
       song_url

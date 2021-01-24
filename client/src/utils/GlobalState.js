@@ -19,6 +19,7 @@ const StoreProvider = ({ value = [], ...props }) => {
     currentGenre: {},
     currentArtist: {},
     currentUser: {},
+    currentSong: {},
   });
   // use this to confirm it works!
   return <Provider value={[state, dispatch]} {...props} />;

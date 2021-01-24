@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useStoreContext } from "../utils/GlobalState";
 import { UPDATE_ARTISTS, UPDATE_CURRENT_ARTIST } from "../utils/actions";
 import { QUERY_ARTISTS } from "../utils/queries";
@@ -59,6 +59,8 @@ function ArtistProfile() {
       });
     };
   }, [loading, currentArtist, dispatch, data, artistId]);
+
+  
 
   //   useEffect(() => {
   //     // already in global store
@@ -135,9 +137,7 @@ function ArtistProfile() {
           <Grid container>
             <SongCard>
               {" "}
-              <SongTableSimple
-                artist={currentArtist}
-              ></SongTableSimple>
+              <SongTableSimple artist={currentArtist}></SongTableSimple>
             </SongCard>
             <SongCard></SongCard>
             <SongCard></SongCard>
