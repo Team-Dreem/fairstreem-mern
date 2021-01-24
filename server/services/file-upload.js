@@ -16,7 +16,7 @@ aws.config.update({
 const s3 = new aws.S3();
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'audio/mp3') {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'audio/mp3' || file.mimetype === 'audio/mpeg') {
       cb(null, true)
   } else {
       cb(new Error('Invalid Mime Type, only .jpeg, .png, or .mp3'), false);

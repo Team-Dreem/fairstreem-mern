@@ -1,5 +1,17 @@
 const { gql } = require("apollo-server-express");
 
+// type User {
+//   _id: ID
+//   avatar: String
+//   username: String!
+//   firstName: String
+//   lastName: String
+//   password: String!
+//   email: String
+//   friends: [User]
+//   orders: [Order]
+// }
+
 const typeDefs = gql`
 
   type Genre {
@@ -36,10 +48,9 @@ const typeDefs = gql`
     _id: ID
     avatar: String
     username: String!
-    firstName: String
-    lastName: String
     password: String!
-    email: String
+    email: String!
+    aboutme: String
     friends: [User]
     orders: [Order]
   }
@@ -48,8 +59,11 @@ const typeDefs = gql`
     _id: ID
     avatar: String
     artistName: String!
-    email: String
-    password: String
+    email: String!
+    password: String!
+    genre: String!
+    aboutme: String
+    socialMedia: String
     songs: [Song]
     followers: [User]
   }
@@ -74,10 +88,19 @@ const typeDefs = gql`
   type Mutation {
     addUser(
       username: String!
-      firstName: String
-      lastName: String
       email: String!
       password: String!
+      aboutme: String
+      avatar: String
+    ): Auth
+    addArtist(
+      artistName: String!
+      email: String!
+      password: String!
+      genre: String!
+      aboutme: String
+      socialMedia: String
+      avatar: String
     ): Auth
     addOrder(songs: [ID]!): Order
     updateUser(
@@ -88,6 +111,7 @@ const typeDefs = gql`
       password: String
     ): User
     login(email: String!, password: String!): Auth
+    artistLogin(email: String!, password: String!):Auth
   }
 `;
 

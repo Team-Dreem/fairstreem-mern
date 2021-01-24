@@ -122,6 +122,12 @@ const resolvers = {
 
       return { token, user };
     },
+    addArtist: async (parent, args) => {
+      const artist = await Artist.create(args);
+      const token = signToken(artist);
+
+      return { token, artist };
+    },
     addOrder: async (parent, { songs }, context) => {
       console.log("context.user", context.user);
       console.log("songs in addOrder arg", songs);
@@ -171,6 +177,23 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
+    },
+    artistLogin: async (parent, { email, password }) => {
+      const artist = await Artist.findOne({ email });
+
+      if (!artist) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+
+      const correctPw = await artist.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+
+      const token = signToken(artist);
+
+      return { token, artist };
     },
   },
 };
