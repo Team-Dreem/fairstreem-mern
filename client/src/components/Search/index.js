@@ -6,6 +6,7 @@ import { Grid } from "@material-ui/core";
 import SearchCard from "../SearchCard";
 import { makeStyles } from "@material-ui/core/styles";
 import GenreMenu from "../GenreMenu";
+import SongList from "../SongList";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,6 +48,7 @@ function Search () {
           />
         </div>
         <GenreMenu />
+        <SongList />
 
         <div className={classes.root + ' grid'}>
        <Grid container spacing={2}>
