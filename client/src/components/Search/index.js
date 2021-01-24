@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "material-ui-search-bar";
-import { useLazyQuery } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/react-hooks";
 import { QUERY_SEARCH } from "../../utils/queries";
 import { Grid } from "@material-ui/core";
 import SearchCard from "../SearchCard";
@@ -15,32 +15,27 @@ const useStyles = makeStyles((theme) => ({
 function Search () {
     const [results, setResults] = useState([]);
     const [searchTerm, setSearchTerm] = useState();
-    const [timeoutId, setTimeoutId] = useState();
-    const [search, { loading, data }] = useLazyQuery(QUERY_SEARCH);
+    const apolloClient = useApolloClient();
     const classes = useStyles();
 
     useEffect(() => {
-        clearTimeout(timeoutId);
-
         if (!searchTerm) {
             setResults([]);
             return;
         }
 
-        const id = setTimeout(() => {
-            search({ variables: { term: searchTerm }});
-        }, 200);
+        const timeoutId = setTimeout(() => {
+            apolloClient
+                .query({ query: QUERY_SEARCH, variables: { term: searchTerm }})
+                .then(results => {
+                    setResults(results.data.search);
+                })
+        }, 150);
 
-        setTimeoutId(id);
-    }, [searchTerm]);
-
-    useEffect(() => {
-        if (loading) {
-            return;
-        }
-
-        setResults(data && data.search ? data.search : []);
-    }, [loading, data]);
+        return () => {
+            clearTimeout(timeoutId);
+        };
+    }, [searchTerm, apolloClient]);
 
     return (
         <>
@@ -51,7 +46,7 @@ function Search () {
           />
         </div>
 
-        <div className={classes.root} className="grid">
+        <div className={classes.root + ' grid'}>
        <Grid container spacing={2}>
            { results.map(result => <Grid item sm={3} key={ result._id }>
                <SearchCard data={result} />

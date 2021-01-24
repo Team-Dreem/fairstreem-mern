@@ -27,7 +27,7 @@ function SearchCard({ data }) {
                     image={data.avatar}
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography className="artist-name" gutterBottom variant="h5" component="h2">
                         { data.artistName }
                     </Typography>
                 </CardContent>

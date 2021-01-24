@@ -131,7 +131,8 @@ nav {
 
   &::before {
     content: "";
-    background-image: url("bg.svg");
+    background-image: linear-gradient(to bottom, rgba(#fff, 0) 75%, #fff 100%), url("bg.svg");
+    max-height: 800px;
     position: absolute;
     background-size: cover;
     background-position: center center;
@@ -182,7 +183,15 @@ nav {
   margin: auto;
   width: 80%;
   padding-bottom: 100px;
+
+  .artist-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
+
+
 
 h1,
 h2,
