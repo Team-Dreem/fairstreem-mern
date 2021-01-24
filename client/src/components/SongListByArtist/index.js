@@ -54,7 +54,7 @@ function SongListByArtist() {
 
   return (
     <div className="my-2">
-      <h2>Sent By Jeff To SongTableSimple:</h2>
+      <h2>Sent By Jeff To SongTableSimple from SongListByArtist:</h2>
       {state.songs.length ? (
         <div className="flex-row">
           {filterSongs().map((song) => (

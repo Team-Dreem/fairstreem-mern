@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { QUERY_SONGS } from "../../utils/queries";
 import { makeStyles } from "@material-ui/core/styles";
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 });
 
 function SongTableSimple(props) {
-  const [state, dispatch] = useStoreContext();
+  const [state] = useStoreContext();
   const {
     image,
     title,
@@ -35,32 +35,10 @@ function SongTableSimple(props) {
     song_url,
   } = props;
 
-  // const [currentSong, setCurrentSong] = useState({});
   const { currentArtist } = state;
 
   //use when data is received
   const { loading, data } = useQuery(QUERY_SONGS);
-
-  // useEffect(() => {
-  //   if (data && !currentSong) {
-  //     dispatch({
-  //       type: UPDATE_SONGS,
-  //       songs: data.songs,
-  //     });
-  //   } else if (currentSong) {
-  //     dispatch({
-  //       type: UPDATE_CURRENT_SONG,
-  //       currentSong,
-  //     });
-  //   }
-
-  //   return () => {
-  //     dispatch({
-  //       type: UPDATE_CURRENT_SONG,
-  //       currentSong: {},
-  //     });
-  //   };
-  // }, [loading, currentSong, dispatch, data]);
 
   const artistSongs = state.songs.filter(
     (song) => song.artist === currentArtist._id
@@ -68,36 +46,20 @@ function SongTableSimple(props) {
 
   console.log("artistSongs", artistSongs);
 
-  // if (!artistSongs?.length) {
-  //   return <h3>There are no songs for this artist!</h3>;
-  // }
-
-  const addToRow = () => {
-    state.songs.forEach((song) => {
-      if (song.artist === artist) {
-        console.log("ArraySong", song);
-        artistSongs.push(song);
-        console.log("songs", artistSongs);
-      }
-    });
-    // const songItem = currentArtist.find((song) => song.artist === _id);
-    // console.log("songItem", songItem);
-  };
-
   const classes = useStyles();
 
   function createData(playBtn, name, album, playcount, purchase) {
     return { playBtn, name, album, playcount, purchase };
   }
-  console.log("ST_ARTIST", currentArtist);
-  console.log("title", title);
-  console.log("image", image);
-  console.log("_id", _id);
-  console.log("price", price);
-  console.log("artist", artist);
-  console.log("description", description);
-  console.log("song_url", song_url);
-  console.log("tags", tags);
+  // console.log("SongTableArtist", currentArtist);
+  // console.log("title", title);
+  // console.log("image", image);
+  // console.log("_id", _id);
+  // console.log("price", price);
+  // console.log("artist", artist);
+  // console.log("description", description);
+  // console.log("song_url", song_url);
+  // console.log("tags", tags);
 
   function buyClick() {
     console.log("buy clicked");
@@ -169,7 +131,7 @@ function SongTableSimple(props) {
           </TableBody>
         </Table>
       </TableContainer>
-      <h2>Songs Sent to SongCard:</h2>
+      {/* <h2>Songs Sent to SongCard:</h2> */}
       {state.songs.length ? (
         <div className="flex-row">
           {filterSongs().map((song) => (

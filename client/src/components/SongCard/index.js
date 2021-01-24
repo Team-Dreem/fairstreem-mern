@@ -50,7 +50,7 @@ const SongCard = ({ _id, title, artist, description, image, price, song_url, tag
   const [state, dispatch] = useStoreContext();
 
   // const { image, title, _id, price, artist, tags, song_url } = props;
-
+  console.log("SongCardArtist", state.currentArtist);
   console.log("title", title);
   console.log("image", image);
   console.log("_id", _id);
