@@ -56,10 +56,9 @@ function GenreMenu() {
 
   return (
     <div className="genre-menu">
+      <ButtonGroup variant="text" aria-label="text primary button group">
       {genres.map((item) => (
-        <ButtonGroup variant="text" aria-label="text primary button group">
-          <Button
-            key={item._id}
+          <Button key={item._id}
             onClick={() => {
               // setGenre(item._id);
               handleClick(item._id);
@@ -67,8 +66,8 @@ function GenreMenu() {
             >
             {item.name}
           </Button>
-        </ButtonGroup>
       ))}
+      </ButtonGroup>
     </div>
   );
 }
