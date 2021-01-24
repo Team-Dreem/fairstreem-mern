@@ -5,7 +5,7 @@ import { UPDATE_SONGS } from '../../utils/actions';
 import { useQuery } from '@apollo/react-hooks';
 
 import SongItem from "../SongItem";
-import { QUERY_SONGS } from "../../utils/queries";
+import { QUERY_SONGS, QUERY_SONGS_BY_GENRE } from "../../utils/queries";
 import spinner from "../../assets/spinner.gif"
 
 
@@ -15,7 +15,7 @@ const [state, dispatch] = useStoreContext();
 
 const { currentGenre } = state;
 
-const { loading, data } = useQuery(QUERY_SONGS);
+const { loading, data } = useQuery(QUERY_SONGS_BY_GENRE);
 console.log("song data", data);
 useEffect(() => {
   // if there's data to be stored
@@ -50,7 +50,7 @@ function filterSongs() {
   }
   console.log("filter", state.songs.filter(song => song.genre._id === currentGenre._id));
 
-  return state.songs.filter(song => song.genre._id === currentGenre._id);
+  return state.songs.filter(song => song.genre === currentGenre._id);
 
 }
 console.log("currentGenre", currentGenre);

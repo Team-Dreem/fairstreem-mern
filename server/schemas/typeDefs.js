@@ -63,6 +63,7 @@ const typeDefs = gql`
     artists(_id: ID, artistName: String): [Artist]
     genres: [Genre]
     songs(genre: ID, name: String): [Song]
+    songsByGenre(genre: ID, name: String): [Song]
     song(_id: ID!): Song
     user: User
     users: [User]

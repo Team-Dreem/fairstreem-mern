@@ -28,7 +28,7 @@ export const QUERY_SONGS_BY_GENRE = gql`
     songs(genre: $genre) {
       _id
       title
-      artist
+      artistId
       description
       image
       price
