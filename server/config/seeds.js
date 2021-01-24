@@ -12,9 +12,10 @@ db.once("open", async () => {
     _id: "600b1de66ea21cf63a4db76c",
     avatar: "../../public/images/default.png",
     artistName: "Test",
-    bio: "This is a default bio. Tell your listeners more about yourself!",
+    aboutme: "This is a default bio. Tell your listeners more about yourself!",
     email: "test@artist.com",
     password: "12345",
+    genre: "Test",
     songs: ["600a28d52e97ee7ae2cf63a5"],
     followers: [],
   });
@@ -23,20 +24,22 @@ db.once("open", async () => {
     _id: "600b1de66ea21cf63a4db76d",
     avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611111773027",
     artistName: "Jeff Johnston",
-    bio: "This is a default bio. Tell your listeners more about yourself!",
+    aboutme: "This is a default bio. Tell your listeners more about yourself!",
     email: "jeffjohnston@artist.com",
     password: "12345",
+    genre: "Rock/Alternative",
     songs: ["600b1de76ea21cf63a4db77a"],
     followers: [],
   });
 
   await Artist.create({
   _id: "600b1de66ea21cf63a4db76e",
-  avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611111773027",
+  avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611528845288.png",
   artistName: "Jeff Warren Johnston",
-  bio: "This is a default bio. Tell your listeners more about yourself!",
+  aboutme: "This is a default bio. Tell your listeners more about yourself!",
   email: "jeffwarrenjohnston@artist.com",
   password: "12345",
+  genre: "Country",
   songs: ["600b1de76ea21cf63a4db77b", "600b1de76ea21cf63a4db77c"],
   followers: [],
 });
@@ -44,9 +47,10 @@ db.once("open", async () => {
   await Artist.create({
     avatar: "../../../public/images/default.png",
     artistName: "Feed",
-    bio: "This is a default bio. Tell your listeners more about yourself!",
+    aboutme: "This is a default bio. Tell your listeners more about yourself!",
     email: "feed@artist.com",
     password: "12345",
+    genre: "Country",
     songs: ["600a28d52e97ee7ae2cf63a5"],
     followers: [],
   });
@@ -54,9 +58,10 @@ db.once("open", async () => {
   await Artist.create({
     avatar: "../../public/images/default.png",
     artistName: "Reboot",
-    bio: "This is a default bio. Tell your listeners more about yourself!",
+    aboutme: "This is a default bio. Tell your listeners more about yourself!",
     email: "reboot@artist.com",
     password: "12345",
+    genre: "Country",
     songs: ["600a28d52e97ee7ae2cf63a5"],
     followers: [],
   });
@@ -64,9 +69,10 @@ db.once("open", async () => {
   await Artist.create({
     avatar: "../../public/images/default.png",
     artistName: "Concrete Hat",
-    bio: "This is a default bio. Tell your listeners more about yourself!",
+    aboutme: "This is a default bio. Tell your listeners more about yourself!",
     email: "concrete_hat@artist.com",
     password: "12345",
+    genre: "Country",
     songs: ["600a28d52e97ee7ae2cf63a5"],
     followers: [],
   });

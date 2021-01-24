@@ -22,7 +22,6 @@ const resolvers = {
     // },
     artists: async () => {
       return Artist.find()
-        .select("-__v -password");
     },
     search: async (parent, { term }, context) => {
       return Artist.find({

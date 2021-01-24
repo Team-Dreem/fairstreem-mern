@@ -26,19 +26,9 @@ const useStyles = makeStyles({
 
 function SongTableSimple() {
   const [state, dispatch] = useStoreContext();
-  // const {
-  //   image,
-  //   title,
-  //   _id,
-  //   price,
-  //   artistId,
-  //   description,
-  //   tags,
-  //   song_url,
-  // } = props;
 
   const { currentArtist } = state;
-
+  
   //use when data is received
   const { loading, data } = useQuery(QUERY_SONGS);
 console.log("data", data);

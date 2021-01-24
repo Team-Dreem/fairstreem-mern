@@ -115,15 +115,40 @@ export const QUERY_USER = gql`
 }
 `;
 
+// export const QUERY_ARTISTS = gql`
+//   query getArtists($_id: ID){
+//     artists(_id: $_id) {
+//       _id
+//       avatar
+//       artistName
+//       email
+//       password
+//       genre
+//       aboutme
+//       socialMedia
+//       songs {
+//         _id
+//         title
+//       }
+//       followers {
+//         _id
+//         username
+//       }
+//     }
+//   }
+// `;
+
 export const QUERY_ARTISTS = gql`
-  query getArtists($_id: ID){
-    artists(_id: $_id) {
+  query artists {
+    artists {
       _id
       avatar
       artistName
-      bio
       email
       password
+      genre
+      aboutme
+      socialMedia
       songs {
         _id
         title

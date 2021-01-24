@@ -8,6 +8,7 @@ const artistSchema = new Schema(
     avatar: {
       type: String,
       defaultValue: "../../public/images/default.png",
+      trim: true,
     },
     artistName: {
       type: String,
@@ -15,19 +16,30 @@ const artistSchema = new Schema(
       trim: true,
       unique: true,
     },
-    bio: {
-      type: String,
-      trim: true,
-    },
     email: {
       type: String,
       required: true,
       unique: true,
+      trim: true,
     },
     password: {
       type: String,
       required: true,
       minlength: 5,
+      trim: true,
+    },
+    genre: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    aboutme: {
+      type: String,
+      trim: true,
+    },
+    socialMedia: {
+      type: String,
+      trim: true,
     },
     songs: [
         {

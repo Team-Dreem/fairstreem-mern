@@ -29,10 +29,6 @@ const typeDefs = gql`
     genre: Genre
     tags: [String]
     song_url: String
-<<<<<<< HEAD
-    s3_object_key: String
-=======
->>>>>>> refactor/artist-profile-userview
     likes: Int!
   }
 
