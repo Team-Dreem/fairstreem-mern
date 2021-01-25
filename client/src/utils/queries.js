@@ -9,8 +9,8 @@ export const QUERY_ME = gql`
       firstName
       lastName
       email
-      friendCount
-      friends {
+      followCount
+      follows {
         _id
         username
       }
@@ -50,8 +50,23 @@ export const QUERY_SONGS = gql`
       description
       image
       price
+      song_url
       genre {
         _id
+      }
+    }
+  }
+`;
+
+export const QUERY_ALL_SONGS = gql`
+  {
+    songs {
+      _id
+      title
+      description
+      price
+      song_url
+      genre {
         name
       }
       tags 
@@ -100,15 +115,40 @@ export const QUERY_USER = gql`
 }
 `;
 
+// export const QUERY_ARTISTS = gql`
+//   query getArtists($_id: ID){
+//     artists(_id: $_id) {
+//       _id
+//       avatar
+//       artistName
+//       email
+//       password
+//       genre
+//       bio
+//       socialMedia
+//       songs {
+//         _id
+//         title
+//       }
+//       followers {
+//         _id
+//         username
+//       }
+//     }
+//   }
+// `;
+
 export const QUERY_ARTISTS = gql`
-  query getArtists($_id: ID){
-    artists(_id: $_id) {
+  query artists {
+    artists {
       _id
       avatar
       artistName
-      bio
       email
       password
+      genre
+      bio
+      socialMedia
       songs {
         _id
         title
@@ -121,14 +161,12 @@ export const QUERY_ARTISTS = gql`
   }
 `;
 
-export const QUERY_ONE_ARTIST = gql`
-query artist($artistName: String){
-  artist(artistName: $artistName){
-    avatar
-    songs{
-      _id  
-      title 
+export const QUERY_SEARCH = gql`
+  query Search($term: String!) {
+    search(term: $term) {
+      artistName,
+      avatar,
+      _id
     }
   }
-}
-`
+`;

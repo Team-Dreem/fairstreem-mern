@@ -1,17 +1,17 @@
 import React from "react";
-import SongListByGenre from "../components/SongListByGenre";
-import GenreMenu from "../components/GenreMenu";
-import Cart from "../components/Cart";
-import { Link } from "react-router-dom";
+import Search from "../components/Search";
+
 
 const Home = () => {
   return (
-    <div className="container">
-      <Link to="/artists/Jeff%20Johnston/600b1de66ea21cf63a4db76d">Jeff's Artist Page</Link>
-      <GenreMenu />
-      <SongListByGenre />
-      <Cart />
+    <div className="home-page">
+      <div className="hero">
+        <h1>Listen | Connect | Support</h1>
+        <h3>Listen to new music while directly supporting the artists who create it</h3>
+        <Search />
+      </div>
     </div>
+
   );
 };
 

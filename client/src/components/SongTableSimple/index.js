@@ -26,16 +26,6 @@ const useStyles = makeStyles({
 
 function SongTableSimple() {
   const [state, dispatch] = useStoreContext();
-  // const {
-  //   image,
-  //   title,
-  //   _id,
-  //   price,
-  //   artistId,
-  //   description,
-  //   tags,
-  //   song_url,
-  // } = props;
 
   const { currentArtist } = state;
 
@@ -162,7 +152,7 @@ console.log("data", data);
         </Table>
       </TableContainer>
       {/* <h2>Songs Sent to SongCard:</h2> */}
-      <h2>{currentArtist.artistName}'s Songs':</h2>
+      <h2>{currentArtist.artistName}'s Songs:</h2>
       {state.songs.length ? (
         <div className="flex-row">
           {filterSongs().map((song) => (

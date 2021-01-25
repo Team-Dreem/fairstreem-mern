@@ -1,13 +1,14 @@
 const db = require("./connection");
 const faker = require("faker");
-const { Artist, User, Genre, Song } = require("../models");
+const { Artist, Comment, User, Genre, Song } = require("../models");
 
 db.once("open", async () => {
   await Artist.deleteMany();
   await User.deleteMany();
   await Genre.deleteMany();
   await Song.deleteMany();
-  
+  await Comment.deleteMany();
+
   await Artist.create({
     _id: "600b1de66ea21cf63a4db76c",
     avatar: "../../public/images/default.png",
@@ -15,6 +16,7 @@ db.once("open", async () => {
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "test@artist.com",
     password: "12345",
+    genre: "Test",
     songs: ["600a28d52e97ee7ae2cf63a5"],
     followers: [],
   });
@@ -26,20 +28,22 @@ db.once("open", async () => {
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "jeffjohnston@artist.com",
     password: "12345",
+    genre: "Rock/Alternative",
     songs: ["600b1de76ea21cf63a4db77a"],
     followers: [],
   });
 
   await Artist.create({
-  _id: "600b1de66ea21cf63a4db76e",
-  avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611111773027",
-  artistName: "Jeff Warren Johnston",
-  bio: "This is a default bio. Tell your listeners more about yourself!",
-  email: "jeffwarrenjohnston@artist.com",
-  password: "12345",
-  songs: ["600b1de76ea21cf63a4db77b", "600b1de76ea21cf63a4db77c"],
-  followers: [],
-});
+    _id: "600b1de66ea21cf63a4db76e",
+    avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611528845288.png",
+    artistName: "Jeff Warren Johnston",
+    bio: "This is a default bio. Tell your listeners more about yourself!",
+    email: "jeffwarrenjohnston@artist.com",
+    password: "12345",
+    genre: "Country",
+    songs: ["600b1de76ea21cf63a4db77b", "600b1de76ea21cf63a4db77c"],
+    followers: [],
+  });
 
   await Artist.create({
     avatar: "../../../public/images/default.png",
@@ -47,6 +51,7 @@ db.once("open", async () => {
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "feed@artist.com",
     password: "12345",
+    genre: "Country",
     songs: ["600a28d52e97ee7ae2cf63a5"],
     followers: [],
   });
@@ -57,6 +62,7 @@ db.once("open", async () => {
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "reboot@artist.com",
     password: "12345",
+    genre: "Country",
     songs: ["600a28d52e97ee7ae2cf63a5"],
     followers: [],
   });
@@ -67,20 +73,21 @@ db.once("open", async () => {
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "concrete_hat@artist.com",
     password: "12345",
+    genre: "Country",
     songs: ["600a28d52e97ee7ae2cf63a5"],
     followers: [],
   });
 
   const genres = await Genre.insertMany([
-    { name: "Rock/Alternative" },
-    { name: "R&B" },
-    { name: "Country" },
-    { name: "Hip-hop/Rap" },
-    { name: "Electronic" },
-    { name: "Jazz" },
-    { name: "Blues" },
-    { name: "Classical" },
-    { name: "Other" },
+    { _id: "600dfabaebcba48440047d26", name: "Rock/Alternative" },
+    { _id: "600dfabaebcba48440047d27", name: "R&B" },
+    { _id: "600dfabaebcba48440047d28", name: "Country" },
+    { _id: "600dfabaebcba48440047d29", name: "Hip-hop/Rap" },
+    { _id: "600dfabaebcba48440047d2a", name: "Electronic" },
+    { _id: "600dfabaebcba48440047d2b", name: "Jazz" },
+    { _id: "600dfabaebcba48440047d2c", name: "Blues" },
+    { _id: "600dfabaebcba48440047d2d", name: "Classical" },
+    { _id: "600dfabaebcba48440047d2e", name: "Other" },
   ]);
 
   const songs = await Song.insertMany([
@@ -94,7 +101,8 @@ db.once("open", async () => {
       price: 0.99,
       genre: genres[0]._id,
       tags: "indie",
-      song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611278736518.mp3",
+      song_url:
+        "https://fairstreem.s3.us-east-2.amazonaws.com/1611278736518.mp3",
       likes: 6,
     },
     {
@@ -110,22 +118,23 @@ db.once("open", async () => {
       song_url: "empty",
       likes: 6,
     },
-    {
-      _id: "600b1de76ea21cf63a4db77c",
-      title: "El Toro",
-      artistId: "600b1de66ea21cf63a4db76e",
-      description:
-        "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
-      image: "El_Toro.jpg",
-      price: 0.99,
-      genre: genres[2]._id,
-      tags: "outlaw",
-      song_url: "empty",
-      likes: 6,
-    },
+    // {
+    //   _id: "600b1de76ea21cf63a4db77c",
+    //   title: "El Toro",
+    //   artistId: "600b1de66ea21cf63a4db76e",
+    //   description:
+    //     "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
+    //   image: "El_Toro.jpg",
+    //   price: 0.99,
+    //   genre: genres[2]._id,
+    //   tags: "outlaw",
+    //   song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611538839197.mp3",
+    //   likes: 6,
+    // },
   ]);
 
   await User.deleteMany();
+
   await User.create({
     avatar: "../../public/images/default.png",
     username: "test",
@@ -133,6 +142,7 @@ db.once("open", async () => {
     lastName: "User",
     email: "test@test.com",
     password: "12345",
+    follows: ["600b1de66ea21cf63a4db76d", "600b1de66ea21cf63a4db76e"]
   });
 
   await User.create({
@@ -142,6 +152,7 @@ db.once("open", async () => {
     lastName: "Washington",
     email: "pamela@testmail.com",
     password: "12345",
+    follows: ["600b1de66ea21cf63a4db76e"]
   });
 
   await User.create({
@@ -151,25 +162,61 @@ db.once("open", async () => {
     lastName: "Holt",
     email: "eholt@testmail.com",
     password: "12345",
+    follows: ["600b1de66ea21cf63a4db76d"]
   });
 
   // create user data
-  // const userData = [];
+  const userData = [];
 
-  // for (let i = 0; i < 10; i += 1) {
-  //   const avatar = faker.internet.avatar();
-  //   const username = faker.internet.userName();
-  //   const firstName = faker.name.firstName();
-  //   const lastName = faker.name.lastName();
-  //   const email = faker.internet.email(username);
-  //   const password = faker.internet.password();
+  for (let i = 0; i < 10; i += 1) {
+    const avatar = faker.internet.avatar();
+    const username = faker.internet.userName();
+    const firstName = faker.name.firstName();
+    const lastName = faker.name.lastName();
+    const email = faker.internet.email(username);
+    const password = faker.internet.password();
 
-  //   userData.push({ avatar, username, firstName, lastName, email, password });
-  // }
+    userData.push({ avatar, username, firstName, lastName, email, password });
+  }
 
-  // const createdUsers = await User.collection.insertMany(userData);
+  const createdUsers = await User.collection.insertMany(userData);
 
-  // console.log("users seeded", userData);
+  // create comments
+  let createdComments = [];
+  for (let i = 0; i < 100; i += 1) {
+    const commentText = faker.lorem.words(Math.round(Math.random() * 20) + 1);
+
+    const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
+    const { username, _id: userId } = createdUsers.ops[randomUserIndex];
+
+    const createdComment = await Comment.create({ commentText, username });
+
+    const updatedUser = await User.updateOne(
+      { _id: userId },
+      { $push: { comments: createdComment._id } }
+    );
+
+    createdComments.push(createdComment);
+  }
+
+  // create reactions
+  for (let i = 0; i < 100; i += 1) {
+    const reactionBody = faker.lorem.words(Math.round(Math.random() * 20) + 1);
+
+    const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
+    const { username } = createdUsers.ops[randomUserIndex];
+
+    const randomCommentIndex = Math.floor(
+      Math.random() * createdComments.length
+    );
+    const { _id: commentId } = createdComments[randomCommentIndex];
+
+    await Comment.updateOne(
+      { _id: commentId },
+      { $push: { reactions: { reactionBody, username } } },
+      { runValidators: true }
+    );
+  }
 
   // create artist data
   // const artistData = [];
@@ -184,24 +231,27 @@ db.once("open", async () => {
   //   artistData.push({ avatar, artistName, bio, email, password });
   // }
 
-  // const createdArtists = await Artist.collection.insertMany(artistData);
+  // const createdArtists = await Artist.collection.insertMan(artists);
 
-  // create friends
+  // // create follows
   // for (let i = 0; i < 10; i += 1) {
-  //   const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
-  //   const { _id: userId } = createdUsers.ops[randomUserIndex];
+  //   const randomArtistIndex = Math.floor(Math.random() * createdArtists.ops.length);
+  //   const { _id: artistId } = createdArtists.ops[randomArtistIndex];
 
-  //   let friendId = userId;
+  //   let followId = artistId;
 
-  //   while (friendId === userId) {
+  //   while (followId === artistId) {
   //     const randomUserIndex = Math.floor(
   //       Math.random() * createdUsers.ops.length
   //     );
-  //     friendId = createdUsers.ops[randomUserIndex];
+  //     followId = createdUsers.ops[randomUserIndex];
   //   }
 
-  //   await User.updateOne({ _id: userId }, { $addToSet: { friends: friendId } });
+  //   await User.updateOne({ _id: userId }, { $addToSet: { follows: followId } });
   // }
+
+  // console.log("users seeded", userData);
+
 
   // create songs
   // let createdSongs = [];
@@ -223,7 +273,7 @@ db.once("open", async () => {
   //   const song_url = "https://fairstreem.s3.us-east-2.amazonaws.com/1611278736518.mp3";
   //   const likes = faker.random.number(Math.round(Math.random() * 20) + 1);
 
-    // songData.push({ title, artist, description, image, price, genre, tags, song_url, s3_object_key });
+  // songData.push({ title, artist, description, image, price, genre, tags, song_url, s3_object_key });
 
   //   const createdSong = await Song.create({
   //     title,

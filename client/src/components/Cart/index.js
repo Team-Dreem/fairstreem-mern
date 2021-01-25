@@ -70,6 +70,9 @@ const Cart = () => {
         variables: { songs: songIds }
       });      
     });
+    getCheckout({
+      variables: { songs: songIds }
+    });      
   }
   // Unfortunately, we can't call useQuery(QUERY_CHECKOUT) in the click handler function. The useQuery Hook is meant to run when a component is first rendered, not at a later point in time based on a user action like a button click. Apollo provides another Hook for this exact situation. The useLazyQuery Hook can be declared like any other Hook but won't actually execute until you tell it to. Let's implement this new Hook to call QUERY_CHECKOUT.
   

@@ -17,6 +17,7 @@
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "jwt-decode": "^2.2.0",
+    "material-ui-search-bar": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
@@ -42,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "node-sass": "^4.14.1"
   }
 }

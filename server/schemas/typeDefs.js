@@ -1,6 +1,34 @@
 const { gql } = require("apollo-server-express");
 
+// type User {
+//   _id: ID
+//   avatar: String
+//   username: String!
+//   firstName: String
+//   lastName: String
+//   password: String!
+//   email: String
+//   follows: [User]
+//   orders: [Order]
+// }
+
 const typeDefs = gql`
+
+  type Comment {
+    _id: ID
+    commentText: String
+    createdAt: String
+    username: String
+    reactionCount: Int
+    reactions: [Reaction]
+  }
+
+  type Reaction {
+    _id: ID
+    reactionBody: String
+    createdAt: String
+    username: String
+  }
 
   type Genre {
     _id: ID
@@ -34,11 +62,12 @@ const typeDefs = gql`
     _id: ID
     avatar: String
     username: String!
-    firstName: String
-    lastName: String
     password: String!
-    email: String
-    friends: [User]
+    email: String!
+    bio: String
+    followCount: Int
+    follows: [Artist]
+    comments: [Comment]
     orders: [Order]
   }
 
@@ -46,11 +75,16 @@ const typeDefs = gql`
     _id: ID
     avatar: String
     artistName: String!
+    email: String!
+    password: String!
+    genre: String!
     bio: String
-    email: String
-    password: String
+    website: String
+    socialMedia: String
     songs: [Song]
+    followerCount: Int
     followers: [User]
+    comments: [Comment]
   }
 
   type Auth {
@@ -59,27 +93,37 @@ const typeDefs = gql`
   }
 
   type Query {
-    artist: Artist
+    search(term: String!): [Artist]
+    artist(_id: ID, artistName: String): Artist
     artists(_id: ID, artistName: String): [Artist]
+    comment(_id: ID!): Comment
+    comments(username: String): [Comment]
     genres: [Genre]
     songs(genre: ID, name: String): [Song]
-    songsByGenre(genre: ID, name: String): [Song]
-    song(_id: ID!): Song
-    user: User
+    song(_id: ID): Song
+    user(_id: ID, username: String): User
     users: [User]
+    userNotLoggedIn(username: String): User
     order(_id: ID!): Order
     checkout(songs: [ID]!): Checkout
-
   }
-
 
   type Mutation {
     addUser(
       username: String!
-      firstName: String
-      lastName: String
       email: String!
       password: String!
+      bio: String
+      avatar: String
+    ): Auth
+    addArtist(
+      artistName: String!
+      email: String!
+      password: String!
+      genre: String!
+      bio: String
+      socialMedia: String
+      avatar: String
     ): Auth
     addOrder(songs: [ID]!): Order
     updateUser(
@@ -90,6 +134,7 @@ const typeDefs = gql`
       password: String
     ): User
     login(email: String!, password: String!): Auth
+    artistLogin(email: String!, password: String!):Auth
   }
 `;
 
