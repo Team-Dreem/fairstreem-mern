@@ -24,6 +24,7 @@ export function idbPromise(storeName, method, object) {
       db.createObjectStore("songs", { keyPath: "_id" });
       db.createObjectStore("genres", { keyPath: "_id" });
       db.createObjectStore("cart", { keyPath: "_id" });
+      db.createObjectStore("artists", { keyPath: "_id" });
     };
 
     // handle any errors with connecting

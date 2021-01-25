@@ -17,7 +17,6 @@ export const QUERY_ME = gql`
       orders {
         songs {
           _id
-          title
         }
       }
     }
@@ -25,7 +24,7 @@ export const QUERY_ME = gql`
 `;
 
 export const QUERY_SONGS_BY_GENRE = gql`
-  query song($genre: ID) {
+  query getSongs($genre: ID) {
     songs(genre: $genre) {
       _id
       title
@@ -35,26 +34,23 @@ export const QUERY_SONGS_BY_GENRE = gql`
       price
       genre {
         _id
-        name
       }
-      tags {
-        name
-      }
+      tags 
       song_url
-      s3_object_key
     }
   }
 `;
 
 export const QUERY_SONGS = gql`
-  query getSongs($genre: ID) {
-    songs(genre: $genre) {
+  query songs {
+    songs {
       _id
       title
-      artist
+      artistId
       description
       image
       price
+      song_url
       genre {
         _id
       }
@@ -69,9 +65,12 @@ export const QUERY_ALL_SONGS = gql`
       title
       description
       price
+      song_url
       genre {
         name
       }
+      tags 
+      song_url
     }
   }
 `;
@@ -116,19 +115,43 @@ export const QUERY_USER = gql`
 }
 `;
 
-export const QUERY_ARTIST = gql`
-  {
-    artist {
+// export const QUERY_ARTISTS = gql`
+//   query getArtists($_id: ID){
+//     artists(_id: $_id) {
+//       _id
+//       avatar
+//       artistName
+//       email
+//       password
+//       genre
+//       aboutme
+//       socialMedia
+//       songs {
+//         _id
+//         title
+//       }
+//       followers {
+//         _id
+//         username
+//       }
+//     }
+//   }
+// `;
+
+export const QUERY_ARTISTS = gql`
+  query artists {
+    artists {
+      _id
       avatar
       artistName
       email
       password
+      genre
+      aboutme
+      socialMedia
       songs {
         _id
         title
-        description
-        price
-        image
       }
       followers {
         _id

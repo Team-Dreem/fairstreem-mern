@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function SongList() {
+function SongListByGenre() {
 const [state, dispatch] = useStoreContext();
 
 const { currentGenre } = state;
@@ -55,8 +55,9 @@ function filterSongs() {
     return state.songs;
   }
 
-  return state.songs.filter(song => song.genre._id === currentGenre);
+  return state.songs.filter(song => song.genre._id === currentGenre._id);
 }
+console.log("currentGenre", currentGenre);
 
   return (
     <div className={classes.root + ' grid'}>
@@ -81,4 +82,10 @@ function filterSongs() {
   );
 }
 
-export default SongList;
+export default SongListByGenre;
+
+// Again, we immediately execute the useStoreContext() function to retrieve the current global state object and the dipatch() method to update state. We then destructure the currentGenre data out of the state object so we can use it in the filterSongs() function.
+
+// We then implement the useEffect() Hook in order to wait for our useQuery() response to come in. Once the data object returned from useQuery() goes from undefined to having an actual value, we execute our dispatch() function, instructing our reducer function that it's the UPDATE_SONGS action and it should save the array of song data to our global store. When that's done, useStoreContext() executes again, giving us the song data needed display songs to the page.
+
+// Lastly, we need to update the code in the return statement to use state.songs.length instead of songs.length, since we are now retrieving songs from the state object
