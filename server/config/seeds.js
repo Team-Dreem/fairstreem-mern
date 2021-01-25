@@ -7,7 +7,7 @@ db.once("open", async () => {
   await User.deleteMany();
   await Genre.deleteMany();
   await Song.deleteMany();
-  
+
   await Artist.create({
     _id: "600b1de66ea21cf63a4db76c",
     avatar: "../../public/images/default.png",
@@ -33,16 +33,16 @@ db.once("open", async () => {
   });
 
   await Artist.create({
-  _id: "600b1de66ea21cf63a4db76e",
-  avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611528845288.png",
-  artistName: "Jeff Warren Johnston",
-  aboutme: "This is a default bio. Tell your listeners more about yourself!",
-  email: "jeffwarrenjohnston@artist.com",
-  password: "12345",
-  genre: "Country",
-  songs: ["600b1de76ea21cf63a4db77b", "600b1de76ea21cf63a4db77c"],
-  followers: [],
-});
+    _id: "600b1de66ea21cf63a4db76e",
+    avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611528845288.png",
+    artistName: "Jeff Warren Johnston",
+    aboutme: "This is a default bio. Tell your listeners more about yourself!",
+    email: "jeffwarrenjohnston@artist.com",
+    password: "12345",
+    genre: "Country",
+    songs: ["600b1de76ea21cf63a4db77b", "600b1de76ea21cf63a4db77c"],
+    followers: [],
+  });
 
   await Artist.create({
     avatar: "../../../public/images/default.png",
@@ -78,15 +78,15 @@ db.once("open", async () => {
   });
 
   const genres = await Genre.insertMany([
-    { name: "Rock/Alternative" },
-    { name: "R&B" },
-    { name: "Country" },
-    { name: "Hip-hop/Rap" },
-    { name: "Electronic" },
-    { name: "Jazz" },
-    { name: "Blues" },
-    { name: "Classical" },
-    { name: "Other" },
+    { _id: "600dfabaebcba48440047d26", name: "Rock/Alternative" },
+    { _id: "600dfabaebcba48440047d27", name: "R&B" },
+    { _id: "600dfabaebcba48440047d28", name: "Country" },
+    { _id: "600dfabaebcba48440047d29", name: "Hip-hop/Rap" },
+    { _id: "600dfabaebcba48440047d2a", name: "Electronic" },
+    { _id: "600dfabaebcba48440047d2b", name: "Jazz" },
+    { _id: "600dfabaebcba48440047d2c", name: "Blues" },
+    { _id: "600dfabaebcba48440047d2d", name: "Classical" },
+    { _id: "600dfabaebcba48440047d2e", name: "Other" },
   ]);
 
   const songs = await Song.insertMany([
@@ -100,7 +100,8 @@ db.once("open", async () => {
       price: 0.99,
       genre: genres[0]._id,
       tags: "indie",
-      song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611278736518.mp3",
+      song_url:
+        "https://fairstreem.s3.us-east-2.amazonaws.com/1611278736518.mp3",
       likes: 6,
     },
     {
@@ -116,19 +117,19 @@ db.once("open", async () => {
       song_url: "empty",
       likes: 6,
     },
-    {
-      _id: "600b1de76ea21cf63a4db77c",
-      title: "El Toro",
-      artistId: "600b1de66ea21cf63a4db76e",
-      description:
-        "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
-      image: "El_Toro.jpg",
-      price: 0.99,
-      genre: genres[2]._id,
-      tags: "outlaw",
-      song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611538839197.mp3",
-      likes: 6,
-    },
+    // {
+    //   _id: "600b1de76ea21cf63a4db77c",
+    //   title: "El Toro",
+    //   artistId: "600b1de66ea21cf63a4db76e",
+    //   description:
+    //     "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
+    //   image: "El_Toro.jpg",
+    //   price: 0.99,
+    //   genre: genres[2]._id,
+    //   tags: "outlaw",
+    //   song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611538839197.mp3",
+    //   likes: 6,
+    // },
   ]);
 
   await User.deleteMany();
@@ -229,7 +230,7 @@ db.once("open", async () => {
   //   const song_url = "https://fairstreem.s3.us-east-2.amazonaws.com/1611278736518.mp3";
   //   const likes = faker.random.number(Math.round(Math.random() * 20) + 1);
 
-    // songData.push({ title, artist, description, image, price, genre, tags, song_url, s3_object_key });
+  // songData.push({ title, artist, description, image, price, genre, tags, song_url, s3_object_key });
 
   //   const createdSong = await Song.create({
   //     title,
