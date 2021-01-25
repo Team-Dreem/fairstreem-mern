@@ -46,6 +46,7 @@ const typeDefs = gql`
     tags: [String]
     song_url: String
     likes: Int!
+    comments: [Comment]
   }
 
   type Order {
@@ -96,8 +97,12 @@ const typeDefs = gql`
     search(term: String!): [Artist]
     artist(_id: ID, artistName: String): Artist
     artists(_id: ID, artistName: String): [Artist]
+<<<<<<< Updated upstream
     comment(_id: ID!): Comment
     comments(username: String): [Comment]
+=======
+    comments: [Comment]
+>>>>>>> Stashed changes
     genres: [Genre]
     songs(genre: ID, name: String): [Song]
     song(_id: ID): Song
@@ -106,6 +111,11 @@ const typeDefs = gql`
     userNotLoggedIn(username: String): User
     order(_id: ID!): Order
     checkout(songs: [ID]!): Checkout
+<<<<<<< Updated upstream
+=======
+    
+
+>>>>>>> Stashed changes
   }
 
   type Mutation {

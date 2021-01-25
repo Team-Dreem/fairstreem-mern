@@ -8,110 +8,17 @@ const s3Bucket = process.env.S3_BUCKET;
 
 const resolvers = {
   Query: {
-    // artist: async (parent, args, context) => {
-    //     const user = await Artist.findById(context.user._id).populate({
-    //       path: "orders.songs",
-    //       populate: "genre",
-    //     });
-
-    //     user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
-
-    //     return user;
-
-    //   throw new AuthenticationError("Not logged in");
-    // },
-    artists: async () => {
-      return Artist.find();
-    },
-    artistsByGenre: async (parent, { genre }, context) => {
-      console.log(genre);
-
-      return Artist.find({
-        genre
-      });
-    },
-    search: async (parent, { term }, context) => {
-      return Artist.find({
-          artistName: new RegExp(`.*${term}.*`, 'i')
-        })
-        .select("-__v -password");
-    },
-    genres: async () => {
-      return await Genre.find();
-    },
-    songs: async (parent, { genre, title }) => {
-      const params = {};
-
-      if (_id) {
-        params._id = _id;
-      }
-
-      if (artistName) {
-        params.artistName= {
-          $regex: artistName,
-        };
-      }
-
-      return await Artist.find(params).populate("Artist");
-    },
-    //find one artist
-    // artist: async (parent, {artistName})=>{
-    //   return await Artist.findOne({artistName})
-    //   // .populate('songs')
-    // },
-    genres: async () => {
-      return await Genre.find();
-    },
-    songs: async () => {
-      return await Song.find();
-    },
-    // songs: async (parent, { genre, title }) => {
-    //   const params = {};
-
-    //   if (genre) {
-    //     params.genre = genre;
-    //   }
-
-    //   if (title) {
-    //     params.title = {
-    //       $regex: title,
-    //     };
-    //   }
-
-    //   return await Song.find(params).populate("genre");
-    // },
-    song: async (parent, { _id }) => {
-      return await Song.findById(_id).populate("genre");
-    },
-    users: async () => {
-      return User.find().select("-__v -password");
-    },
-    user: async (parent, args, context) => {
+    artist: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: "orders.songs",
-          populate: "genre",
-        });
+        const artist = await Artist.findById(context.artist._id)
+          .populate("followers")
+          .populate("comments")
+          .populate("songs");
 
-        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
-
-        return user;
+        return artist;
       }
 
       throw new AuthenticationError("Not logged in");
-    },
-    order: async (parent, { _id }, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: "orders.songs",
-          populate: "genre",
-        });
-
-        return user.orders.id(_id);
-      }
-
-      throw new AuthenticationError("Not logged in");
-      return Artist.find().populate("followers").populate("comments");
     },
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
@@ -171,26 +78,6 @@ const resolvers = {
     genres: async () => {
       return await Genre.find();
     },
-    // songs: async (parent, { genre, title }) => {
-    //   const params = {};
-
-    //   if (_id) {
-    //     params._id = _id;
-    //   }
-
-    //   if (artistName) {
-    //     params.artistName= {
-    //       $regex: artistName,
-    //     };
-    //   }
-
-    //   return await Artist.find(params).populate("Artist");
-    // },
-    //find one artist
-    // artist: async (parent, {artistName})=>{
-    //   return await Artist.findOne({artistName})
-    //   // .populate('songs')
-    // },
     order: async (parent, { _id }, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
@@ -208,26 +95,26 @@ const resolvers = {
         artistName: new RegExp(`.*${term}.*`, "i"),
       }).select("-__v -password");
     },
-    // songs: async (parent, { genre, title }) => {
-    //   const params = {};
-
-    //   if (genre) {
-    //     params.genre = genre;
-    //   }
-
-    //   if (title) {
-    //     params.title = {
-    //       $regex: title,
-    //     };
-    //   }
-
-    //   return await Song.find(params).populate("genre");
-    // },
     song: async (parent, { _id }) => {
       return await Song.findById(_id).populate("genre");
     },
-    songs: async () => {
-      return await Song.find();
+    // songs: async () => {
+    //   return await Song.find();
+    // },
+    songs: async (parent, { genre, title }) => {
+      const params = {};
+
+      if (genre) {
+        params.genre = genre;
+      }
+
+      if (title) {
+        params.title = {
+          $regex: title,
+        };
+      }
+
+      return await Song.find(params).populate("genre");
     },
     users: async () => {
       return User.find()
