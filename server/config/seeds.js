@@ -126,7 +126,7 @@ db.once("open", async () => {
       price: 0.99,
       genre: genres[2]._id,
       tags: "outlaw",
-      song_url: "empty",
+      song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611538839197.mp3",
       likes: 6,
     },
   ]);

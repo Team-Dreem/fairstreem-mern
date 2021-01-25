@@ -52,7 +52,7 @@ const Styles = makeStyles((theme) => ({
 const SongCard = (song) => {
   const [state, dispatch] = useStoreContext();
 const { currentArtist } = state;
-const { title, description, image, price, song_url } = song;
+const { title, description, image, price, song_url, tags } = song;
 
 console.log("currentArtist", currentArtist);
 
@@ -80,7 +80,14 @@ console.log("currentArtist", currentArtist);
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
               Title: {title}
+              <br></br>
               Description: {description}
+              <br></br>
+              Price: {price}
+              <br></br>
+              Song_url: {song_url}
+              <br></br>
+              Tags: {tags}
             </Typography>
           </CardContent>
           <div className={classes.controls}>
@@ -103,11 +110,11 @@ console.log("currentArtist", currentArtist);
             </IconButton>
           </div>
         </div>
-        {/* <CardMedia
+        <CardMedia
           className={classes.cover}
           image="../../assets/placeholder-cat.jpg"
           title="Live from space album cover"
-        /> */}
+        />
         <Button className={classes.button}>buy</Button>
       </Card>
     </div>
