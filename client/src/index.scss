@@ -185,6 +185,21 @@ nav {
   text-align: center;
   padding-bottom: 50px;
 }
+
+.loader {
+  margin: 0 auto;
+  display: block !important;
+
+  svg {
+    color: white;
+  }
+}
+
+.no-result {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+}
 // Search end
 
 // Grid start
