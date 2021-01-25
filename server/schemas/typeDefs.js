@@ -96,12 +96,9 @@ const typeDefs = gql`
     search(term: String!): [Artist]
     artist(_id: ID, artistName: String): Artist
     artists(_id: ID, artistName: String): [Artist]
-<<<<<<< HEAD
     artistsByGenre(genre: String): [Artist]
-=======
     comment(_id: ID!): Comment
     comments(username: String): [Comment]
->>>>>>> 445f2163a22dbf79aa5c368fe792a76419824faf
     genres: [Genre]
     songs(genre: ID, name: String): [Song]
     song(_id: ID): Song
