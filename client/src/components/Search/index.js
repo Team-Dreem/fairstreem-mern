@@ -11,6 +11,7 @@ import { UPDATE_CURRENT_GENRE } from "../../utils/actions";
 function Search () {
     const [results, setResults] = useState([]);
     const [searchTerm, setSearchTerm] = useState();
+    const [loading, setLoading] = useState(false);
     const apolloClient = useApolloClient();
     const [state, dispatch] = useStoreContext();
 
@@ -23,7 +24,7 @@ function Search () {
                 currentGenre: null,
               });
               
-            setResults([]);
+            setResults(null);
             return;
         }
 
@@ -32,12 +33,15 @@ function Search () {
                 type: UPDATE_CURRENT_GENRE,
                 currentGenre: null,
               });
+            
+            setLoading(true);
 
             apolloClient
                 .query({ query: QUERY_SEARCH, variables: { term: searchTerm }})
                 .then(results => {
                     setResults(results.data.search);
-                })
+                    setLoading(false);
+                });
         }, 150);
 
         return () => {
@@ -56,7 +60,7 @@ function Search () {
             <GenreMenu />
 
             { !searchTerm && currentGenre && <SongList /> }
-            { searchTerm && <SearchResults results={results} /> }
+            { (loading || results) && <SearchResults loading={loading} results={results} /> }
         </>
     )
 };
