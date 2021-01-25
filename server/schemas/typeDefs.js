@@ -75,6 +75,7 @@ const typeDefs = gql`
     search(term: String!): [Artist]
     artist: Artist
     artists(_id: ID, artistName: String): [Artist]
+    artistsByGenre(genre: String): [Artist]
     genres: [Genre]
     songs(genre: ID, name: String): [Song]
     song(_id: ID!): Song
@@ -82,7 +83,6 @@ const typeDefs = gql`
     users: [User]
     order(_id: ID!): Order
     checkout(songs: [ID]!): Checkout
-
   }
 
 

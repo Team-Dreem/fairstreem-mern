@@ -7,12 +7,16 @@ import {
   UPDATE_CURRENT_ARTIST,
   UPDATE_CURRENT_USER,
   UPDATE_CURRENT_SONG,
+  UPDATE_SEARCH_TERM,
   ADD_TO_CART,
   ADD_MULTIPLE_TO_CART,
   REMOVE_FROM_CART,
   UPDATE_CART_QUANTITY,
   CLEAR_CART,
   TOGGLE_CART,
+  UPDATE_SEARCH_LOADING,
+  UPDATE_SEARCH_RESULTS,
+  UPDATE_SEARCH_GENRE
 } from "./actions";
 
 import { useReducer } from "react";
@@ -39,7 +43,8 @@ export const reducer = (state, action) => {
     case UPDATE_CURRENT_GENRE:
       return {
         ...state,
-        currentGenre: { ...action.currentGenre },
+        currentGenre: action.currentGenre,
+        searchTerm: null
       };
       case UPDATE_CURRENT_ARTIST:
       return {
@@ -101,6 +106,30 @@ export const reducer = (state, action) => {
       return {
         ...state,
         cartOpen: !state.cartOpen,
+      };
+    case UPDATE_SEARCH_TERM:
+      return {
+        ...state,
+        searchTerm: action.searchTerm,
+        searchGenre: null
+      };
+    case UPDATE_SEARCH_LOADING:
+      return {
+        ...state,
+        loading: action.loading
+      };
+    case UPDATE_SEARCH_GENRE:
+      return {
+        ...state,
+        searchTerm: null,
+        searchGenre: action.genre
+      };
+
+    case UPDATE_SEARCH_RESULTS:
+      return {
+        ...state,
+        loading: false,
+        searchResults: action.results
       };
 
     default:

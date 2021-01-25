@@ -21,7 +21,14 @@ const resolvers = {
     //   throw new AuthenticationError("Not logged in");
     // },
     artists: async () => {
-      return Artist.find()
+      return Artist.find();
+    },
+    artistsByGenre: async (parent, { genre }, context) => {
+      console.log(genre);
+
+      return Artist.find({
+        genre
+      });
     },
     search: async (parent, { term }, context) => {
       return Artist.find({
