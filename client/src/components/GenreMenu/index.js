@@ -16,7 +16,7 @@ function GenreMenu() {
 
   const [state, dispatch] = useStoreContext();
 
-  const { genres } = state;
+  const { genres, currentGenre } = state;
   //Now when we use this component, we immediately call upon the useStoreContext() Hook to retrieve the current state from the global state object and the dispatch() method to update state. Because we only need the genres array out of our global state, we simply destructure it out of state so we can use it to provide to our returning JSX.
   const { loading, data: genreData } = useQuery(QUERY_GENRES);
 
@@ -58,7 +58,7 @@ function GenreMenu() {
     <div className="genre-menu">
       <ButtonGroup variant="text" aria-label="text primary button group">
       {genres.map((item) => (
-          <Button key={item._id}
+          <Button className={ item._id === currentGenre ? 'selected' : null } key={item._id}
             onClick={() => {
               handleClick(item._id);
             }}>
