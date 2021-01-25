@@ -1,7 +1,12 @@
 import {
-  UPDATE_SONGS,
   UPDATE_GENRES,
+  UPDATE_ARTISTS,
+  // UPDATE_USERS,
+  UPDATE_SONGS,
   UPDATE_CURRENT_GENRE,
+  UPDATE_CURRENT_ARTIST,
+  UPDATE_CURRENT_USER,
+  UPDATE_CURRENT_SONG,
   ADD_TO_CART,
   ADD_MULTIPLE_TO_CART,
   REMOVE_FROM_CART,
@@ -14,6 +19,11 @@ import { useReducer } from "react";
 
 export const reducer = (state, action) => {
   switch (action.type) {
+    case UPDATE_ARTISTS:
+      return {
+        ...state,
+        artists: [...action.artists],
+      };
     // if action type value is the value of `UPDATE_SONGS`, return a new state object with an updated songs array
     case UPDATE_SONGS:
       return {
@@ -29,7 +39,22 @@ export const reducer = (state, action) => {
     case UPDATE_CURRENT_GENRE:
       return {
         ...state,
-        currentGenre: action.currentGenre,
+        currentGenre: { ...action.currentGenre },
+      };
+      case UPDATE_CURRENT_ARTIST:
+      return {
+        ...state,
+        currentArtist: { ...action.currentArtist },
+      };
+      case UPDATE_CURRENT_USER:
+      return {
+        ...state,
+        currentUser: { ...action.currentUser },
+      };
+      case UPDATE_CURRENT_SONG:
+      return {
+        ...state,
+        currentSong: { ...action.currentSong },
       };
     case ADD_TO_CART:
       return {
@@ -83,6 +108,6 @@ export const reducer = (state, action) => {
   }
 };
 
-export function useSongReducer(initialState) {
+export function useAppReducer(initialState) {
   return useReducer(reducer, initialState);
 }

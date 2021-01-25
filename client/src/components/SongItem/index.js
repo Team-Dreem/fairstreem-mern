@@ -1,6 +1,7 @@
 import React from "react";
 import { idbPromise } from "../../utils/helpers";
 import { Link } from "react-router-dom";
+// import { pluralize } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import "./style.css";
@@ -14,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 function SongItem(item) {
   const [state, dispatch] = useStoreContext();
 
-  const { _id } = item;
+  const { image, title, _id, price, song_url } = item;
 
   const { cart } = state;
 

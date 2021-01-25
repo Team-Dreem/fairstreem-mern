@@ -20,17 +20,15 @@ const typeDefs = gql`
   }
 
   type Song {
-    _id: ID!
-    title: String!
-    artist: String
+    _id: ID
+    title: String
+    artistId: String
     description: String
     image: String
     price: Float
     genre: Genre
     tags: [String]
     song_url: String
-    s3_object_key: String
-    filePath: String!
     likes: Int!
   }
 
@@ -74,8 +72,9 @@ const typeDefs = gql`
   }
 
   type Query {
-    artists: [Artist]
     search(term: String!): [Artist]
+    artist: Artist
+    artists(_id: ID, artistName: String): [Artist]
     genres: [Genre]
     songs(genre: ID, name: String): [Song]
     song(_id: ID!): Song
@@ -83,7 +82,9 @@ const typeDefs = gql`
     users: [User]
     order(_id: ID!): Order
     checkout(songs: [ID]!): Checkout
+
   }
+
 
   type Mutation {
     addUser(

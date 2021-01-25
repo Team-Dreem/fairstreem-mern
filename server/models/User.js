@@ -35,10 +35,10 @@ const userSchema = new Schema(
       required: true,
       minlength: 5,
     },
-    friends: [
+    follows: [
       {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Artist",
       },
     ],
     orders: [Order.schema],
