@@ -43,8 +43,8 @@ export const ADD_ORDER = gql`
 
 
 export const ADD_USER = gql`
-  mutation addUser($username: String!, $email: String!, $password: String!, $aboutme: String, $avatar: String) {
-    addUser(username: $username, email: $email, password: $password, aboutme: $aboutme, avatar: $avatar) {
+  mutation addUser($username: String!, $email: String!, $password: String!, $bio: String, $avatar: String) {
+    addUser(username: $username, email: $email, password: $password, bio: $bio, avatar: $avatar) {
       token
       user {
         _id
@@ -54,8 +54,8 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_ARTIST = gql`
-  mutation addArtist($artistName: String!, $email: String!, $password: String!, $genre: String!, $aboutme: String, $socialMedia: String, $avatar: String) {
-    addArtist(artistName: $artistName, email: $email, password: $password, genre: $genre, aboutme: $aboutme, socialMedia: $socialMedia, avatar: $avatar) {
+  mutation addArtist($artistName: String!, $email: String!, $password: String!, $genre: String!, $bio: String, $socialMedia: String, $avatar: String) {
+    addArtist(artistName: $artistName, email: $email, password: $password, genre: $genre, bio: $bio, socialMedia: $socialMedia, avatar: $avatar) {
       token
       user {
         _id

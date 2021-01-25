@@ -21,7 +21,7 @@ const ArtistList = () => {
           artistId={artist._id}
           avatar={artist.avatar}
           artistName={artist.artistName}
-          aboutme={artist.aboutme}
+          bio={artist.bio}
           email={artist.email}
           songs={artist.songs}
           followers={artist.followers}

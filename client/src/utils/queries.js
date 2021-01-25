@@ -9,8 +9,8 @@ export const QUERY_ME = gql`
       firstName
       lastName
       email
-      friendCount
-      friends {
+      followCount
+      follows {
         _id
         username
       }
@@ -124,7 +124,7 @@ export const QUERY_USER = gql`
 //       email
 //       password
 //       genre
-//       aboutme
+//       bio
 //       socialMedia
 //       songs {
 //         _id
@@ -147,7 +147,7 @@ export const QUERY_ARTISTS = gql`
       email
       password
       genre
-      aboutme
+      bio
       socialMedia
       songs {
         _id

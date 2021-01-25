@@ -8,11 +8,27 @@ const { gql } = require("apollo-server-express");
 //   lastName: String
 //   password: String!
 //   email: String
-//   friends: [User]
+//   follows: [User]
 //   orders: [Order]
 // }
 
 const typeDefs = gql`
+
+  type Comment {
+    _id: ID
+    commentText: String
+    createdAt: String
+    username: String
+    reactionCount: Int
+    reactions: [Reaction]
+  }
+
+  type Reaction {
+    _id: ID
+    reactionBody: String
+    createdAt: String
+    username: String
+  }
 
   type Genre {
     _id: ID
@@ -48,8 +64,10 @@ const typeDefs = gql`
     username: String!
     password: String!
     email: String!
-    aboutme: String
-    friends: [User]
+    bio: String
+    followCount: Int
+    follows: [Artist]
+    comments: [Comment]
     orders: [Order]
   }
 
@@ -60,10 +78,13 @@ const typeDefs = gql`
     email: String!
     password: String!
     genre: String!
-    aboutme: String
+    bio: String
+    website: String
     socialMedia: String
     songs: [Song]
+    followerCount: Int
     followers: [User]
+    comments: [Comment]
   }
 
   type Auth {
@@ -73,25 +94,26 @@ const typeDefs = gql`
 
   type Query {
     search(term: String!): [Artist]
-    artist: Artist
+    artist(_id: ID, artistName: String): Artist
     artists(_id: ID, artistName: String): [Artist]
+    comment(_id: ID!): Comment
+    comments(username: String): [Comment]
     genres: [Genre]
     songs(genre: ID, name: String): [Song]
-    song(_id: ID!): Song
-    user: User
+    song(_id: ID): Song
+    user(_id: ID, username: String): User
     users: [User]
+    userNotLoggedIn(username: String): User
     order(_id: ID!): Order
     checkout(songs: [ID]!): Checkout
-
   }
-
 
   type Mutation {
     addUser(
       username: String!
       email: String!
       password: String!
-      aboutme: String
+      bio: String
       avatar: String
     ): Auth
     addArtist(
@@ -99,7 +121,7 @@ const typeDefs = gql`
       email: String!
       password: String!
       genre: String!
-      aboutme: String
+      bio: String
       socialMedia: String
       avatar: String
     ): Auth
