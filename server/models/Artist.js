@@ -33,7 +33,11 @@ const artistSchema = new Schema(
       required: true,
       trim: true,
     },
-    aboutme: {
+    bio: {
+      type: String,
+      trim: true,
+    },
+    website: {
       type: String,
       trim: true,
     },
@@ -42,15 +46,21 @@ const artistSchema = new Schema(
       trim: true,
     },
     songs: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Song",
-        },
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Song",
+      },
     ],
     followers: [
       {
         type: Schema.Types.ObjectId,
         ref: "User",
+      },
+    ],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
       },
     ],
   },
@@ -76,7 +86,7 @@ artistSchema.methods.isCorrectPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-artistSchema.virtual('followerCount').get(function() {
+artistSchema.virtual("followerCount").get(function () {
   return this.followers.length;
 });
 

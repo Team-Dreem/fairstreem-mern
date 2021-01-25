@@ -75,7 +75,7 @@ function ArtistProfile() {
             </Grid>
 
             <Grid item md={6}>
-              <p>{currentArtist.aboutme}</p>
+              <p>{currentArtist.bio}</p>
             </Grid>
           </Grid>
 

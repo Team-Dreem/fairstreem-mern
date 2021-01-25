@@ -5,7 +5,7 @@ import Auth from "../utils/auth";
 import { ADD_USER, ADD_ARTIST } from "../utils/mutations";
 
 function Signup(props) {
-  const [formState, setFormState] = useState({ acctType: "", username: "", email: "", password: "", genre: "", aboutme: "", picture: "", social: "", color: "" });
+  const [formState, setFormState] = useState({ acctType: "", username: "", email: "", password: "", genre: "", bio: "", picture: "", social: "", color: "" });
   const [addUser] = useMutation(ADD_USER);
   const [addArtist] = useMutation(ADD_ARTIST);
 
@@ -21,7 +21,7 @@ function Signup(props) {
           username: formState.username,
           email: formState.email,
           password: formState.password,
-          aboutme: formState.aboutme,
+          bio: formState.bio,
           avatar: formState.picture,
           // firstName: formState.firstName,
           // lastName: formState.lastName,
@@ -38,7 +38,7 @@ function Signup(props) {
           email: formState.email,
           password: formState.password,
           genre: formState.genre,
-          aboutme: formState.aboutme,
+          bio: formState.bio,
           avatar: formState.picture,
           socialMedia: formState.social,
           // firstName: formState.firstName,
@@ -136,12 +136,12 @@ function Signup(props) {
           />
         </div>
         <div className="flex-row space-between my-2">
-          <label htmlFor="aboutme">About Me:</label>
+          <label htmlFor="bio">About Me:</label>
           <input
             placeholder="Tell us about yourself"
-            name="aboutme"
-            type="aboutme"
-            id="aboutme"
+            name="bio"
+            type="bio"
+            id="bio"
             onChange={handleChange}
           />
         </div>
