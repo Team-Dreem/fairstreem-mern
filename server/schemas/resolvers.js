@@ -4,7 +4,6 @@ const { Artist, Comment, User, Song, Genre, Order } = require("../models");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
-
 const s3Bucket = process.env.S3_BUCKET;
 
 const resolvers = {
@@ -240,10 +239,22 @@ const resolvers = {
     },
     //claire's draft- feel free to change
     addSong: async (parent, args, context) => {
-      if(context.user) {
-        return await Song.create(args)
+      if (context.artist) {
+        const song = await Song.create({
+          ...args,
+          artistId: context.artist.artist_id,
+          artistName: context.artist.artistName,
+        });
+
+        await Artist.findByIdAndUpdate(
+          { _id: context.artist._id },
+          { $addToSet: { songs: song._id } },
+          { new: true }
+        );
+
+        return song;
       }
-      throw new AuthenticationError("you need to be logged in")
+      throw new AuthenticationError("you need to be logged in!");
     },
     // updateSong: async (parent, { _id, quantity }) => {
     //   const decrement = Math.abs(quantity) * -1;
@@ -321,12 +332,12 @@ const resolvers = {
           { _id: context.user._id },
           { $addToSet: { follows: artistId } },
           { new: true }
-        ).populate('follows');
-    
+        ).populate("follows");
+
         return updatedUser;
       }
-    
-      throw new AuthenticationError('You need to be logged in!');
+
+      throw new AuthenticationError("You need to be logged in!");
     },
     addFollower: async (parent, { artistId }, context) => {
       if (context.user) {
@@ -334,14 +345,13 @@ const resolvers = {
           { _id: artistId },
           { $addToSet: { followers: context.user._id } },
           { new: true }
-        ).populate('followers');
-    
-        return updatedArtist;
-       }
-    
-      throw new AuthenticationError('You need to be logged in!');
-    },
+        ).populate("followers");
 
+        return updatedArtist;
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
+    },
 
     // updateSong: async (parent, { _id, quantity }) => {
     //   const decrement = Math.abs(quantity) * -1;
