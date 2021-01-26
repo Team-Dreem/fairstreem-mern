@@ -167,12 +167,24 @@ export const QUERY_ARTISTS = gql`
   }
 `;
 
+export const QUERY_ARTIST_BY_GENRE = gql`
+  query GetArtistsByGenre($genre: String) {
+    artistsByGenre(genre: $genre) {
+      artistName,
+      avatar,
+      _id,
+      genre
+    }
+  }
+`;
+
 export const QUERY_SEARCH = gql`
   query Search($term: String!) {
     search(term: $term) {
       artistName,
       avatar,
-      _id
+      _id,
+      genre
     }
   }
 `;

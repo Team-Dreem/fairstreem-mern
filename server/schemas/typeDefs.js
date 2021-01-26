@@ -48,6 +48,7 @@ const typeDefs = gql`
     tags: [String]
     song_url: String
     likes: Int!
+    comments: [Comment]
   }
 
   type Order {
@@ -98,6 +99,7 @@ const typeDefs = gql`
     search(term: String!): [Artist]
     artist(_id: ID, artistName: String): Artist
     artists(_id: ID, artistName: String): [Artist]
+    artistsByGenre(genre: String): [Artist]
     comment(_id: ID!): Comment
     comments(username: String): [Comment]
     genres: [Genre]

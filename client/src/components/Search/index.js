@@ -1,66 +1,92 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import SearchBar from "material-ui-search-bar";
 import { useApolloClient } from "@apollo/react-hooks";
-import { QUERY_SEARCH } from "../../utils/queries";
+import { QUERY_SEARCH, QUERY_ARTIST_BY_GENRE } from "../../utils/queries";
 import SearchResults from "../SearchResults";
 import GenreMenu from "../GenreMenu";
-import SongList from "../SongList";
 import { useStoreContext } from '../../utils/GlobalState';
-import { UPDATE_CURRENT_GENRE } from "../../utils/actions";
+import { UPDATE_SEARCH_TERM, UPDATE_SEARCH_LOADING, UPDATE_SEARCH_RESULTS } from "../../utils/actions";
 
 function Search () {
-    const [results, setResults] = useState([]);
-    const [searchTerm, setSearchTerm] = useState();
-    const [loading, setLoading] = useState(false);
     const apolloClient = useApolloClient();
     const [state, dispatch] = useStoreContext();
+    let timeoutId;
+    const { searchGenre, searchTerm } = state;
 
-    const { currentGenre } = state;
+    const updateSearchTerm = (term) => {
+        clearTimeout(timeoutId);
 
-    useEffect(() => {
-        if (!searchTerm) {
+        if (!term) {
             dispatch({
-                type: UPDATE_CURRENT_GENRE,
-                currentGenre: null,
+                type: UPDATE_SEARCH_TERM,
+                searchTerm: ''
               });
-              
-            setResults(null);
+
             return;
         }
 
-        const timeoutId = setTimeout(() => {
+        timeoutId = setTimeout(() => {
             dispatch({
-                type: UPDATE_CURRENT_GENRE,
-                currentGenre: null,
+                type: UPDATE_SEARCH_TERM,
+                searchTerm: term,
               });
-            
-            setLoading(true);
-
-            apolloClient
-                .query({ query: QUERY_SEARCH, variables: { term: searchTerm }})
-                .then(results => {
-                    setResults(results.data.search);
-                    setLoading(false);
-                });
         }, 150);
+    };
 
-        return () => {
-            clearTimeout(timeoutId);
-        };
-    }, [searchTerm, apolloClient, dispatch]);
+    useEffect(() => {
+        let query, variables;
+
+        if (searchGenre) {
+            query = QUERY_ARTIST_BY_GENRE;
+            variables = { genre: searchGenre };
+        } else if (searchTerm) {
+            query = QUERY_SEARCH;
+            variables = { term: searchTerm };
+        } else {
+            dispatch({
+                type: UPDATE_SEARCH_RESULTS,
+                results: null
+            });
+
+            return;
+        }
+
+        dispatch({
+            type: UPDATE_SEARCH_LOADING,
+            loading: true
+        });
+
+        apolloClient
+                .query({ query, variables })
+                .then(r => {
+                    let results;
+
+                    if (query === QUERY_ARTIST_BY_GENRE) {
+                        results = r.data.artistsByGenre;
+                    } else {
+                        results = r.data.search;
+                    }
+
+                    dispatch({
+                        type: UPDATE_SEARCH_RESULTS,
+                        results
+                    });
+                });
+
+    }, [searchGenre, searchTerm]);
 
     return (
         <>
             <div className="search-bar">
                 <SearchBar
-                    onChange={setSearchTerm}
-                    onCancelSearch={() => setSearchTerm(undefined)} />
+                    value={searchTerm}
+                    onChange={updateSearchTerm}
+                    onCancelSearch={() => updateSearchTerm(null)} />
             </div>
 
             <GenreMenu />
 
-            { !searchTerm && currentGenre && <SongList /> }
-            { (loading || results) && <SearchResults loading={loading} results={results} /> }
+            <SearchResults />
         </>
     )
 };

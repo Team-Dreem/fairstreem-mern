@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { useStoreContext } from "../../utils/GlobalState";
 import {
   UPDATE_GENRES,
-  UPDATE_CURRENT_GENRE,
+  UPDATE_SEARCH_GENRE,
 } from "../../utils/actions";
 import { QUERY_GENRES } from "../../utils/queries";
 import { Button, ButtonGroup } from "@material-ui/core";
@@ -16,11 +16,9 @@ function GenreMenu() {
 
   const [state, dispatch] = useStoreContext();
 
-  const { genres, currentGenre } = state;
+  const { genres, searchGenre } = state;
   //Now when we use this component, we immediately call upon the useStoreContext() Hook to retrieve the current state from the global state object and the dispatch() method to update state. Because we only need the genres array out of our global state, we simply destructure it out of state so we can use it to provide to our returning JSX.
   const { loading, data: genreData } = useQuery(QUERY_GENRES);
-
-  
 
   useEffect(() => {
     // if genreData exists or has changed from the response of useQuery, then run dispatch()
@@ -56,20 +54,19 @@ function GenreMenu() {
 
   // But the beauty of the useEffect() Hook is that it not only runs on component load, but also when some form of state changes in that component. So when useQuery() finishes, and we have data in genreData, the useEffect() Hook runs again and notices that genreData exists! Because of that, it does its job and executes the dispatch() function.
 
-  const handleClick = (currentGenreObject) => {
+  const handleClick = (genre) => {
     dispatch({
-      type: UPDATE_CURRENT_GENRE,
-      currentGenre: currentGenreObject,
+      type: UPDATE_SEARCH_GENRE,
+      genre
     });
   };
 
   return (
     <div className="genre-menu">
       <ButtonGroup variant="text" aria-label="text primary button group">
-      {genres.map((item) => (
-          <Button className={ item._id === currentGenre ? 'selected' : null } key={item._id}
+      {genres.map((item) => (<Button className={ item.name === searchGenre ? 'selected' : null } key={item._id}
             onClick={() => {
-              handleClick(item._id);
+              handleClick(item.name);
             }}>
             {item.name}
           </Button>
