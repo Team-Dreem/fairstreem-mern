@@ -23,7 +23,7 @@ db.once("open", async () => {
 
   await Artist.create({
     _id: "600b1de66ea21cf63a4db76c",
-    avatar: "../../public/images/default.png",
+    avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611627258618.jpg",
     artistName: "The American Revival",
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "fakeemail@artist.com",
@@ -148,7 +148,7 @@ db.once("open", async () => {
       "title": "Rise & Fall",
       "artistId": "600b1de66ea21cf63a4db76c",
       "description": "This is the real song upload test.",
-      "image": "default",
+      "image": "https://fairstreem.s3.us-east-2.amazonaws.com/1611627258618.jpg",
       "price": 0.99,
       "genre": {
         "_id": "600dfabaebcba48440047d28"
@@ -163,7 +163,7 @@ db.once("open", async () => {
       "title": "Porcelain",
       "artistId": "600b1de66ea21cf63a4db76c",
       "description": "This is the real song upload test.",
-      "image": "default",
+      "image": "https://fairstreem.s3.us-east-2.amazonaws.com/1611627397778.jpg",
       "price": 0.99,
       "genre": {
         "_id": "600dfabaebcba48440047d28"
