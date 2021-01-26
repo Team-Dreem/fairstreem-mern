@@ -42,7 +42,7 @@ function Signup(props) {
 
     <Container maxWidth="sm">
 
-      <Link to="/login">←Go to Login</Link>
+      <Link to="/login">← Go to Login</Link>
 
       <h2>Sign up to Listen to Music</h2>
 
