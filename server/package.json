@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "watch": "nodemon",
+    "watch": "nodemon server.js",
     "seed": "node config/seeds.js"
   },
   "keywords": [],
@@ -33,6 +33,6 @@
       "restart": "kill-port 3001",
       "crash": "kill-port 3001"
     },
-    "delay": "1500"
+    "delay": "2000"
   }
 }

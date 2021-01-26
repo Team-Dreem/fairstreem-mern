@@ -4,9 +4,10 @@ import { useQuery } from "@apollo/react-hooks";
 import { useStoreContext } from "../../utils/GlobalState";
 import {
   UPDATE_GENRES,
-  UPDATE_CURRENT_GENRE,
+  UPDATE_SEARCH_GENRE,
 } from "../../utils/actions";
 import { QUERY_GENRES } from "../../utils/queries";
+import { Button, ButtonGroup } from "@material-ui/core";
 
 // function GenreMenu({ setGenre }) {
 function GenreMenu() {
@@ -15,7 +16,7 @@ function GenreMenu() {
 
   const [state, dispatch] = useStoreContext();
 
-  const { genres } = state;
+  const { genres, searchGenre } = state;
   //Now when we use this component, we immediately call upon the useStoreContext() Hook to retrieve the current state from the global state object and the dispatch() method to update state. Because we only need the genres array out of our global state, we simply destructure it out of state so we can use it to provide to our returning JSX.
   const { loading, data: genreData } = useQuery(QUERY_GENRES);
 
@@ -38,6 +39,13 @@ function GenreMenu() {
         });
       });
     }
+
+    // return () => {
+    //   dispatch({
+    //     type: UPDATE_CURRENT_GENRE,
+    //     currentGenre: {},
+    //   });
+    // };
   }, [genreData, loading, dispatch]);
 
   // Now when this component loads and the response from the useQuery() Hook returns, the useEffect() Hook notices that genreData is not undefined anymore and runs the dispatch() function, setting our genre data to the global state!
@@ -46,27 +54,24 @@ function GenreMenu() {
 
   // But the beauty of the useEffect() Hook is that it not only runs on component load, but also when some form of state changes in that component. So when useQuery() finishes, and we have data in genreData, the useEffect() Hook runs again and notices that genreData exists! Because of that, it does its job and executes the dispatch() function.
 
-  const handleClick = (id) => {
+  const handleClick = (genre) => {
     dispatch({
-      type: UPDATE_CURRENT_GENRE,
-      currentGenre: id,
+      type: UPDATE_SEARCH_GENRE,
+      genre
     });
   };
 
   return (
-    <div>
-      <h2>Choose a Genre:</h2>
-      {genres.map((item) => (
-        <button
-          key={item._id}
-          onClick={() => {
-            // setGenre(item._id);
-            handleClick(item._id);
-          }}
-        >
-          {item.name}
-        </button>
+    <div className="genre-menu">
+      <ButtonGroup variant="text" aria-label="text primary button group">
+      {genres.map((item) => (<Button className={ item.name === searchGenre ? 'selected' : null } key={item._id}
+            onClick={() => {
+              handleClick(item.name);
+            }}>
+            {item.name}
+          </Button>
       ))}
+      </ButtonGroup>
     </div>
   );
 }

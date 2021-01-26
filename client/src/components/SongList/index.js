@@ -3,12 +3,17 @@ import { idbPromise } from "../../utils/helpers";
 import { useStoreContext } from '../../utils/GlobalState';
 import { UPDATE_SONGS } from '../../utils/actions';
 import { useQuery } from '@apollo/react-hooks';
-
 import SongItem from "../SongItem";
 import { QUERY_SONGS } from "../../utils/queries";
-import spinner from "../../assets/spinner.gif"
+import spinner from "../../assets/spinner.gif";
+import { Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-
+const useStyles = makeStyles((theme) => ({
+  root: {
+      flexGrow: 1
+  }
+}))
 
 function SongList() {
 const [state, dispatch] = useStoreContext();
@@ -16,7 +21,8 @@ const [state, dispatch] = useStoreContext();
 const { currentGenre } = state;
 
 const { loading, data } = useQuery(QUERY_SONGS);
-console.log("SongList DATA:", data);
+
+const classes = useStyles();
 
 useEffect(() => {
   // if there's data to be stored
@@ -53,37 +59,26 @@ function filterSongs() {
 }
 
   return (
-    <div className="my-2">
-      <h2>Songs:</h2>
-      {state.songs.length ? (
-        <div className="flex-row">
-            {filterSongs().map(song => (
+    <div className={classes.root + ' grid'}>
+      <Grid container spacing={2}>
+        {state.songs.length ? (
+          filterSongs().map(song => (
+              <Grid item sm={3} key={song._id}>
                 <SongItem
-                  key= {song._id}
                   _id={song._id}
-                  title={song.title}
                   artist={song.artist}
-                  description={song.description}
                   image={song.image}
-                  price={song.price}
-                  // genre={song.genre}
-                  // tags={song.tags}
                 />
-            ))}
-        </div>
+              </Grid>
+            ))
       ) : (
         <h3>You haven't added any songs yet!</h3>
       )}
       { loading ? 
       <img src={spinner} alt="loading" />: null}
+      </Grid>
     </div>
   );
 }
 
 export default SongList;
-
-// Again, we immediately execute the useStoreContext() function to retrieve the current global state object and the dipatch() method to update state. We then destructure the currentGenre data out of the state object so we can use it in the filterSongs() function.
-
-// We then implement the useEffect() Hook in order to wait for our useQuery() response to come in. Once the data object returned from useQuery() goes from undefined to having an actual value, we execute our dispatch() function, instructing our reducer function that it's the UPDATE_SONGS action and it should save the array of song data to our global store. When that's done, useStoreContext() executes again, giving us the song data needed display songs to the page.
-
-// Lastly, we need to update the code in the return statement to use state.songs.length instead of songs.length, since we are now retrieving songs from the state object

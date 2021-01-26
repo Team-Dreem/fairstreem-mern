@@ -1,14 +1,23 @@
 import React from "react";
 import { idbPromise } from "../../utils/helpers";
 import { Link } from "react-router-dom";
-import { pluralize } from "../../utils/helpers";
+// import { pluralize } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
+import "./style.css";
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
 
 function SongItem(item) {
   const [state, dispatch] = useStoreContext();
+console.log('item', item);
+  const { image, title, _id, price, song_url } = item;
 
-  const { image, title, _id, price, artist } = item;
+  console.log("SongItem image", image);
 
   const { cart } = state;
 
@@ -36,20 +45,30 @@ function SongItem(item) {
     }
   };
 
+  const useStyles = makeStyles({
+    root: {
+        maxWidth: 345
+    },
+    media: {
+        height: 140,
+    },
+  });
+
+  const classes = useStyles();
+
   return (
-    <div className="card px-1 py-1">
+    <Card className={classes.root}>
       <Link to={`/songs/${_id}`}>
-        <img alt={title} src={`/images/${image}`} />
-        <p>{title}</p>
+      <CardActionArea>
+        <CardMedia className={classes.media} image={item.image} />
+        <CardContent>
+          <Typography className="artist-name" gutterBottom variant="h5" component="h2">
+            { item.artist }
+          </Typography>
+        </CardContent>
+      </CardActionArea>
       </Link>
-      <div>
-        <div>
-          by {artist} 
-        </div>
-        <span>${price}</span>
-      </div>
-      <button onClick={addToCart}>Add to cart</button>
-    </div>
+    </Card>
   );
 }
 

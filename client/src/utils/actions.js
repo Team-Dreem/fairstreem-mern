@@ -1,6 +1,16 @@
-export const UPDATE_SONGS = "UPDATE_SONGS";
 export const UPDATE_GENRES = "UPDATE_GENRES";
+export const UPDATE_ARTISTS = "UPDATE_ARTISTS";
+export const UPDATE_USERS= "UPDATE_USERS";
+export const UPDATE_SONGS = "UPDATE_SONGS";
 export const UPDATE_CURRENT_GENRE = "UPDATE_CURRENT_GENRE";
+export const UPDATE_CURRENT_ARTIST = "UPDATE_CURRENT_ARTIST";
+export const UPDATE_CURRENT_USER = "UPDATE_CURRENT_USER";
+export const UPDATE_CURRENT_SONG = "UPDATE_CURRENT_SONG";
+export const UPDATE_SEARCH_TERM = "UPDATE_SEARCH_TERM";
+export const UPDATE_SEARCH_LOADING = "UPDATE_SEARCH_LOADING";
+export const UPDATE_SEARCH_RESULTS = "UPDATE_SEARCH_RESULTS";
+export const UPDATE_SEARCH_GENRE = "UPDATE_SEARCH_GENRE";
+
 
 // With these three actions, we're defining how three parts of our state will be maintained and updated:
 

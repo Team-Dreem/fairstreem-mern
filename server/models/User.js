@@ -35,10 +35,16 @@ const userSchema = new Schema(
       required: true,
       minlength: 5,
     },
-    friends: [
+    follows: [
       {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Artist",
+      },
+    ],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
       },
     ],
     orders: [Order.schema],
@@ -65,8 +71,8 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-userSchema.virtual('friendCount').get(function() {
-  return this.friends.length;
+userSchema.virtual("followCount").get(function () {
+  return this.follows.length;
 });
 
 const User = mongoose.model("User", userSchema);

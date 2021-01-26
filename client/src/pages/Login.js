@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from '@apollo/react-hooks';
 import { Link } from "react-router-dom";
-import { LOGIN } from "../utils/mutations"
+import { LOGIN, ARTIST_LOGIN } from "../utils/mutations"
 import Auth from "../utils/auth";
 import TextField from '@material-ui/core/TextField';
 import { FormControl, Button } from "@material-ui/core";
@@ -9,15 +9,25 @@ import Container from '@material-ui/core/Container';
 
 
 function Login(props) {
-  const [formState, setFormState] = useState({ email: '', password: '' })
-  const [login, { error }] = useMutation(LOGIN);
+  const [formState, setFormState] = useState({ email: '', password: '', accountType: '' });
+  const [login, {error}] = useMutation(LOGIN);
+  const [artistLogin] = useMutation(ARTIST_LOGIN);
 
   const handleFormSubmit = async event => {
     event.preventDefault();
     try {
-      const mutationResponse = await login({ variables: { email: formState.email, password: formState.password } })
-      const token = mutationResponse.data.login.token;
-      Auth.login(token);
+      if(formState.acctType === 'user')
+      {
+        const mutationResponse = await login({ variables: { email: formState.email, password: formState.password } })
+        const token = mutationResponse.data.login.token;
+        Auth.login(token);
+      }
+      else if(formState.acctType === 'artist')
+      {
+        const mutationResponse = await artistLogin({ variables: { email: formState.email, password: formState.password } })
+        const token = mutationResponse.data.artistLogin.token;
+        Auth.login(token);
+      }
     } catch (e) {
       console.log(e)
     }

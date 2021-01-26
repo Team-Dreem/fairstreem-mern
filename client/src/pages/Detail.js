@@ -28,30 +28,29 @@ function Detail() {
   useEffect(() => {
     // already in global store
     if (songs.length) {
-      setCurrentSong(songs.find(song => song._id === id));
-    } 
+      setCurrentSong(songs.find((song) => song._id === id));
+    }
     // retrieved from server
     else if (data) {
       dispatch({
         type: UPDATE_SONGS,
-        songs: data.songs
+        songs: data.songs,
       });
-  
+
       data.songs.forEach((song) => {
-        idbPromise('songs', 'put', song);
+        idbPromise("songs", "put", song);
       });
     }
     // get cache from idb
     else if (!loading) {
-      idbPromise('songs', 'get').then((indexedSongs) => {
+      idbPromise("songs", "get").then((indexedSongs) => {
         dispatch({
           type: UPDATE_SONGS,
-          songs: indexedSongs
+          songs: indexedSongs,
         });
       });
     }
   }, [songs, data, loading, dispatch, id]);
-  
 
   // const addToCart = () => {
   //   dispatch({
@@ -60,38 +59,37 @@ function Detail() {
   //   });
   // };
   const addToCart = () => {
-    const itemInCart = cart.find((cartItem) => cartItem._id === id)
-  
+    const itemInCart = cart.find((cartItem) => cartItem._id === id);
+
     if (itemInCart) {
       dispatch({
         type: UPDATE_CART_QUANTITY,
         _id: id,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
       });
       // if we're updating quantity, use existing item data and increment purchaseQuantity value by one
-      idbPromise('cart', 'put', {
+      idbPromise("cart", "put", {
         ...itemInCart,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
       });
     } else {
       dispatch({
         type: ADD_TO_CART,
-        song: { ...currentSong, purchaseQuantity: 1 }
+        song: { ...currentSong, purchaseQuantity: 1 },
       });
       // if song isn't in the cart yet, add it to the current shopping cart in IndexedDB
-      idbPromise('cart', 'put', { ...currentSong, purchaseQuantity: 1 });
+      idbPromise("cart", "put", { ...currentSong, purchaseQuantity: 1 });
     }
-  }
-  
+  };
 
   const removeFromCart = () => {
     dispatch({
       type: REMOVE_FROM_CART,
-      _id: currentSong._id
+      _id: currentSong._id,
     });
-  
+
     // upon removal from cart, delete the item from IndexedDB using the `currentSong._id` to locate what to remove
-    idbPromise('cart', 'delete', { ...currentSong });
+    idbPromise("cart", "delete", { ...currentSong });
   };
 
   return (
@@ -100,7 +98,7 @@ function Detail() {
         <div className="container my-1">
           <Link to="/">← Back to Songs</Link>
 
-          <h2>{currentSong.name}</h2>
+          <h2>{currentSong.title}</h2>
 
           <p>{currentSong.description}</p>
 
@@ -114,11 +112,10 @@ function Detail() {
               Remove from Cart
             </button>
           </p>
-
-          <img
-            src={`/images/${currentSong.image}`}
-            alt={currentSong.name}
-          />
+          <audio className="audio" controls>
+            <source src={`${currentSong.song_url}`} type="audio/mpeg" />
+          </audio>
+          <img src={`/images/${currentSong.image}`} alt={currentSong.title} />
         </div>
       ) : null}
       {loading ? <img src={spinner} alt="loading" /> : null}
@@ -150,5 +147,3 @@ export default Detail;
 // If no, we don't have data in global state and we don't have a connection to the server, the loading data will be undefined. We'll then go to the song object store in IndexedDB and retrieve the data from there to provide the global state object.
 
 // If this seems like a lot, remember that you'll be making fantastic use of the useEffect() Hook React provides. It will constantly check the dependency array for a change in any of the values listed in it and continue to run the useEffect() Hook's callback function until that data stops changing and you're good to go.
-
-

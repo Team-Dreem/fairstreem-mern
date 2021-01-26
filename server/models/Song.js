@@ -8,16 +8,28 @@ const songSchema = new Schema({
     required: true,
     trim: true,
   },
-  artist: {
-    type: String,
+  artistId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Artist',
     required: true,
+    trim: true,
+  },
+  artistName: {
+    type: String,
+    ref: 'Artist',
+    trim: true,
+  },
+  album: {
+    type: String,
     trim: true,
   },
   description: {
     type: String,
+    trim: true,
   },
   image: {
     type: String,
+    trim: true,
   },
   price: {
     type: Number,
@@ -36,17 +48,10 @@ const songSchema = new Schema({
   ],
   song_url: {
     type: String,
-  },
-  s3_object_key: {
-    type: String,
-  },
-  filePath: {
-    type: String,
-    required: true,
+    trim: true,
   },
   likes: {
     type: Number,
-    required: true,
   },
 });
 

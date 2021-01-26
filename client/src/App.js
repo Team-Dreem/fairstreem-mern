@@ -10,10 +10,13 @@ import Login from "./pages/Login";
 import ArtistSignup from "./pages/ArtistSignup";
 import ListenerSignup from "./pages/ListenerSignup";
 import Signup from "./pages/Signup";
+import SongListByArtist from "./components/SongListByArtist"
 import Nav from "./components/Nav";
 import { StoreProvider } from "./utils/GlobalState";
 import OrderHistory from "./pages/OrderHistory";
 import Success from "./pages/Success";
+import ArtistProfile from "./pages/ArtistProfile";
+import SongDetail from "./pages/SongDetail";
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -43,6 +46,10 @@ function App() {
               <Route exact path="/orderHistory" component={OrderHistory} />
               <Route exact path="/songs/:id" component={Detail} />
               <Route exact path="/success" component={Success} />
+              <Route exact path="/artists/:artistName/:artistId" component={ArtistProfile} />
+              {/* <Route exact path="/artists/:artistName/:artistId/songs" component={SongListByArtist} /> */}
+              <Route exact path="/artists/:artistName/:artistId/songs/:songId" component={SongDetail} />
+
               <Route component={NoMatch} />
             </Switch>
           </StoreProvider>
