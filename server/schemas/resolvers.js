@@ -20,6 +20,9 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+    artistsByGenre: async (parent, { genre }, context) => {
+      return Artist.find({ genre });
+    },
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
       // This will give us the base domain that the request came from. Locally, that would be http://localhost:3001, since the GraphQL Playground is running on port 3001.

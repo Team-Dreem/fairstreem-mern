@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 
 function SearchResults() {
     const classes = useStyles();
-    const [state, dispatch] = useStoreContext();
+    const [state] = useStoreContext();
     const { loading, searchResults: results } = state;
 
     if (loading) {
@@ -30,7 +30,7 @@ function SearchResults() {
             </div>
             );
         } else {
-            return <h3 className="no-result">No results for that Artist!</h3>;
+            return <p className="no-result">No results found.</p>;
         }
     } else {
         return null;

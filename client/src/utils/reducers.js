@@ -43,8 +43,7 @@ export const reducer = (state, action) => {
     case UPDATE_CURRENT_GENRE:
       return {
         ...state,
-        currentGenre: action.currentGenre,
-        searchTerm: null
+        currentGenre: action.currentGenre
       };
       case UPDATE_CURRENT_ARTIST:
       return {
@@ -121,7 +120,7 @@ export const reducer = (state, action) => {
     case UPDATE_SEARCH_GENRE:
       return {
         ...state,
-        searchTerm: null,
+        searchTerm: '',
         searchGenre: action.genre
       };
 
