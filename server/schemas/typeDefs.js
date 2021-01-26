@@ -115,10 +115,6 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addComment(commentText: String!): Comment
-    addReaction(commentId: ID!, reactionBody: String!): Comment
-    addFollow(artistId: ID!): Artist
-    addFollower(userId: ID!): User
     addUser(
       username: String!
       email: String!
@@ -137,8 +133,8 @@ const typeDefs = gql`
     ): Auth
     addComment(commentText: String!): Comment
     addReaction(commentId: ID!, reactionBody: String!): Comment
-    addFollow(artistId: ID!): Artist
-    addFollower(userId: ID!): User
+    addFollow(artistId: ID!): User
+    addFollower(userId: ID!): Artist
     addOrder(songs: [ID]!): Order
     updateUser(
       username: String
