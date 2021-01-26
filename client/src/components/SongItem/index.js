@@ -14,8 +14,10 @@ import Typography from '@material-ui/core/Typography';
 
 function SongItem(item) {
   const [state, dispatch] = useStoreContext();
-
+console.log('item', item);
   const { image, title, _id, price, song_url } = item;
+
+  console.log("SongItem image", image);
 
   const { cart } = state;
 

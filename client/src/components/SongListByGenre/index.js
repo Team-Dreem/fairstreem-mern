@@ -52,10 +52,13 @@ useEffect(() => {
 
 function filterSongs() {
   if (!currentGenre) {
+    console.log("state.songs", state.songs)
     return state.songs;
   }
+  console.log("filter", state.songs.filter(song => song.genre._id === currentGenre._id));
 
-  return state.songs.filter(song => song.genre._id === currentGenre._id);
+  return state.songs.filter(song => song.genre === currentGenre._id);
+
 }
 console.log("currentGenre", currentGenre);
 
