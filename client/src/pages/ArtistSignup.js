@@ -93,9 +93,6 @@ function Signup(props) {
           margin="normal"
           id="musicgenre"
           shrink id="musicgenre"
-          InputLabelProps={{
-            shrink: true,
-          }}
           htmlFor="musicgenre">Music Genre
         </InputLabel>
         <Select
@@ -108,10 +105,7 @@ function Signup(props) {
           label="Music Genre"
           id="musicgenre"
           fullWidth
-          InputLabelProps={{
-            shrink: true,
-          }}
-          value={GenreMenu}
+          // value={GenreMenu}
         >
           <option value={10}>Rock</option>
           <option value={20}>Classical</option>
