@@ -39,6 +39,8 @@ router.post("/song-upload", function (req, res) {
     Song.create({
       title: req.body.title,
       artistId: req.body.artistId,
+      artistName: req.body.artistName,
+      album: req.body.album,
       description: req.body.description,
       image: req.body.image,
       price: req.body.price,
@@ -57,6 +59,8 @@ router.post("/song-upload", function (req, res) {
       _id: req.body._id,
       title: req.body.title,
       artistId: req.body.artistId,
+      artistName: req.body.artistName,
+      album: req.body.album,
       description: req.body.description,
       image: req.body.image,
       price: req.body.price,

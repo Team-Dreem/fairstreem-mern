@@ -29,13 +29,15 @@ export const QUERY_SONGS_BY_GENRE = gql`
       _id
       title
       artistId
+      artistName
+      album
       description
       image
       price
       genre {
         _id
       }
-      tags 
+      tags
       song_url
     }
   }
@@ -47,13 +49,16 @@ export const QUERY_SONGS = gql`
       _id
       title
       artistId
+      artistName
+      album
       description
       image
       price
-      song_url
       genre {
         _id
       }
+      tags
+      song_url
     }
   }
 `;
@@ -148,6 +153,7 @@ export const QUERY_ARTISTS = gql`
       password
       genre
       bio
+      website
       socialMedia
       songs {
         _id

@@ -10,7 +10,7 @@ db.once("open", async () => {
   await Comment.deleteMany();
 
   await Artist.create({
-    _id: "600b1de66ea21cf63a4db76c",
+    _id: "600b1de66ea21cf63a4db76b",
     avatar: "../../public/images/default.png",
     artistName: "Test",
     bio: "This is a default bio. Tell your listeners more about yourself!",
@@ -18,6 +18,18 @@ db.once("open", async () => {
     password: "12345",
     genre: "Test",
     songs: ["600a28d52e97ee7ae2cf63a5"],
+    followers: [],
+  });
+
+  await Artist.create({
+    _id: "600b1de66ea21cf63a4db76c",
+    avatar: "../../public/images/default.png",
+    artistName: "The American Revival",
+    bio: "This is a default bio. Tell your listeners more about yourself!",
+    email: "fakeemail@artist.com",
+    password: "12345",
+    genre: "Rock/Alternative",
+    songs: [],
     followers: [],
   });
 
@@ -118,19 +130,49 @@ db.once("open", async () => {
       song_url: "empty",
       likes: 6,
     },
-    // {
-    //   _id: "600b1de76ea21cf63a4db77c",
-    //   title: "El Toro",
-    //   artistId: "600b1de66ea21cf63a4db76e",
-    //   description:
-    //     "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
-    //   image: "El_Toro.jpg",
-    //   price: 0.99,
-    //   genre: genres[2]._id,
-    //   tags: "outlaw",
-    //   song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611538839197.mp3",
-    //   likes: 6,
-    // },
+    {
+      _id: "600b1de76ea21cf63a4db77c",
+      title: "El Toro",
+      artistId: "600b1de66ea21cf63a4db76e",
+      description:
+        "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
+      image: "El_Toro.jpg",
+      price: 0.99,
+      genre: genres[2]._id,
+      tags: "outlaw",
+      song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611538839197.mp3",
+      likes: 6,
+    },
+    {
+      "_id": "600f6827ded0c5264cbe4a28",
+      "title": "Rise & Fall",
+      "artistId": "600b1de66ea21cf63a4db76c",
+      "description": "This is the real song upload test.",
+      "image": "default",
+      "price": 0.99,
+      "genre": {
+        "_id": "600dfabaebcba48440047d28"
+      },
+      "tags": [
+        ""
+      ],
+      "song_url": "https://fairstreem.s3.us-east-2.amazonaws.com/1611622431810.mp3"
+    },
+    {
+      "_id": "600f667905d21d244b5182ea",
+      "title": "Porcelain",
+      "artistId": "600b1de66ea21cf63a4db76c",
+      "description": "This is the real song upload test.",
+      "image": "default",
+      "price": 0.99,
+      "genre": {
+        "_id": "600dfabaebcba48440047d28"
+      },
+      "tags": [
+        ""
+      ],
+      "song_url": "https://fairstreem.s3.us-east-2.amazonaws.com/1611622008635.mp3"
+    },
   ]);
 
   await User.deleteMany();
