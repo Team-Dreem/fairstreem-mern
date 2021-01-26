@@ -29,7 +29,7 @@ db.once("open", async () => {
     email: "fakeemail@artist.com",
     password: "12345",
     genre: "Rock/Alternative",
-    songs: [],
+    songs: ["600f6827ded0c5264cbe4a28", "600f667905d21d244b5182ea"],
     followers: [],
   });
 
