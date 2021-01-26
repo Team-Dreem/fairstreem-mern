@@ -67,7 +67,7 @@ function GenreMenu() {
     <div className="genre-menu">
       <ButtonGroup variant="text" aria-label="text primary button group">
       {genres.map((item) => (
-        <button
+        <Button
           key={item._id}
           onClick={() => {
             // setGenre(item._id);
@@ -75,7 +75,7 @@ function GenreMenu() {
           }}
         >
           {item.name}
-        </button>
+        </Button>
       ))}
       </ButtonGroup>
     </div>

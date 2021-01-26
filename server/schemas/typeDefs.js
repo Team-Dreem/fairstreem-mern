@@ -39,6 +39,8 @@ const typeDefs = gql`
     _id: ID
     title: String
     artistId: String
+    artistName: String
+    album: String
     description: String
     image: String
     price: Float

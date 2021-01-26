@@ -14,6 +14,15 @@ const songSchema = new Schema({
     required: true,
     trim: true,
   },
+  artistName: {
+    type: String,
+    ref: 'Artist',
+    trim: true,
+  },
+  album: {
+    type: String,
+    trim: true,
+  },
   description: {
     type: String,
     trim: true,
