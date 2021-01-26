@@ -46,7 +46,7 @@ export default function LikeButton() {
 
     return (
         <Button onClick={()=>{
-            console.log("CURRENT ARTIST",state);
+            console.log("CURRENT ARTIST",state.currentArtist);
             addFollowFunction();
             addFollowerFunction()
             
