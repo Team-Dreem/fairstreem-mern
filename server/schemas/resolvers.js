@@ -4,6 +4,7 @@ const { Artist, Comment, User, Song, Genre, Order } = require("../models");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
+
 const s3Bucket = process.env.S3_BUCKET;
 
 const resolvers = {
@@ -318,11 +319,11 @@ const resolvers = {
     
       throw new AuthenticationError('You need to be logged in!');
     },
-    addFollower: async (parent, { userId }, context) => {
+    addFollower: async (parent, { artistId }, context) => {
       if (context.user) {
         const updatedArtist = await Artist.findOneAndUpdate(
-          { _id: artist._id },
-          { $addToSet: { followers: userId } },
+          { _id: artistId },
+          { $addToSet: { followers: context.user._id } },
           { new: true }
         ).populate('followers');
     

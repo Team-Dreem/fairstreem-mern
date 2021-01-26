@@ -134,7 +134,7 @@ const typeDefs = gql`
     addComment(commentText: String!): Comment
     addReaction(commentId: ID!, reactionBody: String!): Comment
     addFollow(artistId: ID!): User
-    addFollower(userId: ID!): Artist
+    addFollower(artistId: ID!): Artist
     addOrder(songs: [ID]!): Order
     updateUser(
       username: String
