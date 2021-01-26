@@ -62,7 +62,7 @@ console.log("data", data);
     return state.songs.filter((song) => song.artistId === currentArtist._id);
   }
   console.log("filterSongs", filterSongs());
-  console.log("currenArtist._id", currentArtist._id);
+  console.log("currentArtist._id", currentArtist._id);
 
   const artistSongs = state.songs.filter(
     (song) => song.artistId === currentArtist._id
@@ -124,6 +124,8 @@ console.log("data", data);
 
   return (
     <div>
+    <h2>{currentArtist.artistName}'s Songs:</h2>
+
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead align="right">
@@ -152,8 +154,8 @@ console.log("data", data);
         </Table>
       </TableContainer>
       {/* <h2>Songs Sent to SongCard:</h2> */}
-      <h2>{currentArtist.artistName}'s Songs:</h2>
-      {state.songs.length ? (
+      
+      {artistSongs.length ? (
         <div className="flex-row">
           {filterSongs().map((song) => (
             <SongCard

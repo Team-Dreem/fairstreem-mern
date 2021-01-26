@@ -63,3 +63,25 @@ export const ADD_ARTIST = gql`
     }
   }
 `;
+//adds User to Artist
+export const ADD_FOLLOW = gql`
+mutation addFollow($artistId:ID!) {
+  addFollow(artistId: $artistId) {
+    followers{
+      username
+      _id
+    }
+  }
+}
+`;
+//adds Artist to User
+export const ADD_FOLLOWER = gql`
+mutation addFollower($userId: ID!){
+  addFollower(userId: $userId) {
+    follows{
+      artistName
+      _id
+    }
+  }
+}
+`

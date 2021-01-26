@@ -115,6 +115,10 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    addComment(commentText: String!): Comment
+    addReaction(commentId: ID!, reactionBody: String!): Comment
+    addFollow(artistId: ID!): Artist
+    addFollower(userId: ID!): User
     addUser(
       username: String!
       email: String!

@@ -314,6 +314,52 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+    addComment: async (parent, args, context) => {
+      if (context.user) {
+        const comment = await Comment.create({
+          ...args,
+          username: context.user.username,
+        });
+
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { comments: comment._id } },
+          { new: true }
+        );
+
+        return comment;
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    addFollow: async (parent, { artistId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { follows: artistId } },
+          { new: true }
+        ).populate('follows');
+    
+        return updatedUser;
+      }
+    
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    addFollower: async (parent, { userId }, context) => {
+      // if (context.user) {
+        const updatedArtist = await Artist.findOneAndUpdate(
+          { _id: context.artist._id },
+          { $addToSet: { followers: userId } },
+          { new: true }
+        ).populate('followers');
+    
+        return updatedArtist;
+      // }
+    
+      // throw new AuthenticationError('You need to be logged in!');
+    },
+
+
     // updateSong: async (parent, { _id, quantity }) => {
     //   const decrement = Math.abs(quantity) * -1;
 

@@ -6,12 +6,16 @@ import { UPDATE_ARTISTS, UPDATE_CURRENT_ARTIST } from "../utils/actions";
 import { QUERY_ARTISTS } from "../utils/queries";
 import { idbPromise } from "../utils/helpers";
 import spinner from "../assets/spinner.gif";
+import Auth from '../utils/auth'
 
 import Grid from "@material-ui/core/Grid";
 // import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 
 import SongTableSimple from "../components/SongTableSimple";
+import CommentForm from '../components/CommentForm'
+import CommentList from '../components/CommentList'
+import LikeButton from '../components/LikeButton'
 
 function ArtistProfile() {
   const [state, dispatch] = useStoreContext();
@@ -65,6 +69,7 @@ function ArtistProfile() {
               {currentArtist.artistName}{" "}
               <span>
                 <Button>like</Button>
+                <LikeButton></LikeButton>
               </span>{" "}
             </h1>
           </Grid>
@@ -86,6 +91,10 @@ function ArtistProfile() {
           </Grid>
           <Grid container justify="center">
             <h1>COMMENT FEED</h1>
+           <CommentForm></CommentForm>
+           <CommentList></CommentList>
+           <CommentList></CommentList>
+
           </Grid>
         </div>
       ) : null}
