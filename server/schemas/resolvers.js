@@ -80,9 +80,33 @@ const resolvers = {
     },
     // Here, we pass in the parent as more of a placeholder parameter. It won't be used, but we need something in that first parameter's spot so we can access the username argument from the second parameter. We use a ternary operator to check if username exists. If it does, we set params to an object with a username key set to that value. If it doesn't, we simply return an empty object.
 
-    //We then pass that object, with or without any data in it, to our .find() method. If there's data, it'll perform a lookup by a specific username. If there's not, it'll simply return every thought.
+    //We then pass that object, with or without any data in it, to our .find() method. If there's data, it'll perform a lookup by a specific username. If there's not, it'll simply return every comment.
     genres: async () => {
       return await Genre.find();
+    },
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id })
+          .select("-__v -password")
+          .populate("comments")
+          .populate("follows");
+
+        return userData;
+      }
+
+      throw new AuthenticationError("Not logged in");
+    },
+    meArtist: async (parent, args, context) => {
+      if (context.artist) {
+        const artistData = await Artist.findOne({ _id: context.artist._id })
+          .select("-__v -password")
+          .populate("comments")
+          .populate("followers");
+
+        return artistData;
+      }
+
+      throw new AuthenticationError("Not logged in");
     },
     order: async (parent, { _id }, context) => {
       if (context.user) {
@@ -160,6 +184,51 @@ const resolvers = {
 
       return { token, artist };
     },
+    addComment: async (parent, args, context) => {
+      if (context.user) {
+        const comment = await Comment.create({
+          ...args,
+          username: context.user.username,
+        });
+
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { comments: comment._id } },
+          { new: true }
+        );
+
+        return comment;
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    addFollow: async (parent, { artistId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { follows: artistId } },
+          { new: true }
+        ).populate('follows');
+    
+        return updatedUser;
+      }
+    
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    addFollower: async (parent, { userId }, context) => {
+      if (context.user) {
+        const updatedArtist = await Artist.findOneAndUpdate(
+          { _id: context.artist._id },
+          { $addToSet: { followers: userId } },
+          { new: true }
+        ).populate('followers');
+    
+        return updatedArtist;
+      }
+    
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
     addOrder: async (parent, { songs }, context) => {
       console.log("context.user", context.user);
       console.log("songs in addOrder arg", songs);
@@ -178,6 +247,24 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+    addReaction: async (parent, { commentId, reactionBody }, context) => {
+      if (context.user) {
+        const updatedComment = await Comment.findOneAndUpdate(
+          { _id: commentId },
+          {
+            $push: {
+              reactions: { reactionBody, username: context.user.username },
+            },
+          },
+          { new: true, runValidators: true }
+        );
+
+        return updatedComment;
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
+    },
+
     addUser: async (parent, args) => {
       const user = await User.create(args);
       const token = signToken(user);

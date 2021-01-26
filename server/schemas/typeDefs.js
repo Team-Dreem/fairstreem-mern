@@ -103,6 +103,8 @@ const typeDefs = gql`
     comment(_id: ID!): Comment
     comments(username: String): [Comment]
     genres: [Genre]
+    me: User
+    meArtist: Artist
     songs(genre: ID, name: String): [Song]
     song(_id: ID): Song
     user(_id: ID, username: String): User
@@ -129,6 +131,10 @@ const typeDefs = gql`
       socialMedia: String
       avatar: String
     ): Auth
+    addComment(commentText: String!): Comment
+    addReaction(commentId: ID!, reactionBody: String!): Comment
+    addFollow(artistId: ID!): Artist
+    addFollower(userId: ID!): User
     addOrder(songs: [ID]!): Order
     updateUser(
       username: String
