@@ -20,6 +20,9 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+    artists: async () => {
+      return Artist.find().populate("followers").populate("comments");
+    },
     artistsByGenre: async (parent, { genre }, context) => {
       return Artist.find({ genre });
     },
