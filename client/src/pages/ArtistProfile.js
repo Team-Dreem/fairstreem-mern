@@ -11,6 +11,8 @@ import SongTableSimple from '../components/SongTableSimple'
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import {QUERY_ONE_ARTIST} from '../utils/queries'
 import { Redirect, useParams } from 'react-router-dom';
+import CommentList from '../components/CommentList'
+import CommentForm from '../components/CommentForm'
 
 import Auth from '../utils/auth';
 
@@ -46,7 +48,7 @@ function ArtistProfile() {
 
             <Grid container justify="center">
                 <Grid item md={6} spacing={2}>
-                    <img src={artist.avatar} />
+                    <img src="" />
                 </Grid>
 
                 <Grid item md={6} spacing={2}>
@@ -60,15 +62,21 @@ function ArtistProfile() {
             </Grid>
 
             <Grid container>
-                <SongCard></SongCard>
-                <SongCard></SongCard>
-                <SongCard></SongCard>
-                <SongCard></SongCard>
+              
                 <SongTableSimple artist={artist}></SongTableSimple>
 
+
             </Grid>
+            
             <Grid container justify="center">
-                <h1>COMMENT FEED</h1>
+            <h1>COMMENT SECTION</h1>
+                <CommentForm></CommentForm>
+                <Grid item xs={12}>
+                <CommentList></CommentList>
+                </Grid>
+                <Grid item xs>
+                <CommentList></CommentList>
+                </Grid>
             </Grid>
         </>
     )
