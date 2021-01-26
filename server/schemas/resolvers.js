@@ -202,33 +202,6 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be logged in!");
     },
-    addFollow: async (parent, { artistId }, context) => {
-      if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { follows: artistId } },
-          { new: true }
-        ).populate('follows');
-    
-        return updatedUser;
-      }
-    
-      throw new AuthenticationError('You need to be logged in!');
-    },
-    addFollower: async (parent, { userId }, context) => {
-      if (context.user) {
-        const updatedArtist = await Artist.findOneAndUpdate(
-          { _id: context.artist._id },
-          { $addToSet: { followers: userId } },
-          { new: true }
-        ).populate('followers');
-    
-        return updatedArtist;
-      }
-    
-      throw new AuthenticationError('You need to be logged in!');
-    },
-
     addOrder: async (parent, { songs }, context) => {
       console.log("context.user", context.user);
       console.log("songs in addOrder arg", songs);
@@ -346,17 +319,17 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     addFollower: async (parent, { userId }, context) => {
-      // if (context.user) {
+      if (context.user) {
         const updatedArtist = await Artist.findOneAndUpdate(
-          { _id: context.artist._id },
+          { _id: artist._id },
           { $addToSet: { followers: userId } },
           { new: true }
         ).populate('followers');
     
         return updatedArtist;
-      // }
+       }
     
-      // throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError('You need to be logged in!');
     },
 
 
