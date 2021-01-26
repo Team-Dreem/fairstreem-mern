@@ -42,7 +42,7 @@ function Login(props) {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="false">
 
 
       {/* <Link to="/signup">

@@ -5,6 +5,8 @@ import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
 import { FormControl, InputLabel, Select, TextField, Button } from "@material-ui/core";
 import Container from '@material-ui/core/Container';
+import { spacing } from '@material-ui/system';
+import Box from '@material-ui/core/Box';
 import { getOperationRootType } from "graphql";
 import GenreMenu from "../components/GenreMenu";
 
@@ -36,16 +38,19 @@ function Signup(props) {
     });
   };
 
+
   return (
 
     <Container maxWidth="sm">
 
+
       <Link to="/login">← Go to Login</Link>
 
       <h2>Sign up to Share Music</h2>
-
+      <Box m={3} /> 
+     <div  mt="4"  class=".MuiFormControl-fullWidth	">
       <FormControl onSubmit={handleFormSubmit}>
-
+      <div class=".MuiFormControl-fullWidth	">
         <TextField
         color="primary"
           id="username"
@@ -168,9 +173,9 @@ function Signup(props) {
 
 
         <Button variant="contained">Submit</Button>
- 
+ </div>
       </FormControl>
-
+</div>
     </Container>
   );
 }
