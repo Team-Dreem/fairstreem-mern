@@ -128,3 +128,25 @@ mutation addSong($title: String!, $price: Float!, $description: String, $genre: 
     }
   }
 `
+
+export const UPDATE_USER_AVATAR = gql`
+mutation updateUserAvatar($avatarUrl: String!) {
+  updateUser(avatar: $avatarUrl) {
+    _id
+    avatar
+    username
+    email
+    followCount
+    follows {
+      _id
+      avatar
+      artistName
+    }
+    orders {
+      songs {
+        _id
+      }
+    }
+  }
+}
+`;
