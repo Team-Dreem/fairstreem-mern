@@ -149,7 +149,7 @@ function SongTableSimple() {
                 {/* <TableCell component="th" scope="row">
                                   {row.name}
                               </TableCell> */}
-                <TableCell align="center">{row.playBtn}</TableCell>
+                <TableCell align="left">{row.playBtn}</TableCell>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="right">{row.album}</TableCell>
                 <TableCell align="right">{row.playcount}</TableCell>
