@@ -28,7 +28,8 @@ function ArtistProfile() {
 
   const { loading, data } = useQuery(QUERY_ARTISTS);
 
-  const currentArtist = state.artists.find((artist) => artist._id === artistId);
+  // const currentArtist = state.artists.find((artist) => artist._id === artistId);
+  const selectedArtist = state.artists.find((artist) => artist._id === artistId);
   // console.log("data", data);
   // console.log("state.artists", state.artists)
   // console.log("currentArtist", currentArtist);
@@ -100,8 +101,8 @@ function ArtistProfile() {
             <h1>COMMENT FEED</h1>
            <CommentForm></CommentForm>
            <CommentList 
-           comments={currentArtist.comments}
-           title={`Comments for ${currentArtist.artistName}`}
+           comments={selectedArtist.comments}
+           title={`Comments for ${selectedArtist.artistName}`}
            />
           </Grid>
         </div>
