@@ -21,6 +21,21 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+    artistByParams: async (parent, { _id, artistName }) => {
+      const params = {};
+      if (_id) {
+        params._id = _id;
+      }
+
+      if (artistName) {
+        params.artistName =  {
+          $regex: artistName,
+        };
+      }
+      return await Artist.find(params)
+        .populate("followers")
+        .populate("comments");
+    },
     artists: async () => {
       return Artist.find().populate("followers").populate("comments");
     },

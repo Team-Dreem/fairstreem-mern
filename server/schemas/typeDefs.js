@@ -90,7 +90,8 @@ const typeDefs = gql`
   type Query {
     search(term: String!): [Artist]
     artist(_id: ID, artistName: String): Artist
-    artists(_id: ID, artistName: String): [Artist]
+    artistByParams(_id: ID, artistName: String): Artist
+    artists: [Artist]
     artistsByGenre(genre: String): [Artist]
     comment(_id: ID!): Comment
     comments(username: String): [Comment]

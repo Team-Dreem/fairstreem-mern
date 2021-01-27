@@ -7,7 +7,7 @@ const artistSchema = new Schema(
   {
     avatar: {
       type: String,
-      defaultValue: "../../public/images/default.png",
+      defaultValue: "https://fairstreem.s3.us-east-2.amazonaws.com/1611761554180.png",
       trim: true,
     },
     artistName: {

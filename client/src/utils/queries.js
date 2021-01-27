@@ -6,13 +6,12 @@ export const QUERY_ME = gql`
       _id
       avatar
       username
-      firstName
-      lastName
       email
       followCount
       follows {
         _id
-        username
+        avatar
+        artistName
       }
       orders {
         songs {
@@ -120,31 +119,30 @@ export const QUERY_USER = gql`
 }
 `;
 
-// export const QUERY_ARTISTS = gql`
-//   query getArtists($_id: ID){
-//     artists(_id: $_id) {
-//       _id
-//       avatar
-//       artistName
-//       email
-//       password
-//       genre
-//       bio
-//       socialMedia
-//       songs {
-//         _id
-//         title
-//       }
-//       followers {
-//         _id
-//         username
-//       }
-//     }
-//   }
-// `;
+export const QUERY_ARTIST_BY_PARAMS = gql`
+  query getArtist($_id: ID){
+    artist(_id: $_id) {
+      _id
+      avatar
+      artistName
+      email
+      password
+      genre
+      bio
+      socialMedia
+      songs {
+        _id
+      }
+      followers {
+        _id
+        username
+      }
+    }
+  }
+`;
 
 export const QUERY_ARTISTS = gql`
-  query artists {
+ {
     artists {
       _id
       avatar
@@ -157,7 +155,6 @@ export const QUERY_ARTISTS = gql`
       socialMedia
       songs {
         _id
-        title
       }
       followers {
         _id
