@@ -134,13 +134,14 @@ const typeDefs = gql`
       username: String
       email: String
       password: String
+      avatar: String
     ): User
     login(email: String!, password: String!): Auth
     artistLogin(email: String!, password: String!): AuthArtist
     addSong(
       title: String!
       album: String
-      genre: ID
+      genre: ID!
       description: String
       price: Float!
       tags: [String]

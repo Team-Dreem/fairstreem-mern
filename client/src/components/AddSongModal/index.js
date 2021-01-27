@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { Button } from '@material-ui/core';
+import { FormControl, InputLabel, Select, TextField, Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -39,7 +39,7 @@ export default function AddSongModal() {
     };
 
     //initialize empty state for all form inputs
-    const [formState, setFormState] = useState({ title: "", price: "", description: "", genre: "", file: "", album: "" });
+    const [formState, setFormState] = useState({ title: "", price: 0, description: "", genre: "", file: "", album: "" });
     const [addSong] = useMutation(ADD_SONG);
     //will extract artistId from global state
     const [state, dispatch] = useStoreContext();
@@ -48,6 +48,7 @@ export default function AddSongModal() {
     //handlers and mutations
     const handleFormSubmit = async (event) => {
         event.preventDefault();
+       
         //    console.log("FORMSTATE", formState.file)
         //    console.log("FORM", document.getElementById("file").files[0])
 
@@ -65,24 +66,24 @@ export default function AddSongModal() {
             .then((response) => {
                 console.log("AWS url", response.data.song_url);
 
-
+                const price = parseFloat(formState.price)
                 /// graph ql mutation to add song to mongoDB
-                 addSong({
+                addSong({
                     variables: {
                         title: formState.title,
-                        price: formState.price,
+                        price: price,
                         description: formState.description,
                         genre: formState.genre,
                         song_url: response.data.song_url,
-                        artistId: state.currentArtist._id,
+
                         album: formState.album,
-                        likes: 0
+
                     }
                 })
             })
 
     }
-//update the state every time input is changed to keep track of input, to send to mutation
+    //update the state every time input is changed to keep track of input, to send to mutation
     function handleChange(event) {
         console.log("handleChange");
         const { name, value } = event.target;
@@ -155,13 +156,30 @@ export default function AddSongModal() {
                                     onChange={handleChange} />
                             </div>
                             <div>
-                                <label for="genre">Genre:</label>
-                                <input
-                                    name="genre"
-                                    id="genre"
+                                <Select
+                                    required
+                                    native
+                                    fullWidth
                                     onChange={handleChange}
-                                />
+                                    inputProps={{
+                                        name: 'genre',
+                                        id: 'genre',
+                                    }}
+                                >
+                                    <option aria-label="None" value="" />
+                                    <option value={'600dfabaebcba48440047d26'}>Rock/Alternative</option>
+                                    <option value={"600dfabaebcba48440047d2d"}>Classical</option>
+                                    <option value={"600dfabaebcba48440047d2c"}>Blues</option>
+                                    <option value={"600dfabaebcba48440047d2b"}>Jazz</option>
+                                    <option value={"600dfabaebcba48440047d28"}>Country</option>
+                                    <option value={"600dfabaebcba48440047d2a"}>Electronic</option>
+                                    <option value={"600dfabaebcba48440047d29"}>Hip Hop</option>
+                                    <option value={"600dfabaebcba48440047d27"}>R and B</option>
+                                    <option value={"600dfabaebcba48440047d2e"}>Other</option>
+                                </Select>
                             </div>
+
+
 
                             <label for="file">Upload song!</label>
                             <input id="file" name="file" type="file"

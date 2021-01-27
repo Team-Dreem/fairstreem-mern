@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useStoreContext } from "../utils/GlobalState";
 import { useQuery } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
-import { UPDATE_ARTISTS, UPDATE_CURRENT_ARTIST } from "../utils/actions";
+import { UPDATE_ARTISTS, UPDATE_SELECTED_ARTIST } from "../utils/actions";
 import { QUERY_ARTISTS } from "../utils/queries";
 import { idbPromise } from "../utils/helpers";
 import spinner from "../assets/spinner.gif";
@@ -34,7 +34,7 @@ function ArtistProfile() {
   // console.log("currentArtist", currentArtist);
 
   useEffect(() => {
-    if (data && !currentArtist) {
+    if (data && !selectedArtist) {
       dispatch({
         type: UPDATE_ARTISTS,
         artists: data.artists,
@@ -42,10 +42,10 @@ function ArtistProfile() {
       data.artists.forEach((artist) => {
         idbPromise("artists", "put", artist);
       });
-    } else if (currentArtist) {
+    } else if (selectedArtist) {
       dispatch({
-        type: UPDATE_CURRENT_ARTIST,
-        currentArtist,
+        type: UPDATE_SELECTED_ARTIST,
+        selectedArtist: selectedArtist,
       });
       // get cache from idb
     } else if (!loading) {
@@ -59,21 +59,21 @@ function ArtistProfile() {
 
     // return () => {
     //   dispatch({
-    //     type: UPDATE_CURRENT_ARTIST,
+    //     type: UPDATE_SELECTED_ARTIST,
     //     currentArtist: {},
     //     // this clears the currenArist object when leaving page(** this mimics "component unmount" **)
     //   });
     // };
-  }, [loading, currentArtist, dispatch, data, artistId]);
+  }, [loading, selectedArtist, dispatch, data, artistId]);
 
   return (
     <>
-      {currentArtist ? (
+      {selectedArtist ? (
         <div>
           <Grid container justify="center">
             {/* {artist.artistName} */}
             <h1>
-              {currentArtist.artistName}{" "}
+              {selectedArtist.artistName}{" "}
               <span>
                 <LikeButton></LikeButton>
               </span>{" "}
@@ -82,11 +82,11 @@ function ArtistProfile() {
 
           <Grid container justify="center" spacing={2}>
             <Grid item md={6}>
-              <img alt="artist" src={currentArtist.avatar} />
+              <img alt="artist" src={selectedArtist.avatar} />
             </Grid>
 
             <Grid item md={6}>
-              <p>{currentArtist.bio}</p>
+              <p>{selectedArtist.bio}</p>
             </Grid>
           </Grid>
 

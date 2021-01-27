@@ -22,6 +22,22 @@ export const QUERY_ME = gql`
   }
 `;
 
+export const QUERY_ME_ARTIST = gql`
+  {
+    meArtist {
+      _id
+      avatar
+      artistName
+      email
+      genre
+      bio
+      website
+      socialMedia
+      followerCount
+    }
+  }
+`;
+
 export const QUERY_SONGS_BY_GENRE = gql`
   query getSongs($genre: ID) {
     songs(genre: $genre) {

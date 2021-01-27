@@ -121,11 +121,32 @@ mutation addComment($commentText: String!, $artistId: ID!) {
 
 //returns type Song
 export const ADD_SONG = gql`
-mutation addSong($title: String!, $price: Float!, $description: String, $genre: ID, $song_url: String, $album: String){
+mutation addSong($title: String!, $price: Float!, $description: String, $genre: ID!, $song_url: String, $album: String){
   addSong(title: $title, price: $price, description: $description, genre: $genre, song_url: $song_url, album: $album){
       title
       _id
-      artistId
     }
   }
 `
+
+export const UPDATE_USER_AVATAR = gql`
+mutation updateUserAvatar($avatarUrl: String!) {
+  updateUser(avatar: $avatarUrl) {
+    _id
+    avatar
+    username
+    email
+    followCount
+    follows {
+      _id
+      avatar
+      artistName
+    }
+    orders {
+      songs {
+        _id
+      }
+    }
+  }
+}
+`;

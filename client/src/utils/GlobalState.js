@@ -16,6 +16,7 @@ const StoreProvider = ({ value = [], ...props }) => {
     cart: [],
     cartOpen: false,
     currentGenre: {},
+    selectedArtist: {},
     currentArtist: {},
     currentUser: {},
     currentSong: {},

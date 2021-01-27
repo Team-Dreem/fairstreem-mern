@@ -15,8 +15,9 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+// import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import Button from "@material-ui/core/Button";
+import PlayButton from '../PlayButton'
 
 const useStyles = makeStyles({
   table: {
@@ -97,11 +98,15 @@ function SongTableSimple() {
 
   const rows = artistSongs.map((song) => {
     return createData(
-      <Button>
-        <PlayArrowIcon onClick={playClick}></PlayArrowIcon>
-      </Button>,
+      // <PlayButton song_url={song.song_url}></PlayButton>,
+        <audio controls> 
+        <source src={song.song_url} type="audio/ogg"/>
+       <source src={song.song_url} type="audio/mpeg"/>
+      </audio>
+     ,
+      // <Button></Button>,
       song.title,
-      1,
+      song.album,
       2,
       <Button onClick={buyClick}>Buy</Button>
     );
