@@ -14,9 +14,11 @@ export default function LikeButton() {
     const [state, dispatch] = useStoreContext();
 
     const listenerId = Auth.getProfile().data._id || null
+    
+    
 
-    const addFollow = useMutation(ADD_FOLLOW)
-    const addFollower = useMutation(ADD_FOLLOWER)
+    const [addFollow, { error }] = useMutation(ADD_FOLLOW)
+    const [addFollower, { e }] = useMutation(ADD_FOLLOWER)
 
         //add Artist to User
         async function addFollowFunction()  {
@@ -31,11 +33,11 @@ export default function LikeButton() {
         }
     }
 
-        //add User to Artist
+    //     //add User to Artist
         async function addFollowerFunction() {
         try {
             await addFollower({
-                variables: { userId: listenerId }
+                variables: { artistId: state.currentArtist._id }
             })
         } catch (e) {
             console.log(e);
@@ -47,8 +49,28 @@ export default function LikeButton() {
     return (
         <Button onClick={()=>{
             console.log("CURRENT ARTIST",state.currentArtist);
+            console.log("LISTENERID", listenerId);
             addFollowFunction();
             addFollowerFunction()
+            // try {
+            //     await addFollower({
+            //         variables: { userId: listenerId }
+            //     })
+            // } catch (e) {
+            //     console.log(e);
+            // }
+
+            // try {
+            //     await addFollow({
+            //         variables: { artistId: state.currentArtist._id }
+            //     })
+            // }
+            // catch (e) {
+            //     console.log(e);
+    
+            // }
+
+
             
             
         }}>Like</Button>

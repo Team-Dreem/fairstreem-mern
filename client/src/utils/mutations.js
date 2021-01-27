@@ -63,25 +63,41 @@ export const ADD_ARTIST = gql`
     }
   }
 `;
-//adds User to Artist
+//adds Artist to User (return type user)
 export const ADD_FOLLOW = gql`
-mutation addFollow($artistId:ID!) {
+mutation addFollow($artistId: ID!) {
   addFollow(artistId: $artistId) {
-    followers{
-      username
+    _id
+    username
+    followCount
+    follows {
       _id
+      artistName
     }
   }
 }
 `;
-//adds Artist to User
+//adds User to Artist (return type artist)
 export const ADD_FOLLOWER = gql`
-mutation addFollower($userId: ID!){
-  addFollower(userId: $userId) {
-    follows{
-      artistName
+mutation addFollower($artistId: ID!){
+  addFollower(artistId: $artistId) {
+    _id
+    artistName
+    followerCount
+    followers{
       _id
+      username
     }
   }
 }
 `
+
+export const ADD_SONG = gql`
+mutation addSong($title: String!, $artist: String, $description: String, $price: Int, $song_url: String ) {
+  addSong(title: $title, artist: $artist, description: $description, price: $price, song_url: $song_url){
+    title
+    artist
+  }
+
+}
+`;

@@ -2,8 +2,8 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { Artist, Comment, User, Song, Genre, Order } = require("../models");
 const { signToken } = require("../utils/auth");
+const { signArtistToken } = require("../utils/authArtist");
 const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
-
 
 const s3Bucket = process.env.S3_BUCKET;
 
@@ -11,7 +11,7 @@ const resolvers = {
   Query: {
     artist: async (parent, args, context) => {
       if (context.user) {
-        const artist = await Artist.findById(context.artist._id)
+        const artist = await Artist.findById(context.user._id)
           .populate("followers")
           .populate("comments")
           .populate("songs");
@@ -98,8 +98,10 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
     meArtist: async (parent, args, context) => {
-      if (context.artist) {
-        const artistData = await Artist.findOne({ _id: context.artist._id })
+      // console.log("context", context);
+      if (context.user) {
+        console.log("context", context.user)
+        const artistData = await Artist.findOne({ _id: context.user._id })
           .select("-__v -password")
           .populate("comments")
           .populate("followers");
@@ -181,7 +183,7 @@ const resolvers = {
   Mutation: {
     addArtist: async (parent, args) => {
       const artist = await Artist.create(args);
-      const token = signToken(artist);
+      const token = signArtistToken(artist);
 
       return { token, artist };
     },
@@ -238,6 +240,27 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be logged in!");
     },
+    //claire's draft- feel free to change
+    addSong: async (parent, args, context) => {
+      if (context.user) {
+        const song = await Song.create({
+          ...args,
+          artistId: context.user._id,
+          artistName: context.user.artistName,
+        });
+
+        await Artist.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { songs: song._id } },
+          { new: true }
+        );
+
+        return song;
+      }
+      throw new AuthenticationError("you need to be logged in!");
+    },
+    // updateSong: async (parent, { _id, quantity }) => {
+    //   const decrement = Math.abs(quantity) * -1;
 
     addUser: async (parent, args) => {
       const user = await User.create(args);
@@ -258,7 +281,7 @@ const resolvers = {
         throw new AuthenticationError("Incorrect credentials");
       }
 
-      const token = signToken(artist);
+      const token = signArtistToken(artist);
 
       return { token, artist };
     },
@@ -312,12 +335,12 @@ const resolvers = {
           { _id: context.user._id },
           { $addToSet: { follows: artistId } },
           { new: true }
-        ).populate('follows');
-    
+        ).populate("follows");
+
         return updatedUser;
       }
-    
-      throw new AuthenticationError('You need to be logged in!');
+
+      throw new AuthenticationError("You need to be logged in!");
     },
     addFollower: async (parent, { artistId }, context) => {
       if (context.user) {
@@ -325,14 +348,13 @@ const resolvers = {
           { _id: artistId },
           { $addToSet: { followers: context.user._id } },
           { new: true }
-        ).populate('followers');
-    
-        return updatedArtist;
-       }
-    
-      throw new AuthenticationError('You need to be logged in!');
-    },
+        ).populate("followers");
 
+        return updatedArtist;
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
+    },
 
     // updateSong: async (parent, { _id, quantity }) => {
     //   const decrement = Math.abs(quantity) * -1;
