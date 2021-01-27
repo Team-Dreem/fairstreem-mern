@@ -25,21 +25,8 @@ const useStyles = makeStyles((theme) => ({
 function ListenerProfile() {
     const classes = useStyles();
 
-    const [state, dispatch] = useStoreContext();
+    const [state] = useStoreContext();
     const { currentUser } = state;
-
-    const { loading, data } = useQuery(QUERY_ME);
-
-    useEffect(() => {
-        if (data && data.me) {
-            const { me } = data;
-
-            dispatch({
-                type: UPDATE_CURRENT_USER,
-                currentUser: me
-            });
-        }
-    }, [loading, data]);
 
     return (
         <>
