@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import Auth from "../utils/auth";
 import { ADD_USER, ADD_ARTIST } from "../utils/mutations";
+import { FormControl, InputLabel, Select, TextField, Button } from "@material-ui/core";
+import Container from '@material-ui/core/Container';
+import { spacing } from '@material-ui/system';
+import Box from '@material-ui/core/Box';
 
 function Signup(props) {
   const [formState, setFormState] = useState({ acctType: "", username: "", email: "", password: "", genre: "", bio: "", picture: "", social: "", color: "" });
@@ -13,8 +17,7 @@ function Signup(props) {
     event.preventDefault();
     let mutationResponse = "";
     let token = "";
-    if(formState.acctType === "user")
-    {
+    if (formState.acctType === "user") {
       mutationResponse = await addUser({
         variables: {
           // accountType: formState.acctType,
@@ -29,8 +32,7 @@ function Signup(props) {
       });
       token = mutationResponse.data.addUser.token;
     }
-    else if(formState.acctType === "artist")
-    {
+    else if (formState.acctType === "artist") {
       mutationResponse = await addArtist({
         variables: {
           // accountType: formState.acctType,
@@ -60,32 +62,57 @@ function Signup(props) {
   // Expecting Account type to change to some alternate form of selection and Genre to change to dropdown.
   // Account type will need to cause Genre and Social Media Links to appear, if artist is selected.
   return (
-    <div className="container my-1">
+    <Container maxWidth="sm">
       <Link to="/login">← Go to Login</Link>
 
       <h2>Signup</h2>
-      <form onSubmit={handleFormSubmit}>
-      <div className="flex-row space-between my-2">
-          <label htmlFor="type">*Account Type:</label>
-          <input
-            placeholder="user or artist"
-            name="acctType"
-            type="acctType"
-            id="type"
-            onChange={handleChange}
-          />
-      </div>
-      <div className="flex-row space-between my-2">
-          <label htmlFor="username">*Username:</label>
-          <input
-            placeholder="Username"
-            name="username"
-            type="username"
-            id="username"
-            onChange={handleChange}
-          />
-        </div>
-        {/* <div className="flex-row space-between my-2">
+
+      <Box m={3} />
+
+      <div mt="4" class=".MuiFormControl-fullWidth	">
+        <FormControl onSubmit={handleFormSubmit}>
+          <div class=".MuiFormControl-fullWidth	">
+
+            <InputLabel htmlFor="">Account Type</InputLabel>
+            <Select
+              required
+              margin="normal"
+
+              native
+              fullWidth
+              // value={acctType}
+              onChange={handleChange}
+              inputProps={{
+                name: 'accType',
+                id: 'accType',
+              }}
+            >
+              <option aria-label="None" value="" />
+              <option value={10}>Listener</option>
+              <option value={20}>Artist</option>
+            </Select>
+
+            <TextField
+              required id="standard-required"
+              label="Username"
+              fullWidth
+              margin="normal"
+              name="username"
+              type="username"
+              onChange={handleChange}
+            />
+
+            <TextField
+              required id="standard-required"
+              label="Email Address"
+              fullWidth
+              margin="normal"
+              name="email"
+              type="email"
+              onChange={handleChange}
+            />
+
+            {/* <div className="flex-row space-between my-2">
           <label htmlFor="firstName">First Name:</label>
           <input
             placeholder="First"
@@ -105,71 +132,87 @@ function Signup(props) {
             onChange={handleChange}
           />
         </div> */}
-        <div className="flex-row space-between my-2">
-          <label htmlFor="email">*Email:</label>
-          <input
-            placeholder="youremail@test.com"
-            name="email"
-            type="email"
-            id="email"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">*Password:</label>
-          <input
-            placeholder="******"
-            name="password"
-            type="password"
-            id="pwd"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="genre">*Genre:</label>
-          <input
-            placeholder="country"
-            name="genre"
-            type="genre"
-            id="genre"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="bio">About Me:</label>
-          <input
-            placeholder="Tell us about yourself"
-            name="bio"
-            type="bio"
-            id="bio"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="picture">Picture:</label>
-          <input
-            placeholder=""
-            name="picture"
-            type="picture"
-            id="picture"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="social">Other Social Media:</label>
-          <input
-            placeholder="LinkedIn, Facebook, Twitter, ect."
-            name="social"
-            type="social"
-            id="social"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-    </div>
+
+            <TextField
+              required id="standard-required"
+              label="Password"
+              fullWidth
+              margin="normal"
+              name="password"
+              type="password"
+              id="pwd"
+              onChange={handleChange}
+            />
+
+
+            <InputLabel htmlFor="">Genre</InputLabel>
+            <Select
+              required
+              margin="normal"
+              native
+              fullWidth
+              // value={genre}
+              onChange={handleChange}
+              inputProps={{
+                name: 'genre',
+                id: 'genre',
+              }}
+            >
+              <option aria-label="None" value="" />
+              <option value={10}>Rock</option>
+              <option value={20}>Classical</option>
+              <option value={30}>Jazz</option>
+              <option value={40}>Country</option>
+              <option value={50}>Pop</option>
+              <option value={60}>Hip Hop</option>
+              <option value={70}>Folk</option>
+              <option value={80}>Heavy Metal</option>
+              <option value={90}>Reggae</option>
+            </Select>
+
+   
+
+            <InputLabel htmlFor="">Bio</InputLabel>
+            <TextField
+              id="bio"
+              name="bio"
+              type="bio"
+              onChange={handleChange}
+              margin="normal"
+              label="Bio"
+              multiline
+              rowsMax={4}
+              placeholder="Tell us about you"
+              fullWidth />
+
+            <InputLabel htmlFor="">Pictire</InputLabel>
+            <TextField
+              id="picture"
+              name="picture"
+              type="picture"
+              onChange={handleChange}
+              margin="normal"
+              placeholder="Post a picture"
+              fullWidth />
+
+            <InputLabel htmlFor="">Social Media</InputLabel>
+            <TextField
+              id="social"
+              name="social"
+              type="social"
+              onChange={handleChange}
+              margin="normal"
+              label="Social Media"
+              multiline
+              rowsMax={2}
+              placeholder="List your social media pages"
+              fullWidth />
+
+            <Button variant="contained">Submit</Button>
+          </div>
+        </FormControl>
+      </div>
+    </Container>
   );
 }
 
