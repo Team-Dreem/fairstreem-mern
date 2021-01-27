@@ -354,6 +354,12 @@ const resolvers = {
           { new: true }
         );
 
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { comments: comment._id } },
+          { new: true }
+        );
+
         return comment;
       }
 
