@@ -91,3 +91,13 @@ mutation addFollower($artistId: ID!){
   }
 }
 `
+
+export const ADD_SONG = gql`
+mutation addSong($title: String!, $artist: String, $description: String, $price: Int, $song_url: String ) {
+  addSong(title: $title, artist: $artist, description: $description, price: $price, song_url: $song_url){
+    title
+    artist
+  }
+
+}
+`;

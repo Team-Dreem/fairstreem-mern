@@ -93,6 +93,7 @@ const typeDefs = gql`
   type Auth {
     token: ID
     user: User
+    artist: Artist
   }
 
   type Query {
@@ -145,6 +146,15 @@ const typeDefs = gql`
     ): User
     login(email: String!, password: String!): Auth
     artistLogin(email: String!, password: String!):Auth
+    addSong(
+      title: String!
+      album: String
+      genre: ID!
+      description: String
+      price: Int!
+      tags: [String]
+      song_url: String
+    ): Song
   }
 `;
 
