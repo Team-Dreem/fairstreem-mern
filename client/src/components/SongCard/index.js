@@ -51,13 +51,13 @@ const Styles = makeStyles((theme) => ({
 
 const SongCard = (song) => {
   const [state, dispatch] = useStoreContext();
-const { currentArtist } = state;
+const { selectedArtist } = state;
 const { title, description, image, price, song_url, tags } = song;
 
-console.log("currentArtist", currentArtist);
+console.log("selectedArtist", selectedArtist);
 
   // const { image, title, _id, price, artistId, tags, song_url } = props;
-  console.log("SongCardArtist", state.currentArtist);
+  console.log("SongCardArtist", state.selectedArtist);
   console.log("title", title);
   // console.log("image", image);
   // console.log("_id", _id);
