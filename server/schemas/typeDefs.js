@@ -1,19 +1,6 @@
 const { gql } = require("apollo-server-express");
 
-// type User {
-//   _id: ID
-//   avatar: String
-//   username: String!
-//   firstName: String
-//   lastName: String
-//   password: String!
-//   email: String
-//   follows: [User]
-//   orders: [Order]
-// }
-
 const typeDefs = gql`
-
   type Comment {
     _id: ID
     commentText: String
@@ -37,14 +24,14 @@ const typeDefs = gql`
 
   type Song {
     _id: ID
-    title: String
+    title: String!
     artistId: String
     artistName: String
     album: String
     description: String
     image: String
-    price: Float
-    genre: Genre
+    price: Float!
+    genre: ID!
     tags: [String]
     song_url: String
     likes: Int!
@@ -91,8 +78,12 @@ const typeDefs = gql`
   }
 
   type Auth {
-    token: ID
+    token: ID!
     user: User
+  }
+
+  type AuthArtist {
+    token: ID!
     artist: Artist
   }
 
@@ -131,7 +122,7 @@ const typeDefs = gql`
       bio: String
       socialMedia: String
       avatar: String
-    ): Auth
+    ): AuthArtist
     addComment(commentText: String!): Comment
     addReaction(commentId: ID!, reactionBody: String!): Comment
     addFollow(artistId: ID!): User
@@ -145,13 +136,13 @@ const typeDefs = gql`
       password: String
     ): User
     login(email: String!, password: String!): Auth
-    artistLogin(email: String!, password: String!):Auth
+    artistLogin(email: String!, password: String!): AuthArtist
     addSong(
       title: String!
       album: String
       genre: ID!
       description: String
-      price: Int!
+      price: Float!
       tags: [String]
       song_url: String
     ): Song

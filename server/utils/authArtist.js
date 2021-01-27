@@ -10,7 +10,7 @@ module.exports = {
 
     // ["Bearer", "<tokenvalue>"]
     if (req.headers.authorization) {
-      token = token
+        token = token
         .split(' ')
         .pop()
         .trim();
@@ -33,8 +33,8 @@ module.exports = {
 
     return req;
   },
-  signToken: function ({ username, email, _id }) {
-    const payload = { username, email, _id };
+  signArtistToken: function ({ artistName, email, _id }) {
+    const payload = { artistName, email, _id };
 
     return jwt.sign(
       { data: payload },
