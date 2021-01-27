@@ -1,9 +1,11 @@
 
-import React, { useState } from 'react';
-import { useStoreContext } from "../utils/GlobalState";
+import React, { useEffect, useState } from 'react';
+import { useStoreContext } from "../../utils/GlobalState";
+import { useQuery } from "@apollo/react-hooks";
 import { useMutation } from '@apollo/react-hooks';
 import { QUERY_ARTISTS, QUERY_COMMENTS } from "../../utils/queries";
 import { ADD_COMMENT } from "../../utils/mutations";
+import { idbPromise } from "../../utils/helpers";
 
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
@@ -20,22 +22,22 @@ import Paper from '@material-ui/core/Paper'
     // const addComment = useMutation(ADD_COMMENT)
     const [addComment] = useMutation(ADD_COMMENT);
     
-    useEffect(() => {
-      async function saveComment() {
-        const comments = comments.map((item) => item._id);
+    // useEffect(() => {
+    //   async function saveComment() {
+    //     const comments = comments.map((item) => item._id);
   
-        if (comments.length) {
-          const { data } = await addComment({ variables: { comments } });
-          const commentData = data.addComment.comments;
+    //     if (comments.length) {
+    //       const { data } = await addComment({ variables: { comments } });
+    //       const commentData = data.addComment.comments;
   
-          commentData.forEach((item) => {
-            idbPromise("cart", "delete", item);
-          });
-        }
-      }
+    //       commentData.forEach((item) => {
+    //         idbPromise("cart", "delete", item);
+    //       });
+    //     }
+    //   }
   
-      saveComment();
-    }, [addComment]);
+    //   saveComment();
+    // }, [addComment]);
 
     //  const [addThought, { error }] = useMutation(ADD_THOUGHT, {
     //     update(cache, { data: { addComment } }) {
