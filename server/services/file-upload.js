@@ -20,12 +20,13 @@ const fileFilter = (req, file, cb) => {
     file.mimetype === "image/jpeg" ||
     file.mimetype === "image/png" ||
     file.mimetype === "audio/mp3" ||
+    file.mimetype === "audio/x-m4a" ||
     file.mimetype === "audio/mpeg"
   ) {
     cb(null, true);
     console.log("file.mimetype:", file.mimetype);
   } else {
-    cb(new Error("Invalid Mime Type, only .jpeg, .png, or .mp3"), false);
+    cb(new Error("Invalid Mime Type, only .jpeg, .png, or .mp3 :" + file.mimetype), false);
   }
 
   // handleFileExtension(file.mimetype);
