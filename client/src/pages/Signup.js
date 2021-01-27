@@ -147,7 +147,7 @@ function Signup(props) {
         placeholder="Tell us about you"
         fullWidth />}
 
-      <Button color="primary" variant="contained" className="btn" onClick={handleFormSubmit}>Submit</Button>
+      <Button color="primary" variant="contained" className="btn" onClick={handleFormSubmit}>Sign Up</Button>
     </Container>
   );
 }
