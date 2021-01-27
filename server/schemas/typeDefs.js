@@ -3,9 +3,10 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   type Comment {
     _id: ID
-    commentText: String
+    commentText: String!
     createdAt: String
-    username: String
+    username: String!
+    artistId: ID!
     reactionCount: Int
     reactions: [Reaction]
   }
@@ -123,15 +124,14 @@ const typeDefs = gql`
       socialMedia: String
       avatar: String
     ): AuthArtist
-    addComment(commentText: String!): Comment
+    addComment(commentText: String!, artistId: ID!): Comment
     addReaction(commentId: ID!, reactionBody: String!): Comment
     addFollow(artistId: ID!): User
     addFollower(artistId: ID!): Artist
     addOrder(songs: [ID]!): Order
     updateUser(
+      avatar: String
       username: String
-      firstName: String
-      lastName: String
       email: String
       password: String
     ): User

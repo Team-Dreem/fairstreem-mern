@@ -99,9 +99,10 @@ function ArtistProfile() {
           <Grid container justify="center">
             <h1>COMMENT FEED</h1>
            <CommentForm></CommentForm>
-           <CommentList></CommentList>
-           <CommentList></CommentList>
-
+           <CommentList 
+           comments={currentArtist.comments}
+           title={`Comments for ${currentArtist.artistName}`}
+           />
           </Grid>
         </div>
       ) : null}

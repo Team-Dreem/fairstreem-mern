@@ -90,8 +90,17 @@ const resolvers = {
     comment: async (parent, { _id }) => {
       return Comment.findOne({ _id });
     },
-    comments: async (parent, { username }) => {
-      const params = username ? { username } : {};
+    comments: async (parent, { username, artistId }) => {
+      const params = {};
+      
+      if (username) { 
+        params.username = username;
+      }
+
+      if (artistId) { 
+        params.artistId = artistId;
+      }
+
       return await Comment.find(params).sort({ createdAt: -1 });
     },
     // Here, we pass in the parent as more of a placeholder parameter. It won't be used, but we need something in that first parameter's spot so we can access the username argument from the second parameter. We use a ternary operator to check if username exists. If it does, we set params to an object with a username key set to that value. If it doesn't, we simply return an empty object.
@@ -330,20 +339,39 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
-    addComment: async (parent, args, context) => {
+    addComment: async (parent, { commentText, artistId }, context) => {
+      console.log("context.user", context.user)
       if (context.user) {
         const comment = await Comment.create({
-          ...args,
           username: context.user.username,
+          commentText: commentText,
+          artistId: artistId,
         });
 
-        await User.findByIdAndUpdate(
-          { _id: context.user._id },
+        await Artist.findByIdAndUpdate(
+          { _id: artistId },
           { $push: { comments: comment._id } },
           { new: true }
         );
 
         return comment;
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    addReaction: async (parent, { commentId, reactionBody }, context) => {
+      if (context.user) {
+        const updatedComment = await Comment.findOneAndUpdate(
+          { _id: commentId },
+          {
+            $push: {
+              reactions: { reactionBody, username: context.user.username },
+            },
+          },
+          { new: true, runValidators: true }
+        );
+
+        return updatedComment;
       }
 
       throw new AuthenticationError("You need to be logged in!");
