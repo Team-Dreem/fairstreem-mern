@@ -93,12 +93,13 @@ mutation addFollower($artistId: ID!){
 `
 
 export const ADD_COMMENT = gql`
-mutation addComment($commentText: String!){
-  addComment(commentText: $commentText){
+mutation addComment($commentText: String!, $artistId: ID!) {
+  addComment(commentText: $commentText, artistId: $artistId) {
     _id
     commentText
     createdAt
     username
+    artistId
     reactionCount
     
   }

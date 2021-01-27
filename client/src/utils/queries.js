@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const QUERY_ME = gql`
   {
@@ -69,20 +69,20 @@ export const QUERY_SONGS = gql`
       description
       image
       price
-      genre 
+      genre
       tags
       song_url
-    }  
+    }
   }
 `;
 
 export const QUERY_GENRES = gql`
-{
-  genres {
-    _id
-    name
+  {
+    genres {
+      _id
+      name
+    }
   }
-}
 `;
 
 export const QUERY_CHECKOUT = gql`
@@ -94,30 +94,30 @@ export const QUERY_CHECKOUT = gql`
 `;
 
 export const QUERY_USER = gql`
-{
-  user {
-    avatar
-    username
-    firstName
-    lastName
-    orders {
-      _id
-      purchaseDate
-      songs {
+  {
+    user {
+      avatar
+      username
+      firstName
+      lastName
+      orders {
         _id
-        title
-        artist
-        description
-        price
-        image
+        purchaseDate
+        songs {
+          _id
+          title
+          artist
+          description
+          price
+          image
+        }
       }
     }
   }
-}
 `;
 
 export const QUERY_ARTIST_BY_PARAMS = gql`
-  query getArtist($_id: ID){
+  query getArtist($_id: ID) {
     artist(_id: $_id) {
       _id
       avatar
@@ -139,7 +139,7 @@ export const QUERY_ARTIST_BY_PARAMS = gql`
 `;
 
 export const QUERY_ARTISTS = gql`
- {
+  {
     artists {
       _id
       avatar
@@ -164,9 +164,9 @@ export const QUERY_ARTISTS = gql`
 export const QUERY_ARTIST_BY_GENRE = gql`
   query GetArtistsByGenre($genre: String) {
     artistsByGenre(genre: $genre) {
-      artistName,
-      avatar,
-      _id,
+      artistName
+      avatar
+      _id
       genre
     }
   }
@@ -175,10 +175,28 @@ export const QUERY_ARTIST_BY_GENRE = gql`
 export const QUERY_SEARCH = gql`
   query Search($term: String!) {
     search(term: $term) {
-      artistName,
-      avatar,
-      _id,
+      artistName
+      avatar
+      _id
       genre
     }
   }
+`;
+
+export const QUERY_COMMENTS = gql` 
+query comments($username: String, $artistId: ID) {
+  comments(username: $username, artistId: $artistId) {
+    _id
+    createdAt
+    username
+    artistId
+    commentText
+    reactions {
+      _id
+      createdAt
+      username
+      reactionBody
+    }
+  }
+}
 `;

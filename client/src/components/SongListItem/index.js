@@ -14,7 +14,7 @@ function SongListItem(item) {
 
   const { image, title, _id, price, artistId, description, tags, song_url } = item;
 
-  const { currentArtist } = state;
+  const { selectedArtist } = state;
   
 
   const { loading, data } = useQuery(QUERY_SONGS);
@@ -46,11 +46,11 @@ function SongListItem(item) {
   }, [data, loading, dispatch]);
 
   function filterSongs() {
-    if (!currentArtist) {
+    if (!selectedArtist) {
       return state.songs;
     }
 
-    return state.songs.filter((song) => song.artistId === currentArtist._id);
+    return state.songs.filter((song) => song.artistId === selectedArtist._id);
   }
   return (
     <div className="card px-1 py-1">
@@ -62,7 +62,7 @@ function SongListItem(item) {
         <source src={song_url} type="audio/mp3" />
       </audio>
       <div>
-        <div>by {currentArtist.artistName}</div>
+        <div>by {selectedArtist.artistName}</div>
         <span>${price}</span>
       </div>
       <div>{description}</div>

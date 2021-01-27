@@ -28,11 +28,11 @@ const useStyles = makeStyles({
 function SongTableSimple() {
   const [state, dispatch] = useStoreContext();
 
-  const { currentArtist } = state;
+  const { selectedArtist } = state;
 
   //use when data is received
   const { loading, data } = useQuery(QUERY_SONGS);
-//   console.log("STScurrentArtist", currentArtist);
+//   console.log("STSselectedArtist", selectedArtist);
 // console.log("STSdata", data);
   useEffect(() => {
     // if there's data to be stored
@@ -61,13 +61,13 @@ function SongTableSimple() {
   }, [data, loading, dispatch]);
 
   function filterSongs() {
-    return state.songs.filter((song) => song.artistId === currentArtist._id);
+    return state.songs.filter((song) => song.artistId === selectedArtist._id);
   }
   console.log("filterSongs", filterSongs());
-  console.log("currentArtist._id", currentArtist._id);
+  console.log("selectedArtist._id", selectedArtist._id);
 
   const artistSongs = state.songs.filter(
-    (song) => song.artistId === currentArtist._id
+    (song) => song.artistId === selectedArtist._id
   );
 
   console.log("artistSongs", artistSongs);
@@ -77,7 +77,7 @@ function SongTableSimple() {
   function createData(playBtn, name, album, playcount, purchase) {
     return { playBtn, name, album, playcount, purchase };
   }
-  // console.log("SongTableArtist", currentArtist);
+  // console.log("SongTableArtist", selectedArtist);
   // console.log("title", title);
   // console.log("image", image);
   // console.log("_id", _id);
@@ -130,7 +130,7 @@ function SongTableSimple() {
 
   return (
     <div>
-    <h2>{currentArtist.artistName}'s Songs:</h2>
+    <h2>Songs by {selectedArtist.artistName}:</h2>
 
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
@@ -178,7 +178,7 @@ function SongTableSimple() {
           ))}
         </div>
       ) : (
-        <h3>{currentArtist.artistName} hasn't added any songs yet!</h3>
+        <h3>{selectedArtist.artistName} hasn't added any songs yet!</h3>
       )}
       {loading ? <img src={spinner} alt="loading" /> : null}
     </div>

@@ -24,7 +24,7 @@ export default function LikeButton() {
         async function addFollowFunction()  {
         try {
             await addFollow({
-                variables: { artistId: state.currentArtist._id }
+                variables: { artistId: state.selectedArtist._id }
             })
         }
         catch (e) {
@@ -37,7 +37,7 @@ export default function LikeButton() {
         async function addFollowerFunction() {
         try {
             await addFollower({
-                variables: { artistId: state.currentArtist._id }
+                variables: { artistId: state.selectedArtist._id }
             })
         } catch (e) {
             console.log(e);
@@ -48,7 +48,7 @@ export default function LikeButton() {
 
     return (
         <Button onClick={()=>{
-            console.log("CURRENT ARTIST",state.currentArtist);
+            console.log("selected ARTIST",state.selectedArtist);
             console.log("LISTENERID", listenerId);
             addFollowFunction();
             addFollowerFunction()
@@ -62,7 +62,7 @@ export default function LikeButton() {
 
             // try {
             //     await addFollow({
-            //         variables: { artistId: state.currentArtist._id }
+            //         variables: { artistId: state.selectedArtist._id }
             //     })
             // }
             // catch (e) {
