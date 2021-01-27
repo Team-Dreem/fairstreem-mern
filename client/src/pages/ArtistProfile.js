@@ -17,8 +17,12 @@ import CommentForm from '../components/CommentForm'
 import CommentList from '../components/CommentList'
 import LikeButton from '../components/LikeButton'
 
+import AddSongModal from '../components/AddSongModal'
+
 function ArtistProfile() {
   const [state, dispatch] = useStoreContext();
+
+  //artist id with full song data 600b1de66ea21cf63a4db76d
   //useParams retrieves username from URL
   const { artistId } = useParams();
 
@@ -84,6 +88,7 @@ function ArtistProfile() {
           </Grid>
 
           <Grid container>
+            <AddSongModal></AddSongModal>
             {/* <SongCard>
               {" "} */}
             <SongTableSimple />
