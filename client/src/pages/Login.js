@@ -7,19 +7,19 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 
 function Login(props) {
-  const [formState, setFormState] = useState({ email: '', password: '', accountType: '' });
+  const [formState, setFormState] = useState({ email: '', password: '', accountType: 'listener' });
   const [login, { error }] = useMutation(LOGIN);
   const [artistLogin] = useMutation(ARTIST_LOGIN);
 
   const handleFormSubmit = async event => {
-    event.preventDefault();
+    event.preventDefault(); 
     try {
-      if (formState.acctType === 'user') {
+      if (formState.accountType === 'listener') {
         const mutationResponse = await login({ variables: { email: formState.email, password: formState.password } })
         const token = mutationResponse.data.login.token;
         Auth.login(token);
       }
-      else if (formState.acctType === 'artist') {
+      else if (formState.accountType === 'artist') {
         const mutationResponse = await artistLogin({ variables: { email: formState.email, password: formState.password } })
         const token = mutationResponse.data.artistLogin.token;
         Auth.login(token);
@@ -39,25 +39,22 @@ function Login(props) {
 
   return (
     <Container maxWidth="sm" className="login-form">
-
       <h2>Login</h2>
-      <Box m={3} />
-      <FormControl fullWidth={true} margin="normal" onSubmit={handleFormSubmit}>
+
+      <FormControl fullWidth={true} margin="normal">
         <InputLabel>Account Type</InputLabel>
         <Select
           required
-          margin="normal"
           native
           fullWidth
           onChange={handleChange}
           inputProps={{
-            name: 'accType',
-            id: 'accType',
+            name: 'accountType',
+            id: 'accountType',
           }}
         >
-          <option aria-label="None" value="" />
-          <option value={10}>Listener</option>
-          <option value={20}>Artist</option>
+          <option value="listener">Listener</option>
+          <option value="artist">Artist</option>
         </Select>
       </FormControl>
 
@@ -88,7 +85,7 @@ function Login(props) {
           <p className="error-text" >The provided credentials are incorrect</p>
         </div> : null
       }
-      <Button variant="contained" className="btn">Submit</Button>
+      <Button variant="contained" className="btn" onClick={handleFormSubmit}>Submit</Button>
     </Container>
   );
 }

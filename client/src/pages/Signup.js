@@ -4,10 +4,9 @@ import Auth from "../utils/auth";
 import { ADD_USER, ADD_ARTIST } from "../utils/mutations";
 import { FormControl, InputLabel, Select, TextField, Button } from "@material-ui/core";
 import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
 
 function Signup(props) {
-  const [formState, setFormState] = useState({ acctType: "", username: "", email: "", password: "", genre: "", bio: "", picture: "", social: "", color: "" });
+  const [formState, setFormState] = useState({ accountType: "listener", username: "", email: "", password: "", genre: "", bio: "", picture: "", social: "", color: "" });
   const [addUser] = useMutation(ADD_USER);
   const [addArtist] = useMutation(ADD_ARTIST);
 
@@ -15,7 +14,7 @@ function Signup(props) {
     event.preventDefault();
     let mutationResponse = "";
     let token = "";
-    if (formState.acctType === "user") {
+    if (formState.accountType === "listener") {
       mutationResponse = await addUser({
         variables: {
           username: formState.username,
@@ -27,7 +26,7 @@ function Signup(props) {
       });
       token = mutationResponse.data.addUser.token;
     }
-    else if (formState.acctType === "artist") {
+    else if (formState.accountType === "artist") {
       mutationResponse = await addArtist({
         variables: {
           artistName: formState.username,
@@ -46,36 +45,33 @@ function Signup(props) {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
     setFormState({
       ...formState,
       [name]: value,
     });
   };
+
   // Expecting Account type to change to some alternate form of selection and Genre to change to dropdown.
   // Account type will need to cause Genre and Social Media Links to appear, if artist is selected.
   return (
     <Container maxWidth="sm" className="signup-form">
-
       <h2>Signup</h2>
 
-      <Box m={3} />
-
-      <FormControl fullWidth={true} onSubmit={handleFormSubmit}>
+      <FormControl fullWidth={true} margin="normal">
         <InputLabel>Account Type</InputLabel>
         <Select
           required
-          margin="normal"
           native
           fullWidth
           onChange={handleChange}
           inputProps={{
-            name: 'accType',
-            id: 'accType',
+            name: 'accountType',
+            id: 'accountType',
           }}
         >
-          <option aria-label="None" value="" />
-          <option value={10}>Listener</option>
-          <option value={20}>Artist</option>
+          <option value="listener">Listener</option>
+          <option value="artist">Artist</option>
         </Select>
       </FormControl>
 
@@ -113,11 +109,10 @@ function Signup(props) {
         onChange={handleChange}
       />
 
-      <FormControl fullWidth={true} margin="normal">
+      {formState.accountType === 'artist' && <FormControl fullWidth={true} margin="normal">
         <InputLabel>Genre</InputLabel>
         <Select
           required
-          margin="normal"
           native
           fullWidth
           onChange={handleChange}
@@ -137,9 +132,9 @@ function Signup(props) {
           <option value={80}>Heavy Metal</option>
           <option value={90}>Reggae</option>
         </Select>
-      </FormControl>
+      </FormControl>}
 
-      <TextField
+      {formState.accountType === 'artist' && <TextField
         className="input"
         id="bio"
         name="bio"
@@ -150,9 +145,9 @@ function Signup(props) {
         multiline
         rowsMax={4}
         placeholder="Tell us about you"
-        fullWidth />
+        fullWidth />}
 
-      <Button variant="contained" className="btn">Submit</Button>
+      <Button color="primary" variant="contained" className="btn" onClick={handleFormSubmit}>Submit</Button>
     </Container>
   );
 }
