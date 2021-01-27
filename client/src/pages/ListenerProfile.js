@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useStoreContext } from "../utils/GlobalState";
 import Grid from "@material-ui/core/Grid";
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
-import { QUERY_ME } from '../utils/queries';
-import { useQuery } from "@apollo/react-hooks";
-import { UPDATE_CURRENT_USER } from '../utils/actions';
 import getLetterAvatar from '../utils/getLetterAvatar';
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
+import SearchCard from '../components/SearchCard';
 
 const useStyles = makeStyles((theme) => ({
     large: {
@@ -19,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         display: "none"
+    },
+    icon: {
+        position: 'absolute'
     }
 }));
 
@@ -40,13 +41,13 @@ function ListenerProfile() {
                     <h1>{currentUser.username}</h1>
                     <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
                     <label htmlFor="icon-button-file">
-                        <IconButton color="primary" aria-label="upload picture" component="span">
+                        <IconButton color="primary" aria-label="upload picture" component="span" className={classes.iconLabel}>
                             <PhotoCamera />
                         </IconButton>
                     </label>
                 </div>
                 <Grid>
-
+                    {currentUser.follows.map(artist => <SearchCard data={artist} />)}
                 </Grid>
             </div>
         </>
