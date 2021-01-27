@@ -35,7 +35,6 @@ const typeDefs = gql`
     tags: [String]
     song_url: String
     likes: Int!
-    comments: [Comment]
   }
 
   type Order {
@@ -98,7 +97,7 @@ const typeDefs = gql`
     genres: [Genre]
     me: User
     meArtist: Artist
-    songs(genre: ID, name: String): [Song]
+    songs(genre: ID, artistName: String, artistId: ID): [Song]
     song(_id: ID): Song
     user(_id: ID, username: String): User
     users: [User]

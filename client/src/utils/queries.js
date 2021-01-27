@@ -54,29 +54,10 @@ export const QUERY_SONGS = gql`
       description
       image
       price
-      genre {
-        _id
-      }
+      genre 
       tags
       song_url
-    }
-  }
-`;
-
-export const QUERY_ALL_SONGS = gql`
-  {
-    songs {
-      _id
-      title
-      description
-      price
-      song_url
-      genre {
-        name
-      }
-      tags 
-      song_url
-    }
+    }  
   }
 `;
 

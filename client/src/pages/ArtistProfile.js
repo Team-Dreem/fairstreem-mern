@@ -57,13 +57,13 @@ function ArtistProfile() {
       });
     }
 
-    return () => {
-      dispatch({
-        type: UPDATE_CURRENT_ARTIST,
-        currentArtist: {},
-        // this clears the currenArist object when leaving page(** this mimics "component unmount" **)
-      });
-    };
+    // return () => {
+    //   dispatch({
+    //     type: UPDATE_CURRENT_ARTIST,
+    //     currentArtist: {},
+    //     // this clears the currenArist object when leaving page(** this mimics "component unmount" **)
+    //   });
+    // };
   }, [loading, currentArtist, dispatch, data, artistId]);
 
   return (
