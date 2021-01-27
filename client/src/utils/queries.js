@@ -6,13 +6,12 @@ export const QUERY_ME = gql`
       _id
       avatar
       username
-      firstName
-      lastName
       email
       followCount
       follows {
         _id
-        username
+        avatar
+        artistName
       }
       orders {
         songs {

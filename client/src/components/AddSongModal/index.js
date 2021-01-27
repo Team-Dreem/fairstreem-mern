@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation } from "@apollo/react-hooks";
 import { ADD_SONG } from '../../utils/mutations'
-
+import axios, { post } from 'axios'
+import { useStoreContext } from "../../utils/GlobalState";
 //material ui components
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -24,13 +25,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-
-
-
-
 export default function AddSongModal() {
-//styles
+    //styles
     const classes = useStyles();
     const [open, setOpen] = useState(false);
 
@@ -42,33 +38,67 @@ export default function AddSongModal() {
         setOpen(false);
     };
 
-    const [formState, setFormState] = useState({ title: "", price: "", description: "", genre: "", song_url: "" });
+    //initialize empty state for all form inputs
+    const [formState, setFormState] = useState({ title: "", price: "", description: "", genre: "", file: "", album: "" });
     const [addSong] = useMutation(ADD_SONG);
+    //will extract artistId from global state
+    const [state, dispatch] = useStoreContext();
 
-//handlers and mutations
+
+    //handlers and mutations
     const handleFormSubmit = async (event) => {
-        console.log(("form Submit"));
-        await addSong({
-            variables: {
-                title: formState.title,
-                price: formState.price,
-                description: formState.description,
-                genre: formState.genre,
-                song_url: formState.song_url
+        event.preventDefault();
+        //    console.log("FORMSTATE", formState.file)
+        //    console.log("FORM", document.getElementById("file").files[0])
+
+        //create variables to send to AWS s3 bucket, receive song url in response
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
             }
-        })
+        }
+        const url = "/api/v1/song-upload"
+        const formData = new FormData()
+        formData.append("song", document.getElementById("file").files[0])
+        console.log("FORMDATA", formData.get("song"))
+        post(url, formData, config)
+            .then((response) => {
+                console.log("AWS url", response.data.song_url);
+
+
+                /// graph ql mutation to add song to mongoDB
+                 addSong({
+                    variables: {
+                        title: formState.title,
+                        price: formState.price,
+                        description: formState.description,
+                        genre: formState.genre,
+                        song_url: response.data.song_url,
+                        artistId: state.currentArtist._id,
+                        album: formState.album,
+                        likes: 0
+                    }
+                })
+            })
+
     }
-    
+//update the state every time input is changed to keep track of input, to send to mutation
     function handleChange(event) {
         console.log("handleChange");
         const { name, value } = event.target;
+        if (name === "file") {
+            setFormState({
+                ...formState,
+                file: event.target.files[0]
+            })
+        }
         setFormState({
             ...formState,
             [name]: value,
         });
     }
 
-//jsx
+    //jsx
     return (
         <div>
             <button type="button" onClick={handleOpen}>
@@ -96,12 +126,22 @@ export default function AddSongModal() {
                             <div>
                                 <label for="title">Title:</label>
                                 <input
+                                    name="title"
                                     id="title"
+                                    onChange={handleChange} />
+                            </div>
+
+                            <div>
+                                <label for="album">Album:</label>
+                                <input
+                                    name="album"
+                                    id="album"
                                     onChange={handleChange} />
                             </div>
                             <div>
                                 <label for="price">Price:</label>
                                 <input placeholder="1.99"
+                                    name="price"
                                     id="price"
                                     onChange={handleChange}
                                 />
@@ -110,19 +150,22 @@ export default function AddSongModal() {
                             <div>
                                 <label for="description">Description:</label>
                                 <input
+                                    name="description"
                                     id="description"
                                     onChange={handleChange} />
                             </div>
                             <div>
                                 <label for="genre">Genre:</label>
                                 <input
+                                    name="genre"
                                     id="genre"
                                     onChange={handleChange}
                                 />
                             </div>
 
-                            <label for="song">Upload song!</label>
-                            <input id="song" name="song" type="file"></input>
+                            <label for="file">Upload song!</label>
+                            <input id="file" name="file" type="file"
+                                onChange={handleChange}></input>
                         </form>
                         <Button onClick={handleFormSubmit}>Add Song</Button>
                     </div>
