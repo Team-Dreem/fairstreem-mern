@@ -20,6 +20,11 @@ const commentSchema = new Schema(
       type: String,
       required: true,
     },
+    artistId: {
+      type: Schema.Types.ObjectId,
+      ref: "Artist",
+      required: true,
+    },
     reactions: [reactionSchema],
   },
   {

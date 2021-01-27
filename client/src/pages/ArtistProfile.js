@@ -48,10 +48,11 @@ function ArtistProfile() {
 
   const { loading, data } = useQuery(QUERY_ARTISTS);
 
+  // const selectedArtist = state.artists.find((artist) => artist._id === artistId);
   const selectedArtist = state.artists.find((artist) => artist._id === artistId);
-  console.log("data", data);
-  console.log("state.artists", state.artists)
-  console.log("currentArtist", selectedArtist);
+  // console.log("data", data);
+  // console.log("state.artists", state.artists)
+  // console.log("selectedArtist", selectedArtist);
 
   useEffect(() => {
     if (data && !selectedArtist) {
@@ -80,7 +81,7 @@ function ArtistProfile() {
     // return () => {
     //   dispatch({
     //     type: UPDATE_SELECTED_ARTIST,
-    //     currentArtist: {},
+    //     selectedArtist: {},
     //     // this clears the currenArist object when leaving page(** this mimics "component unmount" **)
     //   });
     // };
@@ -117,9 +118,10 @@ function ArtistProfile() {
           <Grid container justify="center">
             <h1>COMMENT FEED</h1>
            <CommentForm></CommentForm>
-           <CommentList></CommentList>
-           <CommentList></CommentList>
-
+           <CommentList 
+           comments={selectedArtist.comments}
+           title={`Comments for ${selectedArtist.artistName}`}
+           />
           </Grid>
         </div>
       ) : null}
