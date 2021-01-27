@@ -63,7 +63,7 @@ export const ADD_ARTIST = gql`
     }
   }
 `;
-//adds Artist to User (return type user)
+//adds Artist to User (return type user)¸
 export const ADD_FOLLOW = gql`
 mutation addFollow($artistId: ID!) {
   addFollow(artistId: $artistId) {
@@ -105,26 +105,26 @@ mutation addComment($commentText: String!){
 }
 `
 //return type comment
-export const ADD_REACTION = gql`
-mutation addReaction($commentId: ID!, $reactionBody: String!){
-  addReaction(commentId: $commentId, $reactionBody: reactionBody){
-    _id
-    commentText
-    reactions{
-      reactionBody
-    }
-  }
-}
-`
+// export const ADD_REACTION = gql`
+// mutation addReaction($commentId: ID!, $reactionBody: String!){
+//   addReaction(commentId: $commentId, $reactionBody: reactionBody){
+//     _id
+//     commentText
+//     reactions{
+//       reactionBody
+//     }
+//   }
+// }
+// `
 
 
 //returns type Song
 export const ADD_SONG = gql`
-mutation addSong($title: String, $price: Int, $description: String, $genre: ID, $song_url: String, $artistId: ID, $album: String, $likes: Int!)
-  addSong(title: $title, price: $price, description: $description, genre: $genre, song_url: $song_url, artistId: $artistId, album: $album, likes: $likes){
+mutation addSong($title: String!, $price: Float!, $description: String, $genre: ID, $song_url: String, $album: String){
+  addSong(title: $title, price: $price, description: $description, genre: $genre, song_url: $song_url, album: $album){
       title
       _id
       artistId
-      
+    }
   }
 `

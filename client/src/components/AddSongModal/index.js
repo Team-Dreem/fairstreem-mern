@@ -67,7 +67,7 @@ export default function AddSongModal() {
 
 
                 /// graph ql mutation to add song to mongoDB
-                await addSong({
+                 addSong({
                     variables: {
                         title: formState.title,
                         price: formState.price,
@@ -75,7 +75,7 @@ export default function AddSongModal() {
                         genre: formState.genre,
                         song_url: response.data.song_url,
                         artistId: state.currentArtist._id,
-                        album: formstate.album,
+                        album: formState.album,
                         likes: 0
                     }
                 })
