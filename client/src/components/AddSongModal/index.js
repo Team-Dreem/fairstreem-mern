@@ -48,8 +48,7 @@ export default function AddSongModal() {
     //handlers and mutations
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        console.log("PRICE", formState.price);
-        
+       
         //    console.log("FORMSTATE", formState.file)
         //    console.log("FORM", document.getElementById("file").files[0])
 
