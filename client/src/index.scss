@@ -33,6 +33,22 @@ body {
   line-height: 1.5;
   // font-size: 16px;
   color: var(--dark);
+  background-image: var(--heroGradient);
+  position: relative;
+  flex-grow: 1;
+    &::before {
+      content: "";
+      background-image: linear-gradient(to bottom, rgba(#fff, 0) 75%, #fff 100%), url("bg.svg");
+      max-height: 800px;
+      position: absolute;
+      background-size: cover;
+      background-position: center center;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+    } 
 }
 
 #root {
@@ -124,25 +140,7 @@ nav {
 }
 
 /* Hero Start*/
-.hero {
-  background-image: var(--heroGradient);
-  position: relative;
-  flex-grow: 1;
 
-  &::before {
-    content: "";
-    background-image: linear-gradient(to bottom, rgba(#fff, 0) 75%, #fff 100%), url("bg.svg");
-    max-height: 800px;
-    position: absolute;
-    background-size: cover;
-    background-position: center center;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-  }
-}
 
 .hero h1 {
   color: black;
@@ -206,7 +204,7 @@ nav {
 }
 // Search end
 
-// Grid start
+// Search Grid start
 .grid {
   margin: auto;
   width: 80%;
@@ -218,8 +216,21 @@ nav {
     white-space: nowrap;
   }
 }
-// Grid End
+// Search Grid End
 
+// Listener Profile Start
+.profile {
+  border: solid 1px;
+  margin: auto;
+  width: 60%;
+  height: 400px;
+
+  h1 {
+    margin-top: 130px;
+    text-align: center;
+  }
+}
+// Listener Profile End
 
 h1,
 h2,

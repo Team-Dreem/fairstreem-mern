@@ -15,6 +15,7 @@ import OrderHistory from "./pages/OrderHistory";
 import Success from "./pages/Success";
 import ArtistProfile from "./pages/ArtistProfile";
 import SongDetail from "./pages/SongDetail";
+import ListenerProfile from "./pages/ListenerProfile";
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -45,7 +46,7 @@ function App() {
               <Route exact path="/artists/:artistId" component={ArtistProfile} />
               {/* <Route exact path="/artists/:artistName/:artistId/songs" component={SongListByArtist} /> */}
               <Route exact path="/artists/:artistName/:artistId/songs/:songId" component={SongDetail} />
-
+              <Route exact path="/listener" component={ListenerProfile} />
               <Route component={NoMatch} />
             </Switch>
           </StoreProvider>
