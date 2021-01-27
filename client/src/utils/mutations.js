@@ -99,6 +99,7 @@ mutation addComment($commentText: String!, $artistId: ID!) {
     commentText
     createdAt
     username
+    artistId
     reactionCount
     
   }

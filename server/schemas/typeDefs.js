@@ -94,7 +94,7 @@ const typeDefs = gql`
     artists: [Artist]
     artistsByGenre(genre: String): [Artist]
     comment(_id: ID!): Comment
-    comments(username: String): [Comment]
+    comments(username: String, artistId: ID): [Comment]
     genres: [Genre]
     me: User
     meArtist: Artist

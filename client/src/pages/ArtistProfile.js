@@ -29,9 +29,9 @@ function ArtistProfile() {
   const { loading, data } = useQuery(QUERY_ARTISTS);
 
   const currentArtist = state.artists.find((artist) => artist._id === artistId);
-  console.log("data", data);
-  console.log("state.artists", state.artists)
-  console.log("currentArtist", currentArtist);
+  // console.log("data", data);
+  // console.log("state.artists", state.artists)
+  // console.log("currentArtist", currentArtist);
 
   useEffect(() => {
     if (data && !currentArtist) {

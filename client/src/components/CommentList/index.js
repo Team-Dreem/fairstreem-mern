@@ -22,6 +22,8 @@ const useStyles = makeStyles({
 });
 
 const CommentList = (comments, title) => {
+
+  console.log("comments", comments);
   
   // const [state, dispatch] = useStoreContext();
   // const { loading, data } = useQuery(QUERY_ME);

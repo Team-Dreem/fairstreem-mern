@@ -168,7 +168,7 @@ export const QUERY_SEARCH = gql`
 `;
 
 export const QUERY_COMMENTS = gql` 
-query omments($username: String, $artistId: ID) {
+query comments($username: String, $artistId: ID) {
   comments(username: $username, artistId: $artistId) {
     _id
     createdAt
