@@ -6,7 +6,6 @@
   "engines": {
     "node": "14.x"
   },
-
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "cd server && npm start",
@@ -21,7 +20,7 @@
     "core-js": "^3.8.3",
     "if-env": "^1.0.4",
     "kill-port": "^1.6.1",
-    "node-sass": "^5.0.0"
+    "node-sass": "^4.14.1"
   },
   "devDependencies": {
     "concurrently": "^5.1.0",
