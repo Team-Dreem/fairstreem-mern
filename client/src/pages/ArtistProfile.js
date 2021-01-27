@@ -68,7 +68,6 @@ function ArtistProfile() {
             <h1>
               {currentArtist.artistName}{" "}
               <span>
-                <Button>like</Button>
                 <LikeButton></LikeButton>
               </span>{" "}
             </h1>
