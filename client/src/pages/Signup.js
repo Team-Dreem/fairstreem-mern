@@ -152,16 +152,6 @@ function Signup(props) {
         placeholder="Tell us about you"
         fullWidth />
 
-      <TextField
-        className="input"
-        id="picture"
-        name="picture"
-        type="picture"
-        onChange={handleChange}
-        margin="normal"
-        label="Post a picture"
-        fullWidth />
-
       <Button variant="contained" className="btn">Submit</Button>
     </Container>
   );

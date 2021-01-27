@@ -2,23 +2,24 @@ import React, { useState } from "react";
 import { useMutation } from '@apollo/react-hooks';
 import { LOGIN, ARTIST_LOGIN } from "../utils/mutations"
 import Auth from "../utils/auth";
+import { FormControl, InputLabel, Select, TextField, Button } from "@material-ui/core";
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
 
 function Login(props) {
   const [formState, setFormState] = useState({ email: '', password: '', accountType: '' });
-  const [login, {error}] = useMutation(LOGIN);
+  const [login, { error }] = useMutation(LOGIN);
   const [artistLogin] = useMutation(ARTIST_LOGIN);
 
   const handleFormSubmit = async event => {
     event.preventDefault();
     try {
-      if(formState.acctType === 'user')
-      {
+      if (formState.acctType === 'user') {
         const mutationResponse = await login({ variables: { email: formState.email, password: formState.password } })
         const token = mutationResponse.data.login.token;
         Auth.login(token);
       }
-      else if(formState.acctType === 'artist')
-      {
+      else if (formState.acctType === 'artist') {
         const mutationResponse = await artistLogin({ variables: { email: formState.email, password: formState.password } })
         const token = mutationResponse.data.artistLogin.token;
         Auth.login(token);
@@ -37,52 +38,58 @@ function Login(props) {
   };
 
   return (
-    <div className="container my-1">
+    <Container maxWidth="sm" className="login-form">
 
       <h2>Login</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between my-2">
-            <label htmlFor="type">Account Type:</label>
-            <input
-              placeholder="user or artist"
-              name="acctType"
-              type="acctType"
-              id="type"
-              onChange={handleChange}
-            />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email address:</label>
-          <input
-            placeholder="youremail@test.com"
-            name="email"
-            type="email"
-            id="email"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
-          <input
-            placeholder="******"
-            name="password"
-            type="password"
-            id="pwd"
-            onChange={handleChange}
-          />
-        </div>
-        {
-          error ? <div>
-            <p className="error-text" >The provided credentials are incorrect</p>
-          </div> : null
-        }
-        <div className="flex-row flex-end">
-          <button type="submit">
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+      <Box m={3} />
+      <FormControl fullWidth={true} margin="normal" onSubmit={handleFormSubmit}>
+        <InputLabel>Account Type</InputLabel>
+        <Select
+          required
+          margin="normal"
+          native
+          fullWidth
+          onChange={handleChange}
+          inputProps={{
+            name: 'accType',
+            id: 'accType',
+          }}
+        >
+          <option aria-label="None" value="" />
+          <option value={10}>Listener</option>
+          <option value={20}>Artist</option>
+        </Select>
+      </FormControl>
+
+      <TextField
+        className="input"
+        required id="standard-required"
+        label="Email Address"
+        fullWidth
+        margin="normal"
+        name="email"
+        type="email"
+        onChange={handleChange}
+      />
+
+      <TextField
+        className="input"
+        required id="standard-required"
+        label="Password"
+        fullWidth
+        margin="normal"
+        name="password"
+        type="password"
+        id="pwd"
+        onChange={handleChange}
+      />
+      {
+        error ? <div>
+          <p className="error-text" >The provided credentials are incorrect</p>
+        </div> : null
+      }
+      <Button variant="contained" className="btn">Submit</Button>
+    </Container>
   );
 }
 
