@@ -31,7 +31,8 @@ function SongTableSimple() {
 
   //use when data is received
   const { loading, data } = useQuery(QUERY_SONGS);
-console.log("data", data);
+//   console.log("STScurrentArtist", currentArtist);
+// console.log("STSdata", data);
   useEffect(() => {
     // if there's data to be stored
     if (data) {

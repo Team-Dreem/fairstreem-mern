@@ -21,6 +21,21 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+    artistByParams: async (parent, { _id, artistName }) => {
+      const params = {};
+      if (_id) {
+        params._id = _id;
+      }
+
+      if (artistName) {
+        params.artistName = {
+          $regex: artistName,
+        };
+      }
+      return await Artist.find(params)
+        .populate("followers")
+        .populate("comments");
+    },
     artists: async () => {
       return Artist.find().populate("followers").populate("comments");
     },
@@ -100,7 +115,7 @@ const resolvers = {
     meArtist: async (parent, args, context) => {
       // console.log("context", context);
       if (context.user) {
-        console.log("context", context.user)
+        console.log("context", context.user);
         const artistData = await Artist.findOne({ _id: context.user._id })
           .select("-__v -password")
           .populate("comments")
@@ -134,20 +149,24 @@ const resolvers = {
     // songs: async () => {
     //   return await Song.find();
     // },
-    songs: async (parent, { genre, title }) => {
+    songs: async (parent, { genre, artistName, artistId }) => {
       const params = {};
 
       if (genre) {
         params.genre = genre;
       }
 
-      if (title) {
-        params.title = {
-          $regex: title,
+      if (artistName) {
+        params.artistName = {
+          $regex: artistName,
         };
       }
 
-      return await Song.find(params).populate("genre");
+      if (artistId) {
+        params.artistId = artistId;
+      }
+
+      return Song.find(params);
     },
     users: async () => {
       return User.find()

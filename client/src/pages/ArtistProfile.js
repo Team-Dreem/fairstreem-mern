@@ -6,11 +6,11 @@ import { UPDATE_ARTISTS, UPDATE_CURRENT_ARTIST } from "../utils/actions";
 import { QUERY_ARTISTS } from "../utils/queries";
 import { idbPromise } from "../utils/helpers";
 import spinner from "../assets/spinner.gif";
-import Auth from '../utils/auth'
+// import Auth from '../utils/auth'
 
 import Grid from "@material-ui/core/Grid";
 // import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 
 import SongTableSimple from "../components/SongTableSimple";
 import CommentForm from '../components/CommentForm'
@@ -29,6 +29,9 @@ function ArtistProfile() {
   const { loading, data } = useQuery(QUERY_ARTISTS);
 
   const currentArtist = state.artists.find((artist) => artist._id === artistId);
+  console.log("data", data);
+  console.log("state.artists", state.artists)
+  console.log("currentArtist", currentArtist);
 
   useEffect(() => {
     if (data && !currentArtist) {
@@ -54,13 +57,13 @@ function ArtistProfile() {
       });
     }
 
-    return () => {
-      dispatch({
-        type: UPDATE_CURRENT_ARTIST,
-        currentArtist: {},
-        // this clears the currenArist object when leaving page(** this mimics "component unmount" **)
-      });
-    };
+    // return () => {
+    //   dispatch({
+    //     type: UPDATE_CURRENT_ARTIST,
+    //     currentArtist: {},
+    //     // this clears the currenArist object when leaving page(** this mimics "component unmount" **)
+    //   });
+    // };
   }, [loading, currentArtist, dispatch, data, artistId]);
 
   return (

@@ -58,7 +58,6 @@ db.once("open", async () => {
   });
 
   await Artist.create({
-    avatar: "../../../public/images/default.png",
     artistName: "Feed",
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "feed@artist.com",
@@ -69,7 +68,6 @@ db.once("open", async () => {
   });
 
   await Artist.create({
-    avatar: "../../public/images/default.png",
     artistName: "Reboot",
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "reboot@artist.com",
@@ -80,7 +78,6 @@ db.once("open", async () => {
   });
 
   await Artist.create({
-    avatar: "../../public/images/default.png",
     artistName: "Concrete Hat",
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "concrete_hat@artist.com",
@@ -174,8 +171,6 @@ db.once("open", async () => {
       "song_url": "https://fairstreem.s3.us-east-2.amazonaws.com/1611622008635.mp3"
     },
   ]);
-
-  await User.deleteMany();
 
   await User.create({
     avatar: "../../public/images/default.png",

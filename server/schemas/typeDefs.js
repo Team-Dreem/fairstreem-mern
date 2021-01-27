@@ -35,7 +35,6 @@ const typeDefs = gql`
     tags: [String]
     song_url: String
     likes: Int!
-    comments: [Comment]
   }
 
   type Order {
@@ -90,14 +89,15 @@ const typeDefs = gql`
   type Query {
     search(term: String!): [Artist]
     artist(_id: ID, artistName: String): Artist
-    artists(_id: ID, artistName: String): [Artist]
+    artistByParams(_id: ID, artistName: String): Artist
+    artists: [Artist]
     artistsByGenre(genre: String): [Artist]
     comment(_id: ID!): Comment
     comments(username: String): [Comment]
     genres: [Genre]
     me: User
     meArtist: Artist
-    songs(genre: ID, name: String): [Song]
+    songs(genre: ID, artistName: String, artistId: ID): [Song]
     song(_id: ID): Song
     user(_id: ID, username: String): User
     users: [User]
