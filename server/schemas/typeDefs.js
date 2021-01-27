@@ -140,7 +140,7 @@ const typeDefs = gql`
     addSong(
       title: String!
       album: String
-      genre: ID
+      genre: ID!
       description: String
       price: Float!
       tags: [String]
