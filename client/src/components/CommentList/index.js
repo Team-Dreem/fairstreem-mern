@@ -6,6 +6,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+import { useStoreContext } from "../../utils/GlobalState";
+
 const useStyles = makeStyles({
   root: {
     
@@ -24,6 +26,11 @@ const useStyles = makeStyles({
 });
 
 export default function CommentList() {
+
+  const [state, dispatch] = useStoreContext();
+
+  console.log("CURRENTARTIST",state.currentArtist)
+
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 

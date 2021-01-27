@@ -2,14 +2,13 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 //make mutation
-// import { ADD_COMMENT } from '../../utils/mutations';
+import { ADD_COMMENT } from '../../utils/mutations';
 
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 
-
-
+import Auth from '../../utils/auth'
 
 
 
@@ -18,16 +17,18 @@ import Paper from '@material-ui/core/Paper'
     const [commentText, setText] = useState('');
     const [characterCount, setCharacterCount] = useState(0);
 
-    // const addComment = useMutation(ADD_COMMENT)
+    const [addComment, {error}] = useMutation(ADD_COMMENT)
 
 
     const handleFormSubmit = async event => {
+        console.log(Auth.getProfile());
+        
         event.preventDefault();
         try {
             // add thought to database. the thoughtText comes from useState hook that is updated in handleChange()
-            // await addComment({
-            //   variables: { commentText }
-            // });
+            await addComment({
+              variables: { commentText: commentText }
+            });
         
             // clear form value
             setText('');
