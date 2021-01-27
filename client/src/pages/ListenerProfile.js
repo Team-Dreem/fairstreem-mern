@@ -7,16 +7,21 @@ import { QUERY_ME } from '../utils/queries';
 import { useQuery } from "@apollo/react-hooks";
 import { UPDATE_CURRENT_USER } from '../utils/actions';
 import getLetterAvatar from '../utils/getLetterAvatar';
+import IconButton from "@material-ui/core/IconButton";
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
 
 const useStyles = makeStyles((theme) => ({
     large: {
-      width: 250,
-      height: 250,
-      // display: 'block'
-      margin: '20px auto -125px',
-      fontSize: 72
+        width: 250,
+        height: 250,
+        // display: 'block'
+        margin: '20px auto -125px',
+        fontSize: 72
     },
-  }));
+    input: {
+        display: "none"
+    }
+}));
 
 function ListenerProfile() {
     const classes = useStyles();
@@ -39,17 +44,25 @@ function ListenerProfile() {
 
     return (
         <>
-        <Avatar
-            src={currentUser.avatar}
-            className={classes.large}>
-                { getLetterAvatar(currentUser.username) }
+            <Avatar
+                src={currentUser.avatar}
+                className={classes.large}>
+                {getLetterAvatar(currentUser.username)}
             </Avatar>
-        <div className="profile">
-            <h1>{currentUser.username}</h1>
-            <Grid>
-                
-            </Grid>
-        </div>
+            <div className="profile">
+                <div className="profile-header">
+                    <h1>{currentUser.username}</h1>
+                    <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
+                    <label htmlFor="icon-button-file">
+                        <IconButton color="primary" aria-label="upload picture" component="span">
+                            <PhotoCamera />
+                        </IconButton>
+                    </label>
+                </div>
+                <Grid>
+
+                </Grid>
+            </div>
         </>
     );
 }
