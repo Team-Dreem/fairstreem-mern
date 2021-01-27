@@ -16,7 +16,7 @@ export const ARTIST_LOGIN = gql`
   mutation artistLogin($email: String!, $password: String!) {
     artistLogin(email: $email, password: $password) {
       token
-      user {
+      artist {
         _id
       }
     }
@@ -57,7 +57,7 @@ export const ADD_ARTIST = gql`
   mutation addArtist($artistName: String!, $email: String!, $password: String!, $genre: String!, $bio: String, $socialMedia: String, $avatar: String) {
     addArtist(artistName: $artistName, email: $email, password: $password, genre: $genre, bio: $bio, socialMedia: $socialMedia, avatar: $avatar) {
       token
-      user {
+      artist {
         _id
       }
     }
