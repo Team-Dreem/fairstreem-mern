@@ -14,8 +14,7 @@ const useStyles = makeStyles((theme) => ({
     large: {
         width: 250,
         height: 250,
-        // display: 'block'
-        margin: '20px auto -125px',
+        margin: '50px auto -125px',
         fontSize: 72
     },
     input: {

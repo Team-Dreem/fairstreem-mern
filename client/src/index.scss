@@ -31,7 +31,6 @@ body {
   padding: 0;
   font-family: 'Roboto', sans-serif;
   line-height: 1.5;
-  // font-size: 16px;
   color: var(--dark);
 }
 
@@ -218,11 +217,11 @@ nav {
 
 // Listener Profile Start
 .profile {
-  border: solid 1px;
+  border: solid 1px #666666;
   margin: auto;
   width: 50%;
   height: 400px;
-  background-color: white;
+  background-color: var(--light);
   border-radius: 5px;
 
   h1 {
