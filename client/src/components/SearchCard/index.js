@@ -5,6 +5,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import { Link as RouterLink } from 'react-router-dom'
 
 const useStyles = makeStyles({
     root: {
@@ -21,7 +22,7 @@ function SearchCard({ data }) {
 
     return (
         <Card className={classes.root}>
-            <CardActionArea>
+            <CardActionArea componenet={RouterLink} to={`/artists/${data.artistName}/${data._id}`}>
                 <CardMedia
                     className={classes.media}
                     image={data.avatar}
