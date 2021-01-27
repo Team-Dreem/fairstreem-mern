@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useMutation } from '@apollo/react-hooks';
-import { Link } from "react-router-dom";
 import { LOGIN, ARTIST_LOGIN } from "../utils/mutations"
 import Auth from "../utils/auth";
 
@@ -39,9 +38,6 @@ function Login(props) {
 
   return (
     <div className="container my-1">
-      <Link to="/signup">
-        ← Go to Signup
-      </Link>
 
       <h2>Login</h2>
       <form onSubmit={handleFormSubmit}>

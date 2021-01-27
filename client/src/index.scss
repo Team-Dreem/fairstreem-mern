@@ -241,6 +241,29 @@ nav {
 }
 // Listener Profile End
 
+// Sign Up Form Start
+.signup-form {
+  background-color: white;
+  border: solid 1px black;
+  border-radius: 5px;
+  margin-top: 50px;
+  padding: 15px;
+  padding-bottom: 20px;
+
+  .MuiInputBase-input {
+    border: none;
+    box-shadow: none !important;
+  }
+
+  .btn {
+  }
+}
+// Sign Up Form End
+
+// Login Form Start
+
+// Login Form End
+
 h1,
 h2,
 h3,
