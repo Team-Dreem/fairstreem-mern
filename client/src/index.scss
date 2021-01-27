@@ -266,14 +266,16 @@ nav {
   display: flex;
   justify-content: center;
 
-  .like-btn {
+  .MuiFab-root {
     margin-top: 128px;
-    margin-left: 5px;
+    margin-left: 10px;
+    box-shadow: none;
   }
 }
 
 .bio {
   text-align: center;
+  margin-top: 50px;
 }
 // Artist Profile End
 
