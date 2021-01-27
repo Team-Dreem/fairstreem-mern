@@ -69,15 +69,11 @@ function Signup(props) {
 
       <Box m={3} />
 
-      <div mt="4" class=".MuiFormControl-fullWidth	">
-        <FormControl onSubmit={handleFormSubmit}>
-          <div class=".MuiFormControl-fullWidth	">
-
-            <InputLabel htmlFor="">Account Type</InputLabel>
+        <FormControl fullWidth={true} onSubmit={handleFormSubmit}>
+            <InputLabel>Account Type</InputLabel>
             <Select
               required
               margin="normal"
-
               native
               fullWidth
               // value={acctType}
@@ -91,6 +87,7 @@ function Signup(props) {
               <option value={10}>Listener</option>
               <option value={20}>Artist</option>
             </Select>
+          </FormControl>
 
             <TextField
               required id="standard-required"
@@ -145,34 +142,33 @@ function Signup(props) {
             />
 
 
-            <InputLabel htmlFor="">Genre</InputLabel>
-            <Select
-              required
-              margin="normal"
-              native
-              fullWidth
-              // value={genre}
-              onChange={handleChange}
-              inputProps={{
-                name: 'genre',
-                id: 'genre',
-              }}
-            >
-              <option aria-label="None" value="" />
-              <option value={10}>Rock</option>
-              <option value={20}>Classical</option>
-              <option value={30}>Jazz</option>
-              <option value={40}>Country</option>
-              <option value={50}>Pop</option>
-              <option value={60}>Hip Hop</option>
-              <option value={70}>Folk</option>
-              <option value={80}>Heavy Metal</option>
-              <option value={90}>Reggae</option>
-            </Select>
+            <FormControl fullWidth={true} margin="normal">
+              <InputLabel>Genre</InputLabel>
+              <Select
+                required
+                margin="normal"
+                native
+                fullWidth
+                // value={genre}
+                onChange={handleChange}
+                inputProps={{
+                  name: 'genre',
+                  id: 'genre',
+                }}
+              >
+                <option aria-label="None" value="" />
+                <option value={10}>Rock</option>
+                <option value={20}>Classical</option>
+                <option value={30}>Jazz</option>
+                <option value={40}>Country</option>
+                <option value={50}>Pop</option>
+                <option value={60}>Hip Hop</option>
+                <option value={70}>Folk</option>
+                <option value={80}>Heavy Metal</option>
+                <option value={90}>Reggae</option>
+              </Select>
+            </FormControl>
 
-   
-
-            <InputLabel htmlFor="">Bio</InputLabel>
             <TextField
               id="bio"
               name="bio"
@@ -185,17 +181,15 @@ function Signup(props) {
               placeholder="Tell us about you"
               fullWidth />
 
-            <InputLabel htmlFor="">Pictire</InputLabel>
             <TextField
               id="picture"
               name="picture"
               type="picture"
               onChange={handleChange}
               margin="normal"
-              placeholder="Post a picture"
+              label="Post a picture"
               fullWidth />
 
-            <InputLabel htmlFor="">Social Media</InputLabel>
             <TextField
               id="social"
               name="social"
@@ -209,9 +203,6 @@ function Signup(props) {
               fullWidth />
 
             <Button variant="contained">Submit</Button>
-          </div>
-        </FormControl>
-      </div>
     </Container>
   );
 }
