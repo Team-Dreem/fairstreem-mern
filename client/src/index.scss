@@ -33,6 +33,10 @@ body {
   line-height: 1.5;
   // font-size: 16px;
   color: var(--dark);
+}
+
+#root {
+  min-height: 100vh;
   background-image: var(--heroGradient);
   position: relative;
   flex-grow: 1;
@@ -49,10 +53,6 @@ body {
       bottom: 0;
       z-index: -1;
     } 
-}
-
-#root {
-  min-height: 100vh;
 }
 
 /* Logo Styles Start */
@@ -140,8 +140,6 @@ nav {
 }
 
 /* Hero Start*/
-
-
 .hero h1 {
   color: black;
   font-family: 'Yanone Kaffeesatz', sans-serif;
@@ -222,7 +220,7 @@ nav {
 .profile {
   border: solid 1px;
   margin: auto;
-  width: 60%;
+  width: 50%;
   height: 400px;
   background-color: white;
   border-radius: 5px;
