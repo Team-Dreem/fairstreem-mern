@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
@@ -8,13 +8,15 @@ import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import SongListByArtist from "./components/SongListByArtist"
 import Nav from "./components/Nav";
 import { StoreProvider } from "./utils/GlobalState";
 import OrderHistory from "./pages/OrderHistory";
 import Success from "./pages/Success";
 import ArtistProfile from "./pages/ArtistProfile";
 import SongDetail from "./pages/SongDetail";
+import ListenerProfile from "./pages/ListenerProfile";
+import { ThemeProvider } from "@material-ui/core";
+import { lightTheme } from './utils/theme';
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -26,13 +28,13 @@ const client = new ApolloClient({
     })
   },
   uri: '/graphql',
-})
+});
 
 function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div>
+        <ThemeProvider theme={lightTheme}>
           <StoreProvider>
             <Nav />
             <Switch>
@@ -45,11 +47,11 @@ function App() {
               <Route exact path="/artists/:artistId" component={ArtistProfile} />
               {/* <Route exact path="/artists/:artistName/:artistId/songs" component={SongListByArtist} /> */}
               <Route exact path="/artists/:artistName/:artistId/songs/:songId" component={SongDetail} />
-
+              <Route exact path="/listener" component={ListenerProfile} />
               <Route component={NoMatch} />
             </Switch>
           </StoreProvider>
-        </div>
+        </ThemeProvider>
       </Router>
     </ApolloProvider>
   );

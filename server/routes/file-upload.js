@@ -23,6 +23,7 @@ router.post("/image-upload", function (req, res) {
 });
 
 router.post("/song-upload", function (req, res) {
+  console.log("UPLOADED FILE", req.file, req.files)
   singleSongUpload(req, res, function (err, response, body) {
     // console.log("res.body", response.body);
     // console.log("req.file.location:", req.file.location);
