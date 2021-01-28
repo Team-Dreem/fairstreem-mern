@@ -53,10 +53,7 @@ export default function AddSongModal() {
 
     //error msg state
     const [errorMsgOpen, setErrorMsgOpen] = useState(false)
-    console.log(errorMsgOpen);
     
-
-
     //initialize empty state for all form inputs
     const [formState, setFormState] = useState({ title: "", price: 0, description: "", genre: "", file: "", album: "" });
     const [addSong, { error }] = useMutation(ADD_SONG);
@@ -76,7 +73,7 @@ export default function AddSongModal() {
             const url = "/api/v1/song-upload"
             const formData = new FormData()
             formData.append("song", document.getElementById("file").files[0])
-            console.log("FORMDATA", formData.get("song"))
+            // console.log("FORMDATA", formData.get("song"))
             post(url, formData, config)
                 .then((response) => {
                     console.log("AWS url", response.data.song_url);
@@ -107,7 +104,6 @@ export default function AddSongModal() {
     }
     //update the state every time input is changed to keep track of input, to send to mutation on submit
     function handleChange(event) {
-        console.log("handleChange");
         const { name, value } = event.target;
         if (name === "file") {
             setFormState({
