@@ -1,43 +1,63 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 // import { useStoreContext } from "../../utils/GlobalState";
 // import { useQuery } from "@apollo/react-hooks";
-import { useMutation } from '@apollo/react-hooks';
-// import { QUERY_ARTISTS, QUERY_COMMENTS } from "../../utils/queries";
+import { useApolloClient, useMutation, useQuery } from '@apollo/react-hooks';
 import { ADD_COMMENT } from "../../utils/mutations";
 // import { idbPromise } from "../../utils/helpers";
 // import Auth from '../../utils/auth'
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles, ThemeProvider } from '@material-ui/core';
+import { useStoreContext } from '../../utils/GlobalState';
+import { UPDATE_ARTIST_COMMENTS } from '../../utils/actions';
 
-const CommentForm = (props) => {
-    // const [state, dispatch] = useStoreContext();
-    // const { loading, data } = useQuery(QUERY_ARTISTS);
+const useStyles = makeStyles((theme) => ({
+    form: {
+        width: '100%'
+    },
+    commentFooter: {
+        display: 'flex',
+        marginTop: theme.spacing(2)
+    },
+    commentButton: {
+        marginRight: 'auto'
+    }
+}));
+
+const CommentForm = ({ artistId }) => {
+    const [state, dispatch] = useStoreContext();
+    const classes = useStyles();
     const [commentText, setText] = useState('');
     const [characterCount, setCharacterCount] = useState(0);
-    // console.log("data", data);
-  
+
     const [addComment] = useMutation(ADD_COMMENT);
-
-
+    const apolloClient = useApolloClient();
 
     const handleFormSubmit = async event => {
-        // console.log(Auth.getProfile());
-
         event.preventDefault();
+
         try {
             // add comment to database. the commentText comes from useState hook that is updated in handleChange()
-            await addComment({
+            const { data } = await addComment({
                 variables: {
                     commentText: commentText,
-                    artistId: props.artistId
+                    artistId
                 }
             });
+
+            const { addComment: comments } = data;
 
             // clear form value
             setText('');
             setCharacterCount(0);
+
+            dispatch({
+                type: UPDATE_ARTIST_COMMENTS,
+                _id: artistId,
+                comments
+            });
         } catch (e) {
             console.error(e);
         }
@@ -51,73 +71,32 @@ const CommentForm = (props) => {
     };
 
     return (
-        <Grid container component={Paper}  >
+        <div className="comment">
+            <form onSubmit={handleFormSubmit} className={classes.form}>
+                <TextField
+                    className="comment-field"
+                    id="outlined-multiline-static"
+                    label="Comment"
+                    multiline
+                    rows={5}
+                    fullWidth={true}
+                    variant="outlined"
+                    placeholder="What do you think?"
+                    value={commentText}
+                    onChange={handleChange}
+                />
 
-            <Grid item xs={12}>
-                <p className={characterCount === 280 ? 'text-error' : ''}>
-                    Character Count: {characterCount}/280
-            </p>
-            </Grid>
-
-
-            <form onSubmit={handleFormSubmit}>
-                <Grid item xs={12}>
-                    <textarea
-                        placeholder="What do you think?"
-                        value={commentText}
-
-                        onChange={handleChange}
-                    >
-                    </textarea>
-                </Grid>
-
-                <Button type="submit">
-                    Submit
-                </Button>
+                <footer className={classes.commentFooter}>
+                    <Button className={classes.commentButton} type="submit" variant="contained" color="primary">
+                        Submit
+                    </Button>
+                    <span className={characterCount === 280 ? 'text-error' : ''}>
+                        {characterCount}/280 characters
+                    </span>
+                </footer>
             </form>
-
-        </Grid>
+        </div>
     )
 
 }
 export default CommentForm;
-
-
-    // useEffect(() => {
-    //   async function saveComment() {
-    //     const comments = comments.map((item) => item._id);
-
-    //     if (comments.length) {
-    //       const { data } = await addComment({ variables: { comments } });
-    //       const commentData = data.addComment.comments;
-
-    //       commentData.forEach((item) => {
-    //         idbPromise("cart", "delete", item);
-    //       });
-    //     }
-    //   }
-
-    //   saveComment();
-    // }, [addComment]);
-
-    //  const [addThought, { error }] = useMutation(ADD_THOUGHT, {
-    //     update(cache, { data: { addComment } }) {
-    //       try {
-    //         // could potentially not exist yet, so wrap in a try...catch
-    //         const { comments } = cache.readQuery({ query: QUERY_COMMENTS });
-    //         cache.writeQuery({
-    //           query: QUERY_COMMENTS,
-    //           data: { comments: [addComment, ...comments] },
-    //         });
-    //       } catch (e) {
-    //         console.error(e);
-    //       }
-    //       // update me object's cache, appending new comment to the end of the array
-    //       const { currentArtist } = state;
-    //       cache.writeQuery({
-    //         query: QUERY_ARTISTS,
-    //         data: { artist: { ...artist, comments: [...artist.comments, addComment] } },
-    //         // Thankfully, you usually only have to manually update the cache when adding or deleting items from an array. You won't need to perform any cache updates for the next feature, the Add Reaction form.
-    //       });
-    //     },
-    //   });

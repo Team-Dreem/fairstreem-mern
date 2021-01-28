@@ -101,7 +101,6 @@ mutation addComment($commentText: String!, $artistId: ID!) {
     username
     artistId
     reactionCount
-    
   }
 }
 `

@@ -120,9 +120,9 @@ export default function AddSongModal() {
     //jsx
     return (
         <div>
-            <button type="button" onClick={handleOpen}>
+            <Button className="add-song-btn" size="large" type="button" onClick={handleOpen}>
                 Add Song
-      </button>
+            </Button>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"

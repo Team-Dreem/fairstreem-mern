@@ -2,29 +2,59 @@ import React, { useEffect } from "react";
 import { idbPromise } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
 import { useQuery } from "@apollo/react-hooks";
-import SongRow from "../SongRow";
 import { QUERY_SONGS, QUERY_CHECKOUT } from "../../utils/queries";
-import { UPDATE_SONGS } from "../../utils/actions";
+import { UPDATE_SONGS, UPDATE_CART_QUANTITY, ADD_TO_CART } from "../../utils/actions";
 import { loadStripe } from "@stripe/stripe-js";
 import spinner from "../../assets/spinner.gif";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-// const useStyles = makeStyles({
-//   table: {
-//     minWidth: 650,
-//   },
-// });
+const useStyles = makeStyles({
+  tableHead: {
+    background: 'rgba(0,0,0,.05)'
+  },
+});
 
 function SongTableSimple({ allowPurchase = true }) {
+  const classes = useStyles();
   const [state, dispatch] = useStoreContext();
 
-  const { selectedArtist } = state;
+  const { selectedArtist, cart } = state;
 
   //use when data is received
   const { loading, data } = useQuery(QUERY_SONGS);
-//   console.log("STSselectedArtist", selectedArtist);
-// console.log("STSdata", data);
+
+  const addToCart = (song) => {
+    console.log("buy clicked", song);
+    const itemInCart = cart.find((cartItem) => cartItem._id === song._id);
+    // if there was a match, call UPDATE with a new purchase quantity
+    if (itemInCart) {
+      dispatch({
+        type: UPDATE_CART_QUANTITY,
+        _id: song._id,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+      });
+      idbPromise("cart", "put", {
+        ...itemInCart,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+      });
+    } else {
+      dispatch({
+        type: ADD_TO_CART,
+        song: { ...song },
+      });
+      idbPromise("cart", "put", { ...song });
+    }
+  };
+
   useEffect(() => {
     // if there's data to be stored
     if (data) {
@@ -54,50 +84,42 @@ function SongTableSimple({ allowPurchase = true }) {
   function filterSongs() {
     return state.songs.filter((song) => song.artistId === selectedArtist._id);
   }
-  console.log("filterSongs", filterSongs());
 
-  // console.log("SongTableArtist", selectedArtist);
-  // console.log("title", title);
-  // console.log("image", image);
-  // console.log("_id", _id);
-  // console.log("price", price);
-  // console.log("artistId", artistId);
-  // console.log("description", description);
-  // console.log("song_url", song_url);
-  // console.log("tags", tags);
+  const artistSongs = filterSongs();
 
-  function playClick() {
-    console.log("play clicked");
-  }
-
-  const artistSongs = state.songs.filter(
-    (song) => song.artistId === selectedArtist._id
-  );
-
-  return (
-    <div>    
-      {artistSongs.length ? (
-        <div className="flex-row">
-          {filterSongs().map((song) => (
-            <SongRow
-              key={song._id}
-              _id={song._id}
-              title={song.title}
-              artistId={song.artistId}
-              description={song.description}
-              image={song.image}
-              price={song.price}
-              song_url={song.song_url}
-              tags={song.tags}
-            />
-          ))}
-        </div>
-      ) : (
-        <h3>{selectedArtist.artistName} hasn't added any songs yet!</h3>
-      )}
-      {loading ? <img src={spinner} alt="loading" /> : null}
-    </div>
-  );
+  return (artistSongs && artistSongs.length)
+      ? <TableContainer elevation={0} square={true} component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead align="right">
+              <TableRow className={classes.tableHead}>
+                <TableCell></TableCell>
+                <TableCell align="left">Title</TableCell>
+                {/* <TableCell align="right">Album</TableCell> */}
+                {/* <TableCell align="right">Playcount</TableCell> */}
+                <TableCell align="right">Purchase</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {artistSongs.map((song) => (
+                <TableRow key={song._id}>
+                  <TableCell align="center">
+                    <audio controls controlsList="nodownload"> 
+                      <source src={song.song_url} type="audio/ogg"/>
+                      <source src={song.song_url} type="audio/mpeg"/>
+                    </audio>
+                  </TableCell>
+                  <TableCell align="left">{song.title}</TableCell>
+                  {/* <TableCell align="right">{row.album}</TableCell> */}
+                  {/* <TableCell align="right">{row.playcount}</TableCell> */}
+                  <TableCell align="right">
+                    <Button onClick={addToCart.bind(this, song)}>Buy</Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      : (<h3>{selectedArtist.artistName} hasn't added any songs yet!</h3>);
 }
 
 export default SongTableSimple;
