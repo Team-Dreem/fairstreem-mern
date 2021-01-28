@@ -103,7 +103,7 @@ function SongTableSimple({ allowPurchase = true }) {
               {artistSongs.map((song) => (
                 <TableRow key={song._id}>
                   <TableCell align="center">
-                    <audio controls> 
+                    <audio controls controlsList="nodownload"> 
                       <source src={song.song_url} type="audio/ogg"/>
                       <source src={song.song_url} type="audio/mpeg"/>
                     </audio>
