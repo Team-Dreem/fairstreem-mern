@@ -162,6 +162,8 @@ export const QUERY_ARTISTS = gql`
       }
       comments{
         commentText
+        createdAt
+        username
       }
     }
   }

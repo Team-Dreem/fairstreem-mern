@@ -7,17 +7,13 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-
-
 // import { useStoreContext } from "../../utils/GlobalState";
-
-
 
 const useStyles = makeStyles({
   root: {
     
   },
- 
+  
   title: {
     fontSize: 14,
   },
@@ -30,7 +26,7 @@ const CommentList = (props) => {
   
   
   const {title, comments} = props
-  console.log("props",props);
+  // console.log("props",props);
   
   // const [state, dispatch] = useStoreContext();
   // console.log("SELECTEDARTIST",state.selectedArtist);
@@ -49,8 +45,9 @@ const CommentList = (props) => {
             <Grid item xs ={12}>
             <Card className={classes.root} variant="outlined" >
               <CardContent>
+                <Typography variant="subtitle1">{comment.createdAt}</Typography>
                 <Typography variant="h5" component="h2">
-                  {comment.createdAt} {comment.username} says...
+                   {comment.username} says...
                 </Typography>
 
                 <Typography variant="body2" component="p">
