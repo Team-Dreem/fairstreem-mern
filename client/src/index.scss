@@ -277,6 +277,10 @@ nav {
   text-align: center;
   margin-top: 50px;
 }
+
+.add-song-btn {
+  margin: auto !important;
+}
 // Artist Profile End
 
 // Sign Up Form Start
@@ -310,6 +314,14 @@ nav {
   }
 }
 // Login Form End
+
+// Song Table Start
+.song-table {
+  margin: auto;
+  max-width: 75%;
+  align-content: center;
+}
+// Song Table End
 
 h1,
 h2,

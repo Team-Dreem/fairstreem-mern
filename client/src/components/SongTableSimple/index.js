@@ -129,10 +129,8 @@ function SongTableSimple() {
   //   console.log(rows);
 
   return (
-    <div>
-    <h2>Songs by {selectedArtist.artistName}:</h2>
-
-      <TableContainer component={Paper}>
+    <div className="songs-table">
+      <TableContainer component={Paper} className="song-table">
         <Table className={classes.table} aria-label="simple table">
           <TableHead align="right">
             <TableRow>
@@ -146,9 +144,6 @@ function SongTableSimple() {
           <TableBody>
             {rows.map((row) => (
               <TableRow key={row.name}>
-                {/* <TableCell component="th" scope="row">
-                                  {row.name}
-                              </TableCell> */}
                 <TableCell align="center">{row.playBtn}</TableCell>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="right">{row.album}</TableCell>
