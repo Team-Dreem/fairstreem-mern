@@ -17,7 +17,8 @@ import {
   TOGGLE_CART,
   UPDATE_SEARCH_LOADING,
   UPDATE_SEARCH_RESULTS,
-  UPDATE_SEARCH_GENRE
+  UPDATE_SEARCH_GENRE,
+  UPDATE_ARTIST_COMMENTS
 } from "./actions";
 
 import { useReducer } from "react";
@@ -135,6 +136,34 @@ export const reducer = (state, action) => {
         ...state,
         loading: false,
         searchResults: action.results
+      };
+
+    case UPDATE_ARTIST_COMMENTS:
+      const { _id, comments } = action;
+      let { selectedArtist, artists } = state;
+
+      if (selectedArtist._id === _id) {
+        selectedArtist = {
+          ...selectedArtist,
+          comments
+        };
+      }
+
+      artists = artists.map(a => {
+        if (a._id === _id) {
+          return {
+            ...a,
+            comments
+          };
+        } else {
+          return a;
+        }
+      });
+
+      return {
+        ...state,
+        selectedArtist,
+        artists
       };
 
     default:

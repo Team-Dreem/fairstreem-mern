@@ -37,8 +37,8 @@ function OrderHistory() {
                         <p>{title}</p>
                         
                       </Link>
-                    <button><a target="FairStreem DL" href={song_url}>Download</a></button>
-  
+                      <button><a href={song_url}>Download</a>
+                      </button>
                       <div>
                         <span></span>
                       </div>

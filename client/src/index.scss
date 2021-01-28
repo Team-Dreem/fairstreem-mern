@@ -226,7 +226,6 @@ nav {
   border: solid 1px #666666;
   margin: auto;
   width: 50%;
-  height: 400px;
   background-color: var(--light);
   border-radius: 5px;
   padding-top: 130px;
@@ -249,12 +248,12 @@ nav {
 
 // Artist Profile Start
 .artist-profile {
-  border: solid 1px #666666;
-  margin: auto;
+  // border: solid 1px #666666;
+  margin: 0 auto;
   width: 50%;
-  height: 400px;
-  background-color: var(--light);
-  border-radius: 5px;
+  // height: 400px;
+  // background-color: var(--light);
+  // border-radius: 5px;
   padding-top: 130px;
 
   h1 {
@@ -275,6 +274,10 @@ nav {
 .bio {
   text-align: center;
   margin-top: 50px;
+}
+
+.add-song-btn {
+  margin: auto !important;
 }
 // Artist Profile End
 
@@ -309,6 +312,26 @@ nav {
   }
 }
 // Login Form End
+
+// Song Table Start
+.song-table {
+  margin: auto;
+  max-width: 75%;
+}
+// Song Table End
+
+// Comments Start
+
+
+.comment {
+  padding: 10px;
+  margin: auto;
+}
+
+.comment-field {
+  align-content: center;
+}
+// Comments End
 
 h1,
 h2,

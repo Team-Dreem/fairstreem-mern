@@ -62,21 +62,21 @@ function Nav() {
               { currentArtist.artistName }
               </Link>}
           </li>
-          <li className="nav-link">
-            <Link to="/orderHistory">
+          { currentUser && currentUser._id && <li className="nav-link">
+          <Link to="/orderHistory">
               Order History
               {/* Change to view Profile? */}
             </Link>
-          </li>
+          </li> }
           <li className="nav-link">
             {/* this is not using the Link component to logout or user and then refresh the application to the start */}
             <a href="/" onClick={() => Auth.logout()}>
               Logout
             </a>
           </li>
-          <li className="nav-link">
-            <Cart />
-          </li>
+          { currentUser && currentUser._id && <li className="nav-link">
+           <Cart />
+          </li> }
         </ul>
       );
     } else {
