@@ -22,6 +22,7 @@ It features:
 
 ## Screenshots
 
+ 
 <a id="installation"></a>
 ## Installation
 

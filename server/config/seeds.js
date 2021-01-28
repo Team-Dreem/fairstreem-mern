@@ -102,7 +102,7 @@ db.once("open", async () => {
       artistId: "600b1de66ea21cf63a4db76d",
       description:
         "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
-      image: "JeffJohnston.jpg",
+      image: "https://fairstreem.s3.us-east-2.amazonaws.com/1611853534006.png",
       price: 0.99,
       genre: genres[0]._id,
       tags: "indie",
