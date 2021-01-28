@@ -17,11 +17,14 @@ import Button from "@material-ui/core/Button";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   tableHead: {
     background: 'rgba(0,0,0,.05)'
   },
-});
+  noSong: {
+    margin: theme.spacing(1)
+  }
+}));
 
 function SongTableSimple({ allowPurchase = true }) {
   const classes = useStyles();
@@ -49,7 +52,7 @@ function SongTableSimple({ allowPurchase = true }) {
     } else {
       dispatch({
         type: ADD_TO_CART,
-        song: { ...song },
+        song: { ...song, purchaseQuantity: 1 },
       });
       idbPromise("cart", "put", { ...song });
     }
@@ -119,7 +122,7 @@ function SongTableSimple({ allowPurchase = true }) {
             </TableBody>
           </Table>
         </TableContainer>
-      : (<h3>{selectedArtist.artistName} hasn't added any songs yet!</h3>);
+      : (<p className={classes.noSong}>{selectedArtist.artistName} hasn't added any songs yet!</p>);
 }
 
 export default SongTableSimple;

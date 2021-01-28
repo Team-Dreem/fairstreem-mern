@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
       display: "none"
   },
   sectionHeading: {
-    margin: theme.spacing(2),
+    margin: theme.spacing(1),
     marginTop: theme.spacing(6)
   },
   songsContainer: {
@@ -145,13 +145,13 @@ function ArtistProfile() {
             <p className="bio">{selectedArtist.bio}</p>
         
             <Container className={classes.songsContainer}>
-              <h3 className={classes.sectionHeading}>Songs</h3>
+              <h2 className={classes.sectionHeading}>Songs</h2>
               { isSelf && <AddSongModal /> }
               <SongTableSimple allowPurchase={!isSelf && isLoggedIn} />
             </Container>
 
             <div>
-              <h3 className={classes.sectionHeading}>Comments</h3>
+              <h2 className={classes.sectionHeading}>Comments</h2>
               { isLoggedIn && <CommentForm artistId={artistId}></CommentForm> }
 
               <CommentList

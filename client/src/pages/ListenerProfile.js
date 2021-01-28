@@ -69,8 +69,10 @@ function ListenerProfile() {
                     <h1>{currentUser.username}</h1>
                     <FileUploadButton onChange={uploadNewAvatar} />
                 </div>
-                <Grid>
-                    {currentUser.follows && currentUser.follows.map(artist => <SearchCard data={artist} key={artist._id} />)}
+                <Grid container spacing={2}>
+                    {currentUser.follows && currentUser.follows.map(artist => <Grid item sm={3} key={artist._id}>
+                        <SearchCard data={artist} />
+                    </Grid>)}
                 </Grid>
             </div>
         </>
