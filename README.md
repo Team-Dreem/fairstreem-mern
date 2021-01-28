@@ -3,10 +3,10 @@
 ## Description
 Fairstreem is a new music streaming application with more enhanced social features. 
 It features:
-*Fair pay for artists
-*Connects listeners to artists
-*Allows artists to share their music
-*Listeners can support their favorite artist directly
+* Fair pay for artists
+* Connects listeners to artists
+* Allows artists to share their music
+* Listeners can support their favorite artist directly
 
 ## Table of Contents
 * [Installation](#installation)
