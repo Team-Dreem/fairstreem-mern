@@ -140,6 +140,8 @@ const resolvers = {
         const user = await User.findById(context.user._id).populate({
           path: "orders.songs",
           populate: "genre",
+          populate: "title",
+          populate: "price",
         });
 
         return user.orders.id(_id);

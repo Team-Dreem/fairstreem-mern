@@ -31,11 +31,9 @@ export const ADD_ORDER = gql`
       songs {
         _id
         title
+        artistName
         description
         price
-        genre {
-          name
-        } 
       }
     }
   }
