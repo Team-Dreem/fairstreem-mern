@@ -17,6 +17,10 @@ function Signup(props) {
   const { genres } = state;
 
   useEffect(() => {
+    if (!genreData || !genreData.genres) {
+      return;
+    }
+
     disaptch({
       type: UPDATE_GENRES,
       genres: genreData.genres
