@@ -142,6 +142,8 @@ const resolvers = {
           populate: "genre",
           populate: "title",
           populate: "price",
+          populate: "image",
+          populate: "song_url",
         });
 
         return user.orders.id(_id);

@@ -70,12 +70,15 @@ db.once("open", async () => {
   });
 
   await Artist.create({
-    artistName: "Concrete Hat",
+    _id: "6011afa365dbf441f652e2c4",
+    avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611859034548.jpg",
+    artistName: "Ryan Holley",
     bio: "This is a default bio. Tell your listeners more about yourself!",
-    email: "concrete_hat@artist.com",
+    email: "ryan@artist.com",
     password: "12345",
-    genre: "Country",
-    songs: [],
+    website: "www.RyanHolley.com",
+    genre: "Rock/Alternative",
+    songs: ["600f667905d21d244b5182eb"],
     followers: [],
   });
 
@@ -118,7 +121,7 @@ db.once("open", async () => {
       price: 0.99,
       genre: genres[2]._id,
       tags: "outlaw",
-      song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611850291684.mp3",
+      song_url: "http://fairstreem.s3.us-east-2.amazonaws.com/1611850291684.mp3",
       likes: 6,
     },
     {
@@ -166,6 +169,22 @@ db.once("open", async () => {
         ""
       ],
       "song_url": "https://fairstreem.s3.us-east-2.amazonaws.com/1611622008635.mp3"
+    },
+    {
+      "_id": "600f667905d21d244b5182eb",
+      "title": "Apology",
+      "album": "Scenes of Devastation at the Heart of the Disaster",
+      "artistId": "6011afa365dbf441f652e2c4",
+      "description": "This is the real song upload test.",
+      "image": "https://fairstreem.s3.us-east-2.amazonaws.com/1611859481836.jpg",
+      "price": 0.99,
+      "genre": {
+        "_id": "600dfabaebcba48440047d26"
+      },
+      "tags": [
+        ""
+      ],
+      "song_url": "https://fairstreem.s3.us-east-2.amazonaws.com/1611858720299.mp3"
     },
     {
       "_id": "600a28d52e97ee7ae2cf63a5",

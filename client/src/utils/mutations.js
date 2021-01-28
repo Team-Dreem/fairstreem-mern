@@ -32,8 +32,10 @@ export const ADD_ORDER = gql`
         _id
         title
         artistName
+        image
         description
         price
+        song_url
       }
     }
   }

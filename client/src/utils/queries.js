@@ -104,10 +104,12 @@ export const QUERY_USER = gql`
         songs {
           _id
           title
+          album
+          image
           artistName
           description
           price
-          image
+          song_url
         }
       }
     }
