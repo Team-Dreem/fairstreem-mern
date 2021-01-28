@@ -84,9 +84,10 @@ const itemInCart = cart.find((cartItem) => cartItem._id === _id);
 } else {
   dispatch({
     type: ADD_TO_CART,
-    product: { ...song },
+    product: { ...song, purchaseQuantity: 1 },
   });
-  idbPromise("cart", "put", { ...song });
+  idbPromise("cart", "put", { ...song,
+    purchaseQuantity: 1 });
 }
 };
 
