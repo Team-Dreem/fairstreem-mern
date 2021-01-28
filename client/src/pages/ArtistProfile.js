@@ -18,6 +18,7 @@ import SongTableSimple from "../components/SongTableSimple";
 import CommentForm from '../components/CommentForm'
 import CommentList from '../components/CommentList'
 import LikeButton from '../components/LikeButton'
+import Auth from '../utils/auth';
 
 import AddSongModal from '../components/AddSongModal'
 import FileUploadButton from "../components/FileUploadButton";
@@ -38,6 +39,8 @@ function ArtistProfile() {
   const [updateArtistAvatar] = useMutation(UPDATE_ARTIST_AVATAR);
   const classes = useStyles();
   const [state, dispatch] = useStoreContext();
+  const profile = Auth.getProfile();
+  const isLoggedIn = !!profile;
 
   const { artistId } = useParams();
 
@@ -138,13 +141,12 @@ function ArtistProfile() {
           </div>
 
           <Grid container>
-            <AddSongModal></AddSongModal>
-            <SongTableSimple />
+            { isSelf && <AddSongModal /> }
+            <SongTableSimple allowPurchase={!isSelf && isLoggedIn} />
           </Grid>
           <Grid container justify="center">
             <h1>COMMENT FEED</h1>
-           <CommentForm
-           artistId={artistId}></CommentForm>
+           { isLoggedIn && <CommentForm artistId={artistId}></CommentForm> }
            <CommentList
             comments={selectedArtist.comments}
            

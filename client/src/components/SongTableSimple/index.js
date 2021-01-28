@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   },
 });
 
-function SongTableSimple() {
+function SongTableSimple({ allowPurchase = true }) {
   const [state, dispatch] = useStoreContext();
 
   const { selectedArtist } = state;
@@ -140,7 +140,7 @@ function SongTableSimple() {
               <TableCell align="left">Title</TableCell>
               <TableCell align="right">Album</TableCell>
               <TableCell align="right">Playcount</TableCell>
-              <TableCell align="right">Purchase</TableCell>
+              { allowPurchase && <TableCell align="right">Purchase</TableCell> }
             </TableRow>
           </TableHead>
           <TableBody>
@@ -153,7 +153,7 @@ function SongTableSimple() {
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="right">{row.album}</TableCell>
                 <TableCell align="right">{row.playcount}</TableCell>
-                <TableCell align="right">{row.purchase}</TableCell>
+                { allowPurchase && <TableCell align="right">{row.purchase}</TableCell> }
               </TableRow>
             ))}
           </TableBody>

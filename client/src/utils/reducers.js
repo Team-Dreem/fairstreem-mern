@@ -17,12 +17,10 @@ import {
   TOGGLE_CART,
   UPDATE_SEARCH_LOADING,
   UPDATE_SEARCH_RESULTS,
-  UPDATE_SEARCH_GENRE,
-  UPDATE_ARTIST_AVATAR_IN_CACHE
+  UPDATE_SEARCH_GENRE
 } from "./actions";
 
 import { useReducer } from "react";
-import { UPDATE_ARTIST_AVATAR } from "./mutations";
 
 export const reducer = (state, action) => {
   switch (action.type) {
