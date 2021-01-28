@@ -11,6 +11,7 @@ function OrderHistory() {
   if (data) {
     user = data.user;
   }
+  console.log("user", user);
 
   return (
     <>
@@ -21,7 +22,7 @@ function OrderHistory() {
 
         {user ? (
           <>
-            <h2>Order History for {user.firstName} {user.lastName}</h2>
+            <h2>Order History for {user.username}:</h2>
             {user.orders.map((order) => (
               <div key={order._id} className="my-2">
                 <h3>{new Date(parseInt(order.purchaseDate)).toLocaleDateString()}</h3>
@@ -29,10 +30,10 @@ function OrderHistory() {
                   {order.songs.map(({ _id, image, title, price }, index) => (
                     <div key={index} className="card px-1 py-1">
                       <Link to={`/songs/${_id}`}>
-                        <img
+                        {/* <img
                           alt={title}
                           src={`/images/${image}`}
-                        />
+                        /> */}
                         <p>{title}</p>
                       </Link>
                       <div>

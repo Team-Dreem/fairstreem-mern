@@ -25,7 +25,7 @@ function Signup(props) {
       type: UPDATE_GENRES,
       genres: genreData.genres
     });
-  }, [genreData]);
+  }, [genreData, disaptch]);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -116,7 +116,7 @@ function Signup(props) {
 
       <TextField
         className="input"
-        required id="standard-required"
+        required
         label="Password"
         fullWidth
         margin="normal"
@@ -137,7 +137,7 @@ function Signup(props) {
             name: 'genre',
             id: 'genre',
           }}>
-          {genres.map((genre) => <option value={genre._id} key={genre._id}>{genre.name}</option>)}
+          {genres.map((genre) => <option value={genre.name} key={genre._id}>{genre.name}</option>)}
         </Select>
       </FormControl>}
 

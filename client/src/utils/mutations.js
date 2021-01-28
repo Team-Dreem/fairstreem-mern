@@ -31,11 +31,9 @@ export const ADD_ORDER = gql`
       songs {
         _id
         title
+        artistName
         description
         price
-        genre {
-          name
-        } 
       }
     }
   }
@@ -147,6 +145,22 @@ mutation updateUserAvatar($avatarUrl: String!) {
         _id
       }
     }
+  }
+}
+`;
+
+export const UPDATE_ARTIST_AVATAR = gql`
+mutation updateArtistAvatar($avatarUrl: String!) {
+  updateArtist(avatar: $avatarUrl) {
+    _id
+    avatar
+    artistName
+    email
+    genre
+    bio
+    website
+    socialMedia
+    followerCount
   }
 }
 `;

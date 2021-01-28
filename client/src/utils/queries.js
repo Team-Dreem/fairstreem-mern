@@ -98,15 +98,13 @@ export const QUERY_USER = gql`
     user {
       avatar
       username
-      firstName
-      lastName
       orders {
         _id
         purchaseDate
         songs {
           _id
           title
-          artist
+          artistName
           description
           price
           image
@@ -162,6 +160,8 @@ export const QUERY_ARTISTS = gql`
       }
       comments{
         commentText
+        createdAt
+        username
       }
     }
   }
