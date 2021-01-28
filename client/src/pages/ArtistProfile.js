@@ -149,14 +149,14 @@ function ArtistProfile() {
               <SongTableSimple allowPurchase={!isSelf && isLoggedIn} />
             </Container>
 
-            <Grid container justify="center">
+            <div>
               <h3 className={classes.sectionHeading}>Comments</h3>
               { isLoggedIn && <CommentForm artistId={artistId}></CommentForm> }
 
               <CommentList
                 comments={selectedArtist.comments}
                 />
-            </Grid>
+            </div>
           </Paper>
         </>
       ) : null}

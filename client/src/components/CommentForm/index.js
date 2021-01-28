@@ -72,22 +72,19 @@ const CommentForm = ({ artistId }) => {
 
     return (
         <div className="comment">
-        <Grid container className="comment-grid">
             <form onSubmit={handleFormSubmit} className={classes.form}>
-                <Grid item xs={12} className="comment-form">
-                    <TextField
-                        className="comment-field"
-                        id="outlined-multiline-static"
-                        label="Comment"
-                        multiline
-                        rows={5}
-                        fullWidth={true}
-                        variant="outlined"
-                        placeholder="What do you think?"
-                        value={commentText}
-                        onChange={handleChange}
-                    />
-                </Grid>
+                <TextField
+                    className="comment-field"
+                    id="outlined-multiline-static"
+                    label="Comment"
+                    multiline
+                    rows={5}
+                    fullWidth={true}
+                    variant="outlined"
+                    placeholder="What do you think?"
+                    value={commentText}
+                    onChange={handleChange}
+                />
 
                 <footer className={classes.commentFooter}>
                     <Button className={classes.commentButton} type="submit" variant="contained" color="primary">
@@ -98,8 +95,6 @@ const CommentForm = ({ artistId }) => {
                     </span>
                 </footer>
             </form>
-
-        </Grid>
         </div>
     )
 
