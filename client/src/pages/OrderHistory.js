@@ -51,7 +51,7 @@ function OrderHistory() {
                     <p>{title}</p>
                   </Link>
                   <Button component={DownloadButton} variant="contained" color="primary" songUrl={song_url}>Download</Button>
-                  <p className={classes.price}>${price}</p>
+                  {/* <p className={classes.price}>${price}</p> */}
                 </div>
               ))}
             </div>
