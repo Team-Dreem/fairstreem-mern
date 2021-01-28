@@ -73,7 +73,7 @@ export default function AddSongModal() {
             const url = "/api/v1/song-upload"
             const formData = new FormData()
             formData.append("song", document.getElementById("file").files[0])
-            // console.log("FORMDATA", formData.get("song"))
+            console.log("FORMDATA", formData.get("song"))
             post(url, formData, config)
                 .then((response) => {
                     console.log("AWS url", response.data.song_url);
