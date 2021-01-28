@@ -379,7 +379,7 @@ const resolvers = {
     addComment: async (parent, { commentText, artistId }, context) => {
       if (context.user) {
         const comment = await Comment.create({
-          username: context.user.username,
+          username: context.user.username || context.user.artistName,
           commentText: commentText,
           artistId: artistId,
         });
