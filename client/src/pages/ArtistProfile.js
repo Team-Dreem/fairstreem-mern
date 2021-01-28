@@ -8,8 +8,6 @@ import { idbPromise } from "../utils/helpers";
 import { makeStyles } from '@material-ui/core/styles';
 import getLetterAvatar from '../utils/getLetterAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import Fab from '@material-ui/core/Fab';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import spinner from "../assets/spinner.gif";
@@ -105,10 +103,7 @@ function ArtistProfile() {
             
             <div className="artist-profile-header">
             <h1>{selectedArtist.artistName}</h1>
-              {/* <LikeButton className="like-btn"></LikeButton> */}
-              <Fab size="small" aria-label="like">
-                <FavoriteIcon />
-              </Fab>
+            <LikeButton />
               
             </div>
             <p className="bio">{selectedArtist.bio}</p>
