@@ -114,7 +114,7 @@ export const QUERY_USER = gql`
   }
 `;
 
-export const QUERY_ARTIST_BY_PARAMS = gql`
+export const QUERY_ARTIST = gql`
   query getArtist($_id: ID) {
     artist(_id: $_id) {
       _id
@@ -132,7 +132,8 @@ export const QUERY_ARTIST_BY_PARAMS = gql`
         _id
         username
       }
-      comments{
+      comments {
+        _id
         commentText
       }
     }
@@ -158,7 +159,8 @@ export const QUERY_ARTISTS = gql`
         _id
         username
       }
-      comments{
+      comments {
+        _id
         commentText
         createdAt
         username

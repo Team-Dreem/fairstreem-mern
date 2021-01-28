@@ -124,7 +124,7 @@ const typeDefs = gql`
       socialMedia: String
       avatar: String
     ): AuthArtist
-    addComment(commentText: String!, artistId: ID!): Comment
+    addComment(commentText: String!, artistId: ID!): [Comment]
     addReaction(commentId: ID!, reactionBody: String!): Comment
     addFollow(artistId: ID!): User
     addFollower(artistId: ID!): Artist

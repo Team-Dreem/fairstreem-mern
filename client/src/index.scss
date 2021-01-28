@@ -249,12 +249,12 @@ nav {
 
 // Artist Profile Start
 .artist-profile {
-  border: solid 1px #666666;
-  margin: auto;
+  // border: solid 1px #666666;
+  margin: 0 auto;
   width: 50%;
-  height: 400px;
-  background-color: var(--light);
-  border-radius: 5px;
+  // height: 400px;
+  // background-color: var(--light);
+  // border-radius: 5px;
   padding-top: 130px;
 
   h1 {
@@ -318,9 +318,29 @@ nav {
 .song-table {
   margin: auto;
   max-width: 75%;
-  align-content: center;
 }
 // Song Table End
+
+// Comments Start
+
+
+.comment {
+  padding: 10px;
+  margin: auto;
+}
+
+.comment-form {
+
+}
+
+.comment-field {
+  align-content: center;
+}
+
+.MuiGrid-container {
+  display: block !important;
+}
+// Comments End
 
 h1,
 h2,

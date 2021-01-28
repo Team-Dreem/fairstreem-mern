@@ -35,7 +35,7 @@ const Cart = () => {
     if (!state.cart.length) {
       getCart();
     }
-  }, [state.cart.length, dispatch]);
+  }, [state.cart, dispatch]);
   // You may wonder what happens if there's nothing to retrieve from the cached object store and state.cart.length is still 0. Does this useEffect() function just continuously run because of that? Well, it could very easily do that if we neglect to pass the state.cart.length value into useEffect()'s dependency array. That's the whole point of the dependency array. We list all of the data that this useEffect() Hook is dependent on to execute. The Hook runs on load no matter what, but then it only runs again if any value in the dependency array has changed since the last time it ran.
   useEffect(() => {
     if (data) {
@@ -62,7 +62,7 @@ const Cart = () => {
   function calculateTotal() {
     let sum = 0;
     state.cart.forEach((item) => {
-      sum += item.price * item.purchaseQuantity;
+      sum += item.price * (item.purchaseQuantity || 1);
     });
     return sum.toFixed(2);
   }

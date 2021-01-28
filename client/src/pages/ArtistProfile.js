@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useStoreContext } from "../utils/GlobalState";
 import { useQuery, useApolloClient } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
-import { UPDATE_ARTISTS, UPDATE_SELECTED_ARTIST, UPDATE_ARTIST_AVATAR_IN_CACHE } from "../utils/actions";
+import { UPDATE_ARTISTS, UPDATE_SELECTED_ARTIST } from "../utils/actions";
 import { QUERY_ARTISTS } from "../utils/queries";
 import { UPDATE_ARTIST_AVATAR } from "../utils/mutations";
 import { idbPromise } from "../utils/helpers";
@@ -10,14 +10,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import getLetterAvatar from '../utils/getLetterAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import spinner from "../assets/spinner.gif";
-// import Auth from '../utils/auth'
-import Cart from "../components/Cart";
 
 import Grid from "@material-ui/core/Grid";
 import { useMutation } from "@apollo/react-hooks";
 import { post } from 'axios';
 
-import SongTableSimple from "../components/SongTableSimple";
 import CommentForm from '../components/CommentForm'
 import CommentList from '../components/CommentList'
 import LikeButton from '../components/LikeButton'
@@ -25,6 +22,9 @@ import Auth from '../utils/auth';
 
 import AddSongModal from '../components/AddSongModal'
 import FileUploadButton from "../components/FileUploadButton";
+import Paper from "@material-ui/core/Paper";
+import SongTableSimple from "../components/SongTableSimple";
+import { Container } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -35,6 +35,13 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
       display: "none"
+  },
+  sectionHeading: {
+    margin: theme.spacing(2)
+  },
+  songsContainer: {
+    padding: '0 !important',
+    marginTop: theme.spacing(6)
   }
 }));
 
@@ -45,13 +52,7 @@ function ArtistProfile() {
   const profile = Auth.getProfile();
   const isLoggedIn = !!profile;
 
-  const { artistId } = useParams();
-
-  // const { loading: commentLoading, data: commentData } = useQuery(QUERY_ARTIST_BY_PARAMS, {
-  //   variables:{_id: artistId }
-  // })
-  // console.log("COMMENTDATA", commentData);
-  
+  const { artistId } = useParams();  
 
   const apolloClient = useApolloClient();
   const { loading, data } = useQuery(QUERY_ARTISTS);
@@ -127,13 +128,13 @@ function ArtistProfile() {
   return (
     <>
       {selectedArtist ? (
-        <div>
+        <>
           <Avatar
             src={selectedArtist.avatar}
             className={classes.large}>
             {getLetterAvatar(selectedArtist.artistName)}
           </Avatar>
-          <div className="artist-profile">
+          <Paper elevation={0} className="artist-profile">
             
             <div className="artist-profile-header">
             <h1>{selectedArtist.artistName}</h1>
@@ -141,22 +142,23 @@ function ArtistProfile() {
               
             </div>
             <p className="bio">{selectedArtist.bio}</p>
-          </div>
+        
+            <Container className={classes.songsContainer}>
+              <h3 className={classes.sectionHeading}>Songs</h3>
+              { isSelf && <AddSongModal /> }
+              <SongTableSimple allowPurchase={!isSelf && isLoggedIn} />
+            </Container>
 
-          <Grid container>
-            { isSelf && <AddSongModal /> }
-            <SongTableSimple allowPurchase={!isSelf && isLoggedIn} />
-          </Grid>
-          <Grid container justify="center">
-            <h1>COMMENT FEED</h1>
-           { isLoggedIn && <CommentForm artistId={artistId}></CommentForm> }
-           <CommentList
-            comments={selectedArtist.comments}
-           
-           title={`Comments for ${selectedArtist.artistName}`}
-           />
-          </Grid>
-        </div>
+            <Grid container justify="center">
+              <h3 className={classes.sectionHeading}>Comments</h3>
+              { isLoggedIn && <CommentForm artistId={artistId}></CommentForm> }
+
+              <CommentList
+                comments={selectedArtist.comments}
+                />
+            </Grid>
+          </Paper>
+        </>
       ) : null}
       {loading ? <img src={spinner} alt="loading" /> : null}
  

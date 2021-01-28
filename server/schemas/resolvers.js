@@ -9,17 +9,18 @@ const s3Bucket = process.env.S3_BUCKET;
 
 const resolvers = {
   Query: {
-    artist: async (parent, args, context) => {
-      if (context.user) {
-        const artist = await Artist.findById(context.user._id)
-          .populate("followers")
-          .populate("comments")
-          .populate("songs");
+    artist: async (parent, { _id }, context) => {
+      const artist = await Artist.findById(_id)
+        .populate("followers")
+        .populate({
+          path: "comments",
+          options: {
+            sort: { createdAt: -1 }
+          }
+        })
+        .populate("songs");
 
-        return artist;
-      }
-
-      throw new AuthenticationError("Not logged in");
+      return artist;
     },
     artistByParams: async (parent, { _id, artistName }) => {
       const params = {};
@@ -34,10 +35,23 @@ const resolvers = {
       }
       return await Artist.find(params)
         .populate("followers")
-        .populate("comments");
+        .populate({
+          path: "comments",
+          options: {
+            sort: { createdAt: -1 }
+          }
+        });
     },
     artists: async () => {
-      return Artist.find().populate("followers").populate("comments");
+      return Artist
+        .find()
+        .populate("followers")
+        .populate({
+          path: "comments",
+          options: {
+            sort: { createdAt: -1 }
+          }
+        });
     },
     artistsByGenre: async (parent, { genre }, context) => {
       return Artist.find({ genre });
@@ -101,7 +115,7 @@ const resolvers = {
         params.artistId = artistId;
       }
 
-      return await Comment.find(params).sort({ createdAt: -1 });
+      return await Comment.find(params).sort({ sort: { createdAt: -1 } });
     },
     // Here, we pass in the parent as more of a placeholder parameter. It won't be used, but we need something in that first parameter's spot so we can access the username argument from the second parameter. We use a ternary operator to check if username exists. If it does, we set params to an object with a username key set to that value. If it doesn't, we simply return an empty object.
 
@@ -113,7 +127,12 @@ const resolvers = {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id })
           .select("-__v -password")
-          .populate("comments")
+          .populate({
+            path: "comments",
+            options: {
+              sort: { createdAt: -1 }
+            }
+          })
           .populate("follows");
 
         return userData;
@@ -127,7 +146,12 @@ const resolvers = {
         console.log("context", context.user);
         const artistData = await Artist.findOne({ _id: context.user._id })
           .select("-__v -password")
-          .populate("comments")
+          .populate({
+            path: "comments",
+            options: {
+              sort: { createdAt: -1 }
+            }
+          })
           .populate("followers");
 
         return artistData;
@@ -183,13 +207,23 @@ const resolvers = {
       return User.find()
         .select("-__v -password")
         .populate("follows")
-        .populate("comments");
+        .populate({
+          path: "comments",
+          options: {
+            sort: { createdAt: -1 }
+          }
+        });
     },
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id)
           .populate("follows")
-          .populate("comments")
+          .populate({
+            path: "comments",
+            options: {
+              sort: { createdAt: -1 }
+            }
+          })
           .populate({
             path: "orders.songs",
             populate: "genre",
@@ -207,7 +241,12 @@ const resolvers = {
       return User.findOne(params)
         .select("-__v -password")
         .populate("follows")
-        .populate("comments");
+        .populate({
+          path: "comments",
+          options: {
+            sort: { createdAt: -1 }
+          }
+        });
     },
   },
   Mutation: {
@@ -216,24 +255,6 @@ const resolvers = {
       const token = signArtistToken(artist);
 
       return { token, artist };
-    },
-    addComment: async (parent, args, context) => {
-      if (context.user) {
-        const comment = await Comment.create({
-          ...args,
-          username: context.user.username,
-        });
-
-        await User.findByIdAndUpdate(
-          { _id: context.user._id },
-          { $push: { comments: comment._id } },
-          { new: true }
-        );
-
-        return comment;
-      }
-
-      throw new AuthenticationError("You need to be logged in!");
     },
     addOrder: async (parent, { songs }, context) => {
       console.log("context.user", context.user);
@@ -356,7 +377,6 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
     addComment: async (parent, { commentText, artistId }, context) => {
-      console.log("context.user", context.user)
       if (context.user) {
         const comment = await Comment.create({
           username: context.user.username,
@@ -364,11 +384,14 @@ const resolvers = {
           artistId: artistId,
         });
 
-        await Artist.findByIdAndUpdate(
+        const artist = await Artist.findByIdAndUpdate(
           { _id: artistId },
           { $push: { comments: comment._id } },
           { new: true }
-        );
+        ).populate({
+          path: "comments",
+          options: { sort: { createdAt: -1 } }
+        });
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
@@ -376,7 +399,8 @@ const resolvers = {
           { new: true }
         );
 
-        return comment;
+        // return all comments so we can update the cached artist data
+        return artist.comments;
       }
 
       throw new AuthenticationError("You need to be logged in!");
