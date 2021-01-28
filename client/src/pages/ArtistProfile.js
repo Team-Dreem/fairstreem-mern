@@ -5,12 +5,13 @@ import { useParams } from "react-router-dom";
 import { UPDATE_ARTISTS, UPDATE_SELECTED_ARTIST } from "../utils/actions";
 import { QUERY_ARTISTS, QUERY_ARTIST_BY_PARAMS } from "../utils/queries";
 import { idbPromise } from "../utils/helpers";
+import { makeStyles } from '@material-ui/core/styles';
+import getLetterAvatar from '../utils/getLetterAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from "@material-ui/core/IconButton";
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import spinner from "../assets/spinner.gif";
-// import Auth from '../utils/auth'
-
 import Grid from "@material-ui/core/Grid";
-// import Paper from "@material-ui/core/Paper";
-// import Button from "@material-ui/core/Button";
 
 import SongTableSimple from "../components/SongTableSimple";
 import CommentForm from '../components/CommentForm'
@@ -19,11 +20,22 @@ import LikeButton from '../components/LikeButton'
 
 import AddSongModal from '../components/AddSongModal'
 
+const useStyles = makeStyles((theme) => ({
+  large: {
+      width: 250,
+      height: 250,
+      margin: '50px auto -125px',
+      fontSize: 72
+  },
+  input: {
+      display: "none"
+  }
+}));
+
 function ArtistProfile() {
+  const classes = useStyles();
   const [state, dispatch] = useStoreContext();
 
-  //artist id with full song data 600b1de66ea21cf63a4db76d
-  //useParams retrieves username from URL
   const { artistId } = useParams();
 
   // const { loading: commentLoading, data: commentData } = useQuery(QUERY_ARTIST_BY_PARAMS, {
@@ -34,11 +46,12 @@ function ArtistProfile() {
 
   const { loading, data } = useQuery(QUERY_ARTISTS);
 
-  // const selectedArtist = state.artists.find((artist) => artist._id === artistId);
   const selectedArtist = state.artists.find((artist) => artist._id === artistId);
-  // console.log("data", data);
-  // console.log("state.artists", state.artists)
-  // console.log("selectedArtist", selectedArtist);
+  const self = state.currentArtist
+    && selectedArtist
+    && state.currentArtist._id === selectedArtist._id;
+    
+  console.log('self', self);
 
   useEffect(() => {
     if (data && !selectedArtist) {
@@ -63,39 +76,26 @@ function ArtistProfile() {
         });
       });
     }
-
-    // return () => {
-    //   dispatch({
-    //     type: UPDATE_SELECTED_ARTIST,
-    //     selectedArtist: {},
-    //     // this clears the currenArist object when leaving page(** this mimics "component unmount" **)
-    //   });
-    // };
   }, [loading, selectedArtist, dispatch, data, artistId]);
 
   return (
     <>
       {selectedArtist ? (
         <div>
-          <Grid container justify="center">
-            {/* {artist.artistName} */}
-            <h1>
-              {selectedArtist.artistName}{" "}
-              <span>
-                <LikeButton></LikeButton>
-              </span>{" "}
-            </h1>
-          </Grid>
-
-          <Grid container justify="center" spacing={2}>
-            <Grid item md={6}>
-              <img alt="artist" src={selectedArtist.avatar} />
-            </Grid>
-
-            <Grid item md={6}>
-              <p>{selectedArtist.bio}</p>
-            </Grid>
-          </Grid>
+          <Avatar
+            src={selectedArtist.avatar}
+            className={classes.large}>
+            {getLetterAvatar(selectedArtist.artistName)}
+          </Avatar>
+          <div className="artist-profile">
+            
+            <div className="artist-profile-header">
+            <h1>{selectedArtist.artistName}</h1>
+            <LikeButton />
+              
+            </div>
+            <p className="bio">{selectedArtist.bio}</p>
+          </div>
 
           <Grid container>
             <AddSongModal></AddSongModal>

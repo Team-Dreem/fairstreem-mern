@@ -5,8 +5,8 @@ import { useStoreContext } from "../../utils/GlobalState";
 
 import Auth from '../../utils/auth'
 
-import Button from '@material-ui/core/Button'
-
+import Fab from '@material-ui/core/Fab';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 
 
@@ -47,7 +47,7 @@ export default function LikeButton() {
 
 
     return (
-        <Button onClick={()=>{
+        <Fab size="small" aria-label="like" onClick={()=>{
             console.log("selected ARTIST",state.selectedArtist);
             console.log("LISTENERID", listenerId);
             addFollowFunction();
@@ -73,6 +73,6 @@ export default function LikeButton() {
 
             
             
-        }}>Like</Button>
+        }}><FavoriteIcon /></Fab>
     )
 }

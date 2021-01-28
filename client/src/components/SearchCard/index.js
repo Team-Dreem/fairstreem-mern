@@ -19,6 +19,7 @@ const useStyles = makeStyles({
 
 function SearchCard({ data }) {
     const classes = useStyles();
+    const placeholder = () => !data.avatar ? <div className="MuiCardMedia-root makeStyles-media-7"/> : null;
 
     return (
         <Card className={classes.root}>
@@ -26,7 +27,7 @@ function SearchCard({ data }) {
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
-                        image={data.avatar}
+                        image={data.avatar || 'http://placehold.it/500x500?text=%20'}
                     />
                     <CardContent>
                         <Typography className="artist-name" gutterBottom variant="h5" component="h2">

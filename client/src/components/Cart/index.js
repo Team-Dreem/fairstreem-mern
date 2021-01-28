@@ -8,12 +8,23 @@ import "./style.css";
 import { QUERY_CHECKOUT } from "../../utils/queries";
 import { loadStripe } from "@stripe/stripe-js";
 import { useLazyQuery } from '@apollo/react-hooks';
+import IconButton from '@material-ui/core/IconButton';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import { makeStyles } from "@material-ui/core";
 
 const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+const useStyles = makeStyles((theme) => ({
+  button: {
+    padding: 0,
+    position: 'relative',
+    top: -2
+  },
+}));
 
 const Cart = () => {
   const [state, dispatch] = useStoreContext();
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+  const classes = useStyles();
 
   useEffect(() => {
     async function getCart() {
@@ -42,10 +53,10 @@ const Cart = () => {
   }
   if (!state.cartOpen) {
     return (
-      <div className="cart-closed" onClick={toggleCart}>
-        <span role="img" aria-label="trash">
-          🛒
-        </span>
+      <div onClick={toggleCart}>
+        <IconButton color="primary" className={classes.button} aria-label="add to shopping cart">
+          <AddShoppingCartIcon />
+        </IconButton>
       </div>
     );
   }

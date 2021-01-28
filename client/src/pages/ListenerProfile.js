@@ -78,7 +78,7 @@ function ListenerProfile() {
                     </label>
                 </div>
                 <Grid>
-                    {currentUser.follows && currentUser.follows.map(artist => <SearchCard data={artist} />)}
+                    {currentUser.follows && currentUser.follows.map(artist => <SearchCard data={artist} key={artist._id} />)}
                 </Grid>
             </div>
         </>

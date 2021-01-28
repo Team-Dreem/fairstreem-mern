@@ -1,14 +1,31 @@
-import React, { useState } from "react";
-import { useMutation } from "@apollo/react-hooks";
+import React, { useEffect, useState } from "react";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import Auth from "../utils/auth";
+import { QUERY_GENRES } from "../utils/queries";
 import { ADD_USER, ADD_ARTIST } from "../utils/mutations";
+import { UPDATE_GENRES } from "../utils/actions";
 import { FormControl, InputLabel, Select, TextField, Button } from "@material-ui/core";
 import Container from '@material-ui/core/Container';
+import { useStoreContext } from "../utils/GlobalState";
 
 function Signup(props) {
   const [formState, setFormState] = useState({ accountType: "listener", username: "", email: "", password: "", genre: "", bio: "", picture: "", social: "", color: "" });
+  const { data: genreData } = useQuery(QUERY_GENRES);
   const [addUser] = useMutation(ADD_USER);
   const [addArtist] = useMutation(ADD_ARTIST);
+  const [state, disaptch] = useStoreContext();
+  const { genres } = state;
+
+  useEffect(() => {
+    if (!genreData || !genreData.genres) {
+      return;
+    }
+
+    disaptch({
+      type: UPDATE_GENRES,
+      genres: genreData.genres
+    });
+  }, [genreData]);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -78,7 +95,7 @@ function Signup(props) {
       <TextField
         className="input"
         required id="standard-required"
-        label="Username"
+        label={formState.accountType === 'artist' ? 'Artist Name' : 'Username'}
         fullWidth
         margin="normal"
         name="username"
@@ -119,18 +136,8 @@ function Signup(props) {
           inputProps={{
             name: 'genre',
             id: 'genre',
-          }}
-        >
-          <option aria-label="None" value="" />
-          <option value={10}>Rock</option>
-          <option value={20}>Classical</option>
-          <option value={30}>Jazz</option>
-          <option value={40}>Country</option>
-          <option value={50}>Pop</option>
-          <option value={60}>Hip Hop</option>
-          <option value={70}>Folk</option>
-          <option value={80}>Heavy Metal</option>
-          <option value={90}>Reggae</option>
+          }}>
+          {genres.map((genre) => <option value={genre._id} key={genre._id}>{genre.name}</option>)}
         </Select>
       </FormControl>}
 
