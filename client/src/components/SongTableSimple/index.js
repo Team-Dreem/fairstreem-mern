@@ -99,7 +99,7 @@ function SongTableSimple() {
   const rows = artistSongs.map((song) => {
     return createData(
       // <PlayButton song_url={song.song_url}></PlayButton>,
-        <audio controls> 
+        <audio controls controlsList="nodownload"> 
         <source src={song.song_url} type="audio/ogg"/>
        <source src={song.song_url} type="audio/mpeg"/>
       </audio>
