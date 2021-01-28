@@ -2,32 +2,48 @@ import React, { useEffect } from "react";
 import { useStoreContext } from "../utils/GlobalState";
 import { useQuery } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
-import { UPDATE_ARTISTS, UPDATE_CURRENT_ARTIST } from "../utils/actions";
-import { QUERY_ARTISTS } from "../utils/queries";
+import { UPDATE_ARTISTS, UPDATE_SELECTED_ARTIST } from "../utils/actions";
+import { QUERY_ARTISTS, QUERY_ARTIST_BY_PARAMS } from "../utils/queries";
 import { idbPromise } from "../utils/helpers";
 import spinner from "../assets/spinner.gif";
-import Auth from '../utils/auth'
+// import Auth from '../utils/auth'
 
 import Grid from "@material-ui/core/Grid";
 // import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 
 import SongTableSimple from "../components/SongTableSimple";
 import CommentForm from '../components/CommentForm'
 import CommentList from '../components/CommentList'
 import LikeButton from '../components/LikeButton'
 
+import AddSongModal from '../components/AddSongModal'
+
 function ArtistProfile() {
   const [state, dispatch] = useStoreContext();
+
+  //artist id with full song data 600b1de66ea21cf63a4db76d
   //useParams retrieves username from URL
   const { artistId } = useParams();
 
+  // const { loading: commentLoading, data: commentData } = useQuery(QUERY_ARTIST_BY_PARAMS, {
+  //   variables:{_id: artistId }
+  // })
+  // console.log("COMMENTDATA", commentData);
+  
+
   const { loading, data } = useQuery(QUERY_ARTISTS);
 
-  const currentArtist = state.artists.find((artist) => artist._id === artistId);
+  // const currentArtist = state.artists.find((artist) => artist._id === artistId);
+  const selectedArtist = state.artists.find((artist) => artist._id === artistId);
+  // console.log("data", data);
+  // console.log("state.artists", state.artists)
+  // console.log("currentArtist", currentArtist);
+  console.log("selectedArtist",selectedArtist);
+  
 
   useEffect(() => {
-    if (data && !currentArtist) {
+    if (data && !selectedArtist) {
       dispatch({
         type: UPDATE_ARTISTS,
         artists: data.artists,
@@ -35,10 +51,10 @@ function ArtistProfile() {
       data.artists.forEach((artist) => {
         idbPromise("artists", "put", artist);
       });
-    } else if (currentArtist) {
+    } else if (selectedArtist) {
       dispatch({
-        type: UPDATE_CURRENT_ARTIST,
-        currentArtist,
+        type: UPDATE_SELECTED_ARTIST,
+        selectedArtist: selectedArtist,
       });
       // get cache from idb
     } else if (!loading) {
@@ -50,23 +66,23 @@ function ArtistProfile() {
       });
     }
 
-    return () => {
-      dispatch({
-        type: UPDATE_CURRENT_ARTIST,
-        currentArtist: {},
-        // this clears the currenArist object when leaving page(** this mimics "component unmount" **)
-      });
-    };
-  }, [loading, currentArtist, dispatch, data, artistId]);
+    // return () => {
+    //   dispatch({
+    //     type: UPDATE_SELECTED_ARTIST,
+    //     currentArtist: {},
+    //     // this clears the currenArist object when leaving page(** this mimics "component unmount" **)
+    //   });
+    // };
+  }, [loading, selectedArtist, dispatch, data, artistId]);
 
   return (
     <>
-      {currentArtist ? (
+      {selectedArtist ? (
         <div>
           <Grid container justify="center">
             {/* {artist.artistName} */}
             <h1>
-              {currentArtist.artistName}{" "}
+              {selectedArtist.artistName}{" "}
               <span>
                 <LikeButton></LikeButton>
               </span>{" "}
@@ -75,25 +91,27 @@ function ArtistProfile() {
 
           <Grid container justify="center" spacing={2}>
             <Grid item md={6}>
-              <img alt="artist" src={currentArtist.avatar} />
+              <img alt="artist" src={selectedArtist.avatar} />
             </Grid>
 
             <Grid item md={6}>
-              <p>{currentArtist.bio}</p>
+              <p>{selectedArtist.bio}</p>
             </Grid>
           </Grid>
 
           <Grid container>
-            {/* <SongCard>
-              {" "} */}
+            <AddSongModal></AddSongModal>
             <SongTableSimple />
           </Grid>
           <Grid container justify="center">
             <h1>COMMENT FEED</h1>
-           <CommentForm></CommentForm>
-           <CommentList></CommentList>
-           <CommentList></CommentList>
-
+           <CommentForm
+           artistId={artistId}></CommentForm>
+           <CommentList
+            comments={selectedArtist.comments}
+           
+           title={`Comments for ${selectedArtist.artistName}`}
+           />
           </Grid>
         </div>
       ) : null}

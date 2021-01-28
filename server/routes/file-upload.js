@@ -23,6 +23,7 @@ router.post("/image-upload", function (req, res) {
 });
 
 router.post("/song-upload", function (req, res) {
+  console.log("UPLOADED FILE", req.file, req.files)
   singleSongUpload(req, res, function (err, response, body) {
     // console.log("res.body", response.body);
     // console.log("req.file.location:", req.file.location);
@@ -35,40 +36,12 @@ router.post("/song-upload", function (req, res) {
           errors: [{ title: "File Upload Error", detail: err.message }],
         });
     }
-
-    Song.create({
-      title: req.body.title,
-      artistId: req.body.artistId,
-      artistName: req.body.artistName,
-      album: req.body.album,
-      description: req.body.description,
-      image: req.body.image,
-      price: req.body.price,
-      genre: req.body.genre,
-      tags: req.body.tags,
-      song_url: req.file.location,
-    })
-      // .then((dbSongData) => res.redirect("/songs" + req.body._id))
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-      });
-    // console.log("res.body:", res.body);
     console.log("SONG-UPLOAD:", req.file);
     return res.json({
-      _id: req.body._id,
-      title: req.body.title,
-      artistId: req.body.artistId,
-      artistName: req.body.artistName,
-      album: req.body.album,
-      description: req.body.description,
-      image: req.body.image,
-      price: req.body.price,
-      genre: req.body.genre,
-      tags: req.body.tags,
+
       song_url: req.file.location,
-      // "s3_object_key:": req.file.key, Make sure it was ok to omit this!
-    });
+
+    });  
   });
 });
 

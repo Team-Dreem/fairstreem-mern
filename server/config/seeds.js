@@ -58,7 +58,6 @@ db.once("open", async () => {
   });
 
   await Artist.create({
-    avatar: "../../../public/images/default.png",
     artistName: "Feed",
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "feed@artist.com",
@@ -69,7 +68,6 @@ db.once("open", async () => {
   });
 
   await Artist.create({
-    avatar: "../../public/images/default.png",
     artistName: "Reboot",
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "reboot@artist.com",
@@ -80,7 +78,6 @@ db.once("open", async () => {
   });
 
   await Artist.create({
-    avatar: "../../public/images/default.png",
     artistName: "Concrete Hat",
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "concrete_hat@artist.com",
@@ -175,8 +172,6 @@ db.once("open", async () => {
     },
   ]);
 
-  await User.deleteMany();
-
   await User.create({
     avatar: "../../public/images/default.png",
     username: "test",
@@ -224,41 +219,41 @@ db.once("open", async () => {
   const createdUsers = await User.collection.insertMany(userData);
 
   // create comments
-  let createdComments = [];
-  for (let i = 0; i < 100; i += 1) {
-    const commentText = faker.lorem.words(Math.round(Math.random() * 20) + 1);
+  // let createdComments = [];
+  // for (let i = 0; i < 100; i += 1) {
+  //   const commentText = faker.lorem.words(Math.round(Math.random() * 20) + 1);
 
-    const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
-    const { username, _id: userId } = createdUsers.ops[randomUserIndex];
+  //   const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
+  //   const { username, _id: userId } = createdUsers.ops[randomUserIndex];
 
-    const createdComment = await Comment.create({ commentText, username });
+  //   const createdComment = await Comment.create({ commentText, username });
 
-    const updatedUser = await User.updateOne(
-      { _id: userId },
-      { $push: { comments: createdComment._id } }
-    );
+  //   const updatedUser = await User.updateOne(
+  //     { _id: userId },
+  //     { $push: { comments: createdComment._id } }
+  //   );
 
-    createdComments.push(createdComment);
-  }
+  //   createdComments.push(createdComment);
+  // }
 
   // create reactions
-  for (let i = 0; i < 100; i += 1) {
-    const reactionBody = faker.lorem.words(Math.round(Math.random() * 20) + 1);
+  // for (let i = 0; i < 100; i += 1) {
+  //   const reactionBody = faker.lorem.words(Math.round(Math.random() * 20) + 1);
 
-    const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
-    const { username } = createdUsers.ops[randomUserIndex];
+  //   const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
+  //   const { username } = createdUsers.ops[randomUserIndex];
 
-    const randomCommentIndex = Math.floor(
-      Math.random() * createdComments.length
-    );
-    const { _id: commentId } = createdComments[randomCommentIndex];
+  //   const randomCommentIndex = Math.floor(
+  //     Math.random() * createdComments.length
+  //   );
+  //   const { _id: commentId } = createdComments[randomCommentIndex];
 
-    await Comment.updateOne(
-      { _id: commentId },
-      { $push: { reactions: { reactionBody, username } } },
-      { runValidators: true }
-    );
-  }
+  //   await Comment.updateOne(
+  //     { _id: commentId },
+  //     { $push: { reactions: { reactionBody, username } } },
+  //     { runValidators: true }
+  //   );
+  // }
 
   // create artist data
   // const artistData = [];

@@ -15,6 +15,7 @@ $headerHeight: 60px;
     #{rgba(#f36, 0.65)} 100%);
   --spacing-one: calc(1rem * 0.5);
   --spacing-two: calc(1rem);
+  --barColor: #F36;
 }
 
 * {
@@ -31,12 +32,27 @@ body {
   padding: 0;
   font-family: 'Roboto', sans-serif;
   line-height: 1.5;
-  // font-size: 16px;
   color: var(--dark);
 }
 
 #root {
   min-height: 100vh;
+  background-image: var(--heroGradient);
+  position: relative;
+  flex-grow: 1;
+    &::before {
+      content: "";
+      background-image: linear-gradient(to bottom, rgba(#fff, 0) 75%, #fff 100%), url("bg.svg");
+      max-height: 800px;
+      position: absolute;
+      background-size: cover;
+      background-position: center center;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+    } 
 }
 
 /* Logo Styles Start */
@@ -47,7 +63,7 @@ body {
 }
 
 .bar {
- background: #F36;
+ background: var(--barColor);
   bottom: 15px;
   height: 3px;
   position: absolute;
@@ -93,9 +109,13 @@ font-weight: 200;
 color: var(--dark);
 }
 
-header h1 a {
-  display: flex;
-  align-items: center;
+header h1 {
+  margin: 0;
+
+  a {
+    display: flex;
+    align-items: center;
+  }
 }
 /* Logo Styles End */
 
@@ -103,6 +123,7 @@ header h1 a {
 header {
   background-color: var(--light);
   height: $headerHeight;
+  align-items: center;
 }
 
 nav {
@@ -124,26 +145,6 @@ nav {
 }
 
 /* Hero Start*/
-.hero {
-  background-image: var(--heroGradient);
-  position: relative;
-  flex-grow: 1;
-
-  &::before {
-    content: "";
-    background-image: linear-gradient(to bottom, rgba(#fff, 0) 75%, #fff 100%), url("bg.svg");
-    max-height: 800px;
-    position: absolute;
-    background-size: cover;
-    background-position: center center;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-  }
-}
-
 .hero h1 {
   color: black;
   font-family: 'Yanone Kaffeesatz', sans-serif;
@@ -206,7 +207,7 @@ nav {
 }
 // Search end
 
-// Grid start
+// Search Grid start
 .grid {
   margin: auto;
   width: 80%;
@@ -218,8 +219,71 @@ nav {
     white-space: nowrap;
   }
 }
-// Grid End
+// Search Grid End
 
+// Listener Profile Start
+.profile {
+  border: solid 1px #666666;
+  margin: auto;
+  width: 50%;
+  height: 400px;
+  background-color: var(--light);
+  border-radius: 5px;
+
+  h1 {
+    margin-top: 130px;
+    text-align: center;
+  }
+}
+
+.profile-header {
+  display: flex;
+  justify-content: center;
+
+  label {
+    margin-top: 128px;
+    margin-left: 5px;
+  }
+}
+// Listener Profile End
+
+// Sign Up Form Start
+.signup-form {
+  background-color: white;
+  border: solid 1px black;
+  border-radius: 5px;
+  margin-top: 50px;
+  padding: 15px;
+  padding-bottom: 20px;
+
+  .MuiInputBase-input {
+    border: none;
+    box-shadow: none !important;
+  }
+
+  .btn {
+  }
+}
+// Sign Up Form End
+
+// Login Form Start
+.login-form {
+  background-color: white;
+  border: solid 1px black;
+  border-radius: 5px;
+  margin-top: 50px;
+  padding: 15px;
+  padding-bottom: 20px;
+
+  .MuiInputBase-input {
+    border: none;
+    box-shadow: none !important;
+  }
+
+  .btn {
+  }
+}
+// Login Form End
 
 h1,
 h2,

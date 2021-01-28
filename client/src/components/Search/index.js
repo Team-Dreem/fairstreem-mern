@@ -13,13 +13,13 @@ function Search () {
     let timeoutId;
     const { searchGenre, searchTerm } = state;
 
-    const updateSearchTerm = (term) => {
+    const updateSearchTerm = (searchTerm) => {
         clearTimeout(timeoutId);
 
-        if (!term) {
+        if (!searchTerm) {
             dispatch({
                 type: UPDATE_SEARCH_TERM,
-                searchTerm: ''
+                searchTerm: null
               });
 
             return;
@@ -28,7 +28,7 @@ function Search () {
         timeoutId = setTimeout(() => {
             dispatch({
                 type: UPDATE_SEARCH_TERM,
-                searchTerm: term,
+                searchTerm,
               });
         }, 150);
     };

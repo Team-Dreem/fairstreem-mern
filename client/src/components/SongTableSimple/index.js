@@ -15,8 +15,9 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+// import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import Button from "@material-ui/core/Button";
+import PlayButton from '../PlayButton'
 
 const useStyles = makeStyles({
   table: {
@@ -27,11 +28,12 @@ const useStyles = makeStyles({
 function SongTableSimple() {
   const [state, dispatch] = useStoreContext();
 
-  const { currentArtist } = state;
+  const { selectedArtist } = state;
 
   //use when data is received
   const { loading, data } = useQuery(QUERY_SONGS);
-console.log("data", data);
+//   console.log("STSselectedArtist", selectedArtist);
+// console.log("STSdata", data);
   useEffect(() => {
     // if there's data to be stored
     if (data) {
@@ -59,13 +61,13 @@ console.log("data", data);
   }, [data, loading, dispatch]);
 
   function filterSongs() {
-    return state.songs.filter((song) => song.artistId === currentArtist._id);
+    return state.songs.filter((song) => song.artistId === selectedArtist._id);
   }
   console.log("filterSongs", filterSongs());
-  console.log("currentArtist._id", currentArtist._id);
+  console.log("selectedArtist._id", selectedArtist._id);
 
   const artistSongs = state.songs.filter(
-    (song) => song.artistId === currentArtist._id
+    (song) => song.artistId === selectedArtist._id
   );
 
   console.log("artistSongs", artistSongs);
@@ -75,7 +77,7 @@ console.log("data", data);
   function createData(playBtn, name, album, playcount, purchase) {
     return { playBtn, name, album, playcount, purchase };
   }
-  // console.log("SongTableArtist", currentArtist);
+  // console.log("SongTableArtist", selectedArtist);
   // console.log("title", title);
   // console.log("image", image);
   // console.log("_id", _id);
@@ -96,11 +98,15 @@ console.log("data", data);
 
   const rows = artistSongs.map((song) => {
     return createData(
-      <Button>
-        <PlayArrowIcon onClick={playClick}></PlayArrowIcon>
-      </Button>,
+      // <PlayButton song_url={song.song_url}></PlayButton>,
+        <audio controls> 
+        <source src={song.song_url} type="audio/ogg"/>
+       <source src={song.song_url} type="audio/mpeg"/>
+      </audio>
+     ,
+      // <Button></Button>,
       song.title,
-      1,
+      song.album,
       2,
       <Button onClick={buyClick}>Buy</Button>
     );
@@ -124,7 +130,7 @@ console.log("data", data);
 
   return (
     <div>
-    <h2>{currentArtist.artistName}'s Songs:</h2>
+    <h2>{selectedArtist.artistName}'s Songs:</h2>
 
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
@@ -172,7 +178,7 @@ console.log("data", data);
           ))}
         </div>
       ) : (
-        <h3>{currentArtist.artistName} hasn't added any songs yet!</h3>
+        <h3>{selectedArtist.artistName} hasn't added any songs yet!</h3>
       )}
       {loading ? <img src={spinner} alt="loading" /> : null}
     </div>

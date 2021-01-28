@@ -16,7 +16,7 @@ export const ARTIST_LOGIN = gql`
   mutation artistLogin($email: String!, $password: String!) {
     artistLogin(email: $email, password: $password) {
       token
-      user {
+      artist {
         _id
       }
     }
@@ -57,13 +57,13 @@ export const ADD_ARTIST = gql`
   mutation addArtist($artistName: String!, $email: String!, $password: String!, $genre: String!, $bio: String, $socialMedia: String, $avatar: String) {
     addArtist(artistName: $artistName, email: $email, password: $password, genre: $genre, bio: $bio, socialMedia: $socialMedia, avatar: $avatar) {
       token
-      user {
+      artist {
         _id
       }
     }
   }
 `;
-//adds Artist to User (return type user)
+//adds Artist to User (return type user)¸
 export const ADD_FOLLOW = gql`
 mutation addFollow($artistId: ID!) {
   addFollow(artistId: $artistId) {
@@ -93,14 +93,60 @@ mutation addFollower($artistId: ID!){
 `
 
 export const ADD_COMMENT = gql`
-mutation addComment($commentText: String!){
-  addComment(commentText: $commentText){
+mutation addComment($commentText: String!, $artistId: ID!) {
+  addComment(commentText: $commentText, artistId: $artistId) {
     _id
     commentText
     createdAt
     username
+    artistId
     reactionCount
     
   }
 }
 `
+//return type comment
+// export const ADD_REACTION = gql`
+// mutation addReaction($commentId: ID!, $reactionBody: String!){
+//   addReaction(commentId: $commentId, $reactionBody: reactionBody){
+//     _id
+//     commentText
+//     reactions{
+//       reactionBody
+//     }
+//   }
+// }
+// `
+
+
+//returns type Song
+export const ADD_SONG = gql`
+mutation addSong($title: String!, $price: Float!, $description: String, $genre: ID!, $song_url: String, $album: String){
+  addSong(title: $title, price: $price, description: $description, genre: $genre, song_url: $song_url, album: $album){
+      title
+      _id
+    }
+  }
+`
+
+export const UPDATE_USER_AVATAR = gql`
+mutation updateUserAvatar($avatarUrl: String!) {
+  updateUser(avatar: $avatarUrl) {
+    _id
+    avatar
+    username
+    email
+    followCount
+    follows {
+      _id
+      avatar
+      artistName
+    }
+    orders {
+      songs {
+        _id
+      }
+    }
+  }
+}
+`;

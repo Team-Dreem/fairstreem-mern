@@ -1,24 +1,12 @@
 const { gql } = require("apollo-server-express");
 
-// type User {
-//   _id: ID
-//   avatar: String
-//   username: String!
-//   firstName: String
-//   lastName: String
-//   password: String!
-//   email: String
-//   follows: [User]
-//   orders: [Order]
-// }
-
 const typeDefs = gql`
-
   type Comment {
     _id: ID
-    commentText: String
+    commentText: String!
     createdAt: String
-    username: String
+    username: String!
+    artistId: ID!
     reactionCount: Int
     reactions: [Reaction]
   }
@@ -37,18 +25,17 @@ const typeDefs = gql`
 
   type Song {
     _id: ID
-    title: String
+    title: String!
     artistId: String
     artistName: String
     album: String
     description: String
     image: String
-    price: Float
-    genre: Genre
+    price: Float!
+    genre: ID!
     tags: [String]
     song_url: String
     likes: Int!
-    comments: [Comment]
   }
 
   type Order {
@@ -91,21 +78,27 @@ const typeDefs = gql`
   }
 
   type Auth {
-    token: ID
+    token: ID!
     user: User
+  }
+
+  type AuthArtist {
+    token: ID!
+    artist: Artist
   }
 
   type Query {
     search(term: String!): [Artist]
     artist(_id: ID, artistName: String): Artist
-    artists(_id: ID, artistName: String): [Artist]
+    artistByParams(_id: ID, artistName: String): Artist
+    artists: [Artist]
     artistsByGenre(genre: String): [Artist]
     comment(_id: ID!): Comment
-    comments(username: String): [Comment]
+    comments(username: String, artistId: ID): [Comment]
     genres: [Genre]
     me: User
     meArtist: Artist
-    songs(genre: ID, name: String): [Song]
+    songs(genre: ID, artistName: String, artistId: ID): [Song]
     song(_id: ID): Song
     user(_id: ID, username: String): User
     users: [User]
@@ -130,21 +123,30 @@ const typeDefs = gql`
       bio: String
       socialMedia: String
       avatar: String
-    ): Auth
-    addComment(commentText: String!): Comment
+    ): AuthArtist
+    addComment(commentText: String!, artistId: ID!): Comment
     addReaction(commentId: ID!, reactionBody: String!): Comment
     addFollow(artistId: ID!): User
     addFollower(artistId: ID!): Artist
     addOrder(songs: [ID]!): Order
     updateUser(
+      avatar: String
       username: String
-      firstName: String
-      lastName: String
       email: String
       password: String
+      avatar: String
     ): User
     login(email: String!, password: String!): Auth
-    artistLogin(email: String!, password: String!):Auth
+    artistLogin(email: String!, password: String!): AuthArtist
+    addSong(
+      title: String!
+      album: String
+      genre: ID!
+      description: String
+      price: Float!
+      tags: [String]
+      song_url: String
+    ): Song
   }
 `;
 

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const QUERY_ME = gql`
   {
@@ -6,19 +6,34 @@ export const QUERY_ME = gql`
       _id
       avatar
       username
-      firstName
-      lastName
       email
       followCount
       follows {
         _id
-        username
+        avatar
+        artistName
       }
       orders {
         songs {
           _id
         }
       }
+    }
+  }
+`;
+
+export const QUERY_ME_ARTIST = gql`
+  {
+    meArtist {
+      _id
+      avatar
+      artistName
+      email
+      genre
+      bio
+      website
+      socialMedia
+      followerCount
     }
   }
 `;
@@ -54,39 +69,20 @@ export const QUERY_SONGS = gql`
       description
       image
       price
-      genre {
-        _id
-      }
+      genre
       tags
       song_url
     }
   }
 `;
 
-export const QUERY_ALL_SONGS = gql`
+export const QUERY_GENRES = gql`
   {
-    songs {
+    genres {
       _id
-      title
-      description
-      price
-      song_url
-      genre {
-        name
-      }
-      tags 
-      song_url
+      name
     }
   }
-`;
-
-export const QUERY_GENRES = gql`
-{
-  genres {
-    _id
-    name
-  }
-}
 `;
 
 export const QUERY_CHECKOUT = gql`
@@ -98,53 +94,55 @@ export const QUERY_CHECKOUT = gql`
 `;
 
 export const QUERY_USER = gql`
-{
-  user {
-    avatar
-    username
-    firstName
-    lastName
-    orders {
-      _id
-      purchaseDate
-      songs {
+  {
+    user {
+      avatar
+      username
+      firstName
+      lastName
+      orders {
         _id
-        title
-        artist
-        description
-        price
-        image
+        purchaseDate
+        songs {
+          _id
+          title
+          artist
+          description
+          price
+          image
+        }
       }
     }
   }
-}
 `;
 
-// export const QUERY_ARTISTS = gql`
-//   query getArtists($_id: ID){
-//     artists(_id: $_id) {
-//       _id
-//       avatar
-//       artistName
-//       email
-//       password
-//       genre
-//       bio
-//       socialMedia
-//       songs {
-//         _id
-//         title
-//       }
-//       followers {
-//         _id
-//         username
-//       }
-//     }
-//   }
-// `;
+export const QUERY_ARTIST_BY_PARAMS = gql`
+  query getArtist($_id: ID) {
+    artist(_id: $_id) {
+      _id
+      avatar
+      artistName
+      email
+      password
+      genre
+      bio
+      socialMedia
+      songs {
+        _id
+      }
+      followers {
+        _id
+        username
+      }
+      comments{
+        commentText
+      }
+    }
+  }
+`;
 
 export const QUERY_ARTISTS = gql`
-  query artists {
+  {
     artists {
       _id
       avatar
@@ -157,11 +155,13 @@ export const QUERY_ARTISTS = gql`
       socialMedia
       songs {
         _id
-        title
       }
       followers {
         _id
         username
+      }
+      comments{
+        commentText
       }
     }
   }
@@ -170,9 +170,9 @@ export const QUERY_ARTISTS = gql`
 export const QUERY_ARTIST_BY_GENRE = gql`
   query GetArtistsByGenre($genre: String) {
     artistsByGenre(genre: $genre) {
-      artistName,
-      avatar,
-      _id,
+      artistName
+      avatar
+      _id
       genre
     }
   }
@@ -181,10 +181,28 @@ export const QUERY_ARTIST_BY_GENRE = gql`
 export const QUERY_SEARCH = gql`
   query Search($term: String!) {
     search(term: $term) {
-      artistName,
-      avatar,
-      _id,
+      artistName
+      avatar
+      _id
       genre
     }
   }
+`;
+
+export const QUERY_COMMENTS = gql` 
+query comments($username: String, $artistId: ID) {
+  comments(username: $username, artistId: $artistId) {
+    _id
+    createdAt
+    username
+    artistId
+    commentText
+    reactions {
+      _id
+      createdAt
+      username
+      reactionBody
+    }
+  }
+}
 `;
