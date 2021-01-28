@@ -10,14 +10,11 @@ import spinner from "../../assets/spinner.gif";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-
-const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
+// const useStyles = makeStyles({
+//   table: {
+//     minWidth: 650,
+//   },
+// });
 
 function SongTableSimple() {
   const [state, dispatch] = useStoreContext();

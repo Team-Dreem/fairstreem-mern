@@ -7,6 +7,7 @@ import { QUERY_ARTISTS } from "../utils/queries";
 import { idbPromise } from "../utils/helpers";
 import spinner from "../assets/spinner.gif";
 // import Auth from '../utils/auth'
+import Cart from "../components/Cart";
 
 import Grid from "@material-ui/core/Grid";
 // import Paper from "@material-ui/core/Paper";
@@ -108,6 +109,7 @@ function ArtistProfile() {
         </div>
       ) : null}
       {loading ? <img src={spinner} alt="loading" /> : null}
+      <Cart />
     </>
   );
 }

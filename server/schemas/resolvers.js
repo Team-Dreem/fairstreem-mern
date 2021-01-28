@@ -54,17 +54,17 @@ const resolvers = {
 
       for (let i = 0; i < songs.length; i++) {
         // generate song id
-        const product = await stripe.products.create({
+        const song = await stripe.products.create({
           name: songs[i].title,
           description: songs[i].description,
           images: [`${url}/images/${songs[i].image}`],
           // These image thumbnails won't display on the Stripe checkout page when testing locally, because Stripe can't download images that are being served from your personal computer's localhost. You will only see these images when you deploy the app to Heroku.
         });
-        console.log("resolver product:", product);
+        console.log("stripe song:", song);
 
         // generate price id using the song id
         const price = await stripe.prices.create({
-          product: product.id,
+          product: song.id,
           unit_amount: songs[i].price * 100,
           currency: "usd",
         });
@@ -242,15 +242,20 @@ const resolvers = {
         await User.findByIdAndUpdate(context.user._id, {
           $push: { orders: order },
         });
-        const populatedOrder = await Order.findById(order._id).populate(
-          "songs"
-        );
-        console.log("popOrder:", populatedOrder);
-        return populatedOrder;
+        return order;
       }
 
       throw new AuthenticationError("Not logged in");
     },
+    //     const populatedOrder = await Order.findById(order._id).populate(
+    //       "songs"
+    //     );
+    //     console.log("popOrder:", populatedOrder);
+    //     return populatedOrder;
+    //   }
+
+    //   throw new AuthenticationError("Not logged in");
+    // },
     addReaction: async (parent, { commentId, reactionBody }, context) => {
       if (context.user) {
         const updatedComment = await Comment.findOneAndUpdate(
