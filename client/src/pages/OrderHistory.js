@@ -19,6 +19,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const DownloadButton = React.forwardRef(({ songUrl, children, className }, ref) => <a target="_blank" ref={ref} className={className} rel="noopener noreferrer" href={songUrl}>{ children }</a>);
+
 function OrderHistory() {
   const { data } = useQuery(QUERY_USER);
   let user;
@@ -29,8 +31,6 @@ function OrderHistory() {
   console.log("OrderHistory: user", user);
 
   const classes = useStyles();
-
-  const DownloadButton = React.forwardRef(({ songUrl, children, className }, ref) => <a target="_blank" ref={ref} className={className} rel="noopener noreferrer" href={songUrl}>{ children }</a>);
 
   return user ? (
       <Paper className={classes.root} elevation={1}>
