@@ -130,7 +130,11 @@ function SongTableSimple() {
 
   return (
     <div>
+<<<<<<< HEAD
     <h2>{selectedArtist.artistName}'s Songs:</h2>
+=======
+    <h2>Songs by {selectedArtist.artistName}:</h2>
+>>>>>>> 62b41776a072f87bbd9d2ae7b1955e138e9d2f25
 
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
