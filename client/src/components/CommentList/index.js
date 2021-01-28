@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
   },
   comment: {
     borderBottom: 'none !important'
+  },
+  noComments: {
+    margin: theme.spacing(1)
   }
 }));
 
@@ -29,7 +32,7 @@ const CommentList = (props) => {
   const classes = useStyles();
   
   if (!comments.length) {
-    return <p>No comments yet!</p>;
+    return <p className={classes.noComments}>No comments yet!</p>;
   }
   return (
     <div className={classes.root}>

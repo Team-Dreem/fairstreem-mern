@@ -11,7 +11,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-      flexGrow: 1
+    flexGrow: 1
+  },
+  noSong: {
+    margin: theme.spacing(1)
   }
 }))
 
@@ -72,7 +75,7 @@ function filterSongs() {
               </Grid>
             ))
       ) : (
-        <h3>You haven't added any songs yet!</h3>
+        <p className={classes.noSong}>You haven't added any songs yet!</p>
       )}
       { loading ? 
       <img src={spinner} alt="loading" />: null}
