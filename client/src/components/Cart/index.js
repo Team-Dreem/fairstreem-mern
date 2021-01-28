@@ -18,7 +18,7 @@ const Cart = () => {
   useEffect(() => {
     async function getCart() {
       const cart = await idbPromise("cart", "get");
-      dispatch({ type: ADD_MULTIPLE_TO_CART, songs: [...cart] });
+      dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
     }
 
     if (!state.cart.length) {
@@ -27,10 +27,8 @@ const Cart = () => {
   }, [state.cart.length, dispatch]);
   // You may wonder what happens if there's nothing to retrieve from the cached object store and state.cart.length is still 0. Does this useEffect() function just continuously run because of that? Well, it could very easily do that if we neglect to pass the state.cart.length value into useEffect()'s dependency array. That's the whole point of the dependency array. We list all of the data that this useEffect() Hook is dependent on to execute. The Hook runs on load no matter what, but then it only runs again if any value in the dependency array has changed since the last time it ran.
   useEffect(() => {
-    // console.log("Data:", data);
     if (data) {
       stripePromise.then((res) => {
-        // console.log("res:", res);
         res.redirectToCheckout({ sessionId: data.checkout.session });
       });
     }
@@ -58,21 +56,19 @@ const Cart = () => {
     return sum.toFixed(2);
   }
 
+  console.log(state);
+
   function submitCheckout() {
-    const songIds = [];
+    const productIds = [];
   
     state.cart.forEach((item) => {
       for (let i = 0; i < item.purchaseQuantity; i++) {
-        songIds.push(item._id);
+        productIds.push(item._id);
       }
-      // console.log("songIds in cart:", songIds);
       getCheckout({
-        variables: { songs: songIds }
+        variables: { products: productIds }
       });      
     });
-    getCheckout({
-      variables: { songs: songIds }
-    });      
   }
   // Unfortunately, we can't call useQuery(QUERY_CHECKOUT) in the click handler function. The useQuery Hook is meant to run when a component is first rendered, not at a later point in time based on a user action like a button click. Apollo provides another Hook for this exact situation. The useLazyQuery Hook can be declared like any other Hook but won't actually execute until you tell it to. Let's implement this new Hook to call QUERY_CHECKOUT.
   
