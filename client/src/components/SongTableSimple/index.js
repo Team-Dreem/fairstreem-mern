@@ -3,7 +3,11 @@ import { idbPromise } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
 import { useQuery } from "@apollo/react-hooks";
 import { QUERY_SONGS, QUERY_CHECKOUT } from "../../utils/queries";
-import { UPDATE_SONGS, UPDATE_CART_QUANTITY, ADD_TO_CART } from "../../utils/actions";
+import {
+  UPDATE_SONGS,
+  UPDATE_CART_QUANTITY,
+  ADD_TO_CART,
+} from "../../utils/actions";
 import { loadStripe } from "@stripe/stripe-js";
 import spinner from "../../assets/spinner.gif";
 import Table from "@material-ui/core/Table";
@@ -19,11 +23,11 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   tableHead: {
-    background: 'rgba(0,0,0,.05)'
+    background: "rgba(0,0,0,.05)",
   },
   noSong: {
-    margin: theme.spacing(1)
-  }
+    margin: theme.spacing(1),
+  },
 }));
 
 function SongTableSimple({ allowPurchase = true }) {
@@ -40,15 +44,17 @@ function SongTableSimple({ allowPurchase = true }) {
     const itemInCart = cart.find((cartItem) => cartItem._id === song._id);
     // if there was a match, call UPDATE with a new purchase quantity
     if (itemInCart) {
-      dispatch({
-        type: UPDATE_CART_QUANTITY,
-        _id: song._id,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-      });
-      idbPromise("cart", "put", {
-        ...itemInCart,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-      });
+      alert("You already have this song in your cart!");
+      return;
+      // dispatch({
+      //   type: UPDATE_CART_QUANTITY,
+      //   _id: song._id,
+      //   purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+      // });
+      // idbPromise("cart", "put", {
+      //   ...itemInCart,
+      //   purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+      // });
     } else {
       dispatch({
         type: ADD_TO_CART,
@@ -90,39 +96,43 @@ function SongTableSimple({ allowPurchase = true }) {
 
   const artistSongs = filterSongs();
 
-  return (artistSongs && artistSongs.length)
-      ? <TableContainer elevation={0} square={true} component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
-            <TableHead align="right">
-              <TableRow className={classes.tableHead}>
-                <TableCell></TableCell>
-                <TableCell align="left">Title</TableCell>
-                {/* <TableCell align="right">Album</TableCell> */}
-                {/* <TableCell align="right">Playcount</TableCell> */}
-                <TableCell align="right">Purchase</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {artistSongs.map((song) => (
-                <TableRow key={song._id}>
-                  <TableCell align="center">
-                    <audio controls controlsList="nodownload"> 
-                      <source src={song.song_url} type="audio/ogg"/>
-                      <source src={song.song_url} type="audio/mpeg"/>
-                    </audio>
-                  </TableCell>
-                  <TableCell align="left">{song.title}</TableCell>
-                  {/* <TableCell align="right">{row.album}</TableCell> */}
-                  {/* <TableCell align="right">{row.playcount}</TableCell> */}
-                  <TableCell align="right">
-                    <Button onClick={addToCart.bind(this, song)}>Buy</Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      : (<p className={classes.noSong}>{selectedArtist.artistName} hasn't added any songs yet!</p>);
+  return artistSongs && artistSongs.length ? (
+    <TableContainer elevation={0} square={true} component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead align="right">
+          <TableRow className={classes.tableHead}>
+            <TableCell></TableCell>
+            <TableCell align="left">Title</TableCell>
+            {/* <TableCell align="right">Album</TableCell> */}
+            {/* <TableCell align="right">Playcount</TableCell> */}
+            <TableCell align="right">Purchase</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {artistSongs.map((song) => (
+            <TableRow key={song._id}>
+              <TableCell align="center">
+                <audio controls controlsList="nodownload">
+                  <source src={song.song_url} type="audio/ogg" />
+                  <source src={song.song_url} type="audio/mpeg" />
+                </audio>
+              </TableCell>
+              <TableCell align="left">{song.title}</TableCell>
+              {/* <TableCell align="right">{row.album}</TableCell> */}
+              {/* <TableCell align="right">{row.playcount}</TableCell> */}
+              <TableCell align="right">
+                <Button onClick={addToCart.bind(this, song)}>Buy</Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  ) : (
+    <p className={classes.noSong}>
+      {selectedArtist.artistName} hasn't added any songs yet!
+    </p>
+  );
 }
 
 export default SongTableSimple;

@@ -27,15 +27,18 @@ function SongItem(item) {
 
     // if there was a match, call UPDATE with a new purchase quantity
     if (itemInCart) {
-      dispatch({
-        type: UPDATE_CART_QUANTITY,
-        _id: _id,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-      });
-      idbPromise("cart", "put", {
-        ...itemInCart,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-      });
+      return (
+        <p>You already have this song in your cart!</p>
+      )
+      // dispatch({
+      //   type: UPDATE_CART_QUANTITY,
+      //   _id: _id,
+      //   purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+      // });
+      // idbPromise("cart", "put", {
+      //   ...itemInCart,
+      //   purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+      // });
     } else {
       dispatch({
         type: ADD_TO_CART,

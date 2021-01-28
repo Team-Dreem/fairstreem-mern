@@ -45,13 +45,13 @@ const CartItem = ({ item }) => {
           {item.title}, ${item.price}
         </div>
         <div>
-          <input
+          {/* <input
             type="number"
             placeholder="1"
             value={item.purchaseQuantity}
             onChange={onChange}
             />
-            {/* This will also clear up the error that React was throwing earlier, because the onChange handler means that the value of this element can now potentially change and is no longer read-only. Test this out in the browser by adding an item to the cart and then typing a new number in the <input> element. Doing so will automatically update the total dollar amount, because the parent Cart component re-renders whenever the global state is updated. */}
+            This will also clear up the error that React was throwing earlier, because the onChange handler means that the value of this element can now potentially change and is no longer read-only. Test this out in the browser by adding an item to the cart and then typing a new number in the <input> element. Doing so will automatically update the total dollar amount, because the parent Cart component re-renders whenever the global state is updated. */}
           <span
             role="img"
             aria-label="trash"

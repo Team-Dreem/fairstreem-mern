@@ -25,7 +25,7 @@ function Success() {
         });
       }
       setTimeout(function () {
-        window.location.assign("/");
+        window.location.assign("/orderHistory");
       }, 3000);
     }
 
@@ -37,8 +37,7 @@ function Success() {
       <Jumbotron>
         <h1>Success!</h1>
         <h2>Thank you for your purchase!</h2>
-        <h2>You may download your songs via the order history tab at any time!</h2>
-        <h2>You will now be redirected to the homepage</h2>
+        <h2>You will now be redirected to the order history page, where you may download your new songs!</h2>
       </Jumbotron>
     </div>
   );
