@@ -132,6 +132,9 @@ export const QUERY_ARTIST_BY_PARAMS = gql`
         _id
         username
       }
+      comments{
+        commentText
+      }
     }
   }
 `;
@@ -153,6 +156,11 @@ export const QUERY_ARTISTS = gql`
       }
       followers {
         _id
+        username
+      }
+      comments{
+        commentText
+        createdAt
         username
       }
     }

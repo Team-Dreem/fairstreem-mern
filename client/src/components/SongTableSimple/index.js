@@ -16,7 +16,7 @@ import { makeStyles } from "@material-ui/core/styles";
 //   },
 // });
 
-function SongTableSimple() {
+function SongTableSimple({ allowPurchase = true }) {
   const [state, dispatch] = useStoreContext();
 
   const { selectedArtist } = state;

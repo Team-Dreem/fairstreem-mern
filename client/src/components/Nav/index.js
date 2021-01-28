@@ -7,6 +7,7 @@ import { QUERY_ME, QUERY_ME_ARTIST } from '../../utils/queries';
 import { UPDATE_CURRENT_USER, UPDATE_CURRENT_ARTIST } from '../../utils/actions';
 import { makeStyles } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
+import Cart from '../Cart';
 
 const useStyles = makeStyles((theme) => ({
   userLink: {
@@ -72,6 +73,9 @@ function Nav() {
             <a href="/" onClick={() => Auth.logout()}>
               Logout
             </a>
+          </li>
+          <li className="nav-link">
+            <Cart />
           </li>
         </ul>
       );

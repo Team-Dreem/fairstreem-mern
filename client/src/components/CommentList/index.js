@@ -1,18 +1,19 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
+import Grid from '@material-ui/core/Grid'
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
+// import { useStoreContext } from "../../utils/GlobalState";
+
 const useStyles = makeStyles({
-  root: {},
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
+  root: {
+    
   },
+  
   title: {
     fontSize: 14,
   },
@@ -21,13 +22,59 @@ const useStyles = makeStyles({
   },
 });
 
-const CommentList = (comments, title) => {
-
-  console.log("comments", comments);
+const CommentList = (props) => {
+  
+  
+  const {title, comments} = props
+  // console.log("props",props);
   
   // const [state, dispatch] = useStoreContext();
-  // const { loading, data } = useQuery(QUERY_ME);
-  // const { currentUser, currentArtist } = state;
+  // console.log("SELECTEDARTIST",state.selectedArtist);
+  
+  const classes = useStyles();
+  
+ if (!comments.length) {
+    return <h3>No Comments Yet</h3>;
+  }
+  return (
+    <div>
+      <h3>{title}</h3>
+      {comments &&
+        comments.map((comment) => (
+          
+            <Grid item xs ={12}>
+            <Card className={classes.root} variant="outlined" >
+              <CardContent>
+                <Typography variant="subtitle1">{comment.createdAt}</Typography>
+                <Typography variant="h5" component="h2">
+                   {comment.username} says...
+                </Typography>
+
+                <Typography variant="body2" component="p">
+                 {comment.commentText}
+                  <br />
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small">reply</Button>
+              </CardActions>
+            </Card>
+            </Grid>
+        ))}
+    </div>
+  );
+};
+
+export default CommentList;
+
+
+
+  // const { loading, data } = useQuery(QUERY_COMMENTS, {
+  //   variables:{
+
+  //   }
+  // });
+  // const { currentUser} = state;
 
   // const [addComment] = useMutation(ADD_COMMENT);
 
@@ -41,39 +88,3 @@ const CommentList = (comments, title) => {
   //     });
   //   }
   // }, [loading, data]);
-
-  const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
-
-  if (!comments.length) {
-    return <h3>No Comments Yet</h3>;
-  }
-  return (
-    <div>
-      <h3>{title}</h3>
-      {comments &&
-        comments.map((comment) => (
-          <div>
-            <Card className={classes.root} variant="outlined">
-              <CardContent>
-                <Typography variant="h5" component="h2">
-                  {comment.createdAt} {comment.username} says...
-                </Typography>
-
-                <Typography variant="body2" component="p">
-                 {comment.commentText}
-                  I like this artist, rock song #999 is my favorite!
-                  <br />
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">reply</Button>
-              </CardActions>
-            </Card>
-          </div>
-        ))}
-    </div>
-  );
-};
-
-export default CommentList;
