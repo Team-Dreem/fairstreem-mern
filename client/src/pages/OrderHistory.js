@@ -46,7 +46,7 @@ function OrderHistory() {
                   <Link to={`/songs/${_id}`}>
                   <img
                       alt={title}
-                      src={`/images/${image}`}
+                      src={`${image}`}
                     />
                     <p>{title}</p>
                   </Link>

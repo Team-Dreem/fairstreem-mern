@@ -117,7 +117,7 @@ db.once("open", async () => {
       artistId: "600b1de66ea21cf63a4db76e",
       description:
         "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
-      image: "Wild_Eyes.jpg",
+      image: "https://fairstreem.s3.us-east-2.amazonaws.com/1611870917401.jpg",
       price: 0.99,
       genre: genres[2]._id,
       tags: "outlaw",
@@ -131,7 +131,7 @@ db.once("open", async () => {
       artistId: "600b1de66ea21cf63a4db76e",
       description:
         "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
-      image: "El_Toro.jpg",
+      image: "https://fairstreem.s3.us-east-2.amazonaws.com/1611870723332.jpg",
       price: 0.99,
       genre: genres[2]._id,
       tags: "outlaw",
@@ -139,82 +139,72 @@ db.once("open", async () => {
       likes: 6,
     },
     {
-      "_id": "600f6827ded0c5264cbe4a28",
-      "title": "Rise & Fall",
-      "album": "The Saint and The Sinner",
-      "artistId": "600b1de66ea21cf63a4db76c",
-      "description": "This is the real song upload test.",
-      "image": "https://fairstreem.s3.us-east-2.amazonaws.com/1611627258618.jpg",
-      "price": 0.99,
-      "genre": {
-        "_id": "600dfabaebcba48440047d28"
-      },
+      _id: "600f6827ded0c5264cbe4a28",
+      title: "Rise & Fall",
+      album: "The Saint and The Sinner",
+      artistId: "600b1de66ea21cf63a4db76c",
+      description: "This is the real song upload test.",
+      image: "https://fairstreem.s3.us-east-2.amazonaws.com/1611627258618.jpg",
+      price: 0.99,
+      genre: genres[0]._id,
+      tags: [
+        ""
+      ],
+      song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611622431810.mp3"
+    },
+    {
+      _id: "600f667905d21d244b5182ea",
+      title: "Porcelain",
+      album: "Scenes.. Volume 1",
+      artistId: "600b1de66ea21cf63a4db76c",
+      description: "This is the real song upload test.",
+      image: "https://fairstreem.s3.us-east-2.amazonaws.com/1611627397778.jpg",
+      price: 0.99,
+      genre: genres[0]._id,
       "tags": [
         ""
       ],
-      "song_url": "https://fairstreem.s3.us-east-2.amazonaws.com/1611622431810.mp3"
+      song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611622008635.mp3"
     },
     {
-      "_id": "600f667905d21d244b5182ea",
-      "title": "Porcelain",
-      "album": "Scenes.. Volume 1",
-      "artistId": "600b1de66ea21cf63a4db76c",
-      "description": "This is the real song upload test.",
-      "image": "https://fairstreem.s3.us-east-2.amazonaws.com/1611627397778.jpg",
-      "price": 0.99,
-      "genre": {
-        "_id": "600dfabaebcba48440047d28"
-      },
-      "tags": [
+      _id: "600f667905d21d244b5182eb",
+      title: "Apology",
+      album: "Scenes of Devastation at the Heart of the Disaster",
+      artistId: "6011afa365dbf441f652e2c4",
+      description: "This is the real song upload test.",
+      image: "https://fairstreem.s3.us-east-2.amazonaws.com/1611859481836.jpg",
+      price: 0.99,
+      genre: genres[0]._id,
+      tags: [
         ""
       ],
-      "song_url": "https://fairstreem.s3.us-east-2.amazonaws.com/1611622008635.mp3"
+      song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611858720299.mp3"
     },
     {
-      "_id": "600f667905d21d244b5182eb",
-      "title": "Apology",
-      "album": "Scenes of Devastation at the Heart of the Disaster",
-      "artistId": "6011afa365dbf441f652e2c4",
-      "description": "This is the real song upload test.",
-      "image": "https://fairstreem.s3.us-east-2.amazonaws.com/1611859481836.jpg",
-      "price": 0.99,
-      "genre": {
-        "_id": "600dfabaebcba48440047d26"
-      },
-      "tags": [
-        ""
-      ],
-      "song_url": "https://fairstreem.s3.us-east-2.amazonaws.com/1611858720299.mp3"
-    },
-    {
-      "_id": "600a28d52e97ee7ae2cf63a5",
-      "title": "Memphis",
-      "artistId": "6011afa365dbf441f652e2c3",
-      "description": "This is the real song upload test.",
-      "image": "https://fairstreem.s3.us-east-2.amazonaws.com/1611852310238.JPG",
-      "price": 0.99,
-      "genre": {
-        "_id": "600dfabaebcba48440047d28"
-      },
-      "tags": [
+      _id: "600a28d52e97ee7ae2cf63a5",
+      title: "Memphis",
+      artistId: "6011afa365dbf441f652e2c3",
+      description: "This is the real song upload test.",
+      image: "https://fairstreem.s3.us-east-2.amazonaws.com/1611852310238.JPG",
+      price: 0.99,
+      genre: genres[2]._id,
+      tags: [
         "rockabilly"
       ],
-      "song_url": "https://fairstreem.s3.us-east-2.amazonaws.com/1611775351569.mp3"
+      song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611775351569.mp3"
     },
     {
-      "_id": "600a28d52e97ee7ae2cf63a6",
-      "title": "Yonder",
-      "artistId": "6011afa365dbf441f652e2c3",
-      "description": "This is the real song upload test.",
-      "image": "https://fairstreem.s3.us-east-2.amazonaws.com/1611852310238.JPG",
-      "price": 0.99,
-      "genre": {
-        "_id": "600dfabaebcba48440047d28"
-      },
-      "tags": [
+      _id: "600a28d52e97ee7ae2cf63a6",
+      title: "Yonder",
+      artistId: "6011afa365dbf441f652e2c3",
+      description: "This is the real song upload test.",
+      image: "https://fairstreem.s3.us-east-2.amazonaws.com/1611852310238.JPG",
+      price: 0.99,
+      genre: genres[2]._id,
+      tags: [
         "rockabilly"
       ],
-      "song_url": "https://fairstreem.s3.us-east-2.amazonaws.com/1611852015582.mp3"
+      song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611852015582.mp3"
     },
   ]);
  

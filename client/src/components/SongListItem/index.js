@@ -55,7 +55,7 @@ function SongListItem(item) {
   return (
     <div className="card px-1 py-1">
       <Link to={`/songs/${_id}`}>
-        <img alt={title} src={`/images/${image}`} />
+        <img alt={title} src={`${image}`} />
         <p>{title}</p>
       </Link>
       <audio className="audio" controls>
