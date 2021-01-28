@@ -133,7 +133,7 @@ function Signup(props) {
             name: 'genre',
             id: 'genre',
           }}>
-          {genres.map((genre) => <option value={genre._id}>{genre.name}</option>)}
+          {genres.map((genre) => <option value={genre._id} key={genre._id}>{genre.name}</option>)}
         </Select>
       </FormControl>}
 
