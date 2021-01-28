@@ -12,7 +12,7 @@ function SongListByArtist() {
   const [state, dispatch] = useStoreContext();
   const { selectedArtist } = state;
 
-  console.log("selectedArtist", selectedArtist);
+  // console.log("selectedArtist", selectedArtist);
   const { loading, data } = useQuery(QUERY_SONGS);
 
   // const songs = data?.songs || [];
@@ -50,8 +50,8 @@ function SongListByArtist() {
   function filterSongs() {
     return state.songs.filter((song) => song.artistId === selectedArtist._id);
   }
-  console.log("filterSongs", filterSongs());
-  console.log("currenArtist._id", selectedArtist._id);
+  // console.log("filterSongs", filterSongs());
+  // console.log("currenArtist._id", selectedArtist._id);
 
   return (
     <div className="my-2">

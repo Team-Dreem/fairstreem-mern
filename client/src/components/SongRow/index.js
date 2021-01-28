@@ -91,16 +91,16 @@ const itemInCart = cart.find((cartItem) => cartItem._id === _id);
 }
 };
 
-console.log("selectedArtist", selectedArtist);
+// console.log("selectedArtist", selectedArtist);
 
   // const { image, title, _id, price, artistId, tags, song_url } = props;
-  console.log("SongRowArtist", state.selectedArtist);
-  console.log("title", title);
+  // console.log("SongRowArtist", state.selectedArtist);
+  // console.log("title", title);
   // console.log("image", image);
   // console.log("_id", _id);
   // console.log("price", price);
   // console.log("artistId", artistId);
-  console.log("description", description);
+  // console.log("description", description);
   // console.log("song_url", song_url);
   // console.log("tags", tags);
 

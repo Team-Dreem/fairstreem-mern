@@ -11,7 +11,7 @@ db.once("open", async () => {
 
   await Artist.create({
     _id: "600b1de66ea21cf63a4db76b",
-    avatar: "../../public/images/default.png",
+    avatar: "../assets/images/default.png",
     artistName: "Test",
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "test@artist.com",
@@ -35,7 +35,7 @@ db.once("open", async () => {
 
   await Artist.create({
     _id: "600b1de66ea21cf63a4db76d",
-    avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611111773027",
+    avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611853534006.png",
     artistName: "Jeff Johnston",
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "jeffjohnston@artist.com",
@@ -47,7 +47,7 @@ db.once("open", async () => {
 
   await Artist.create({
     _id: "600b1de66ea21cf63a4db76e",
-    avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611528845288.png",
+    avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611853850851.png",
     artistName: "Jeff Warren Johnston",
     bio: "This is a default bio. Tell your listeners more about yourself!",
     email: "jeffwarrenjohnston@artist.com",
@@ -58,19 +58,11 @@ db.once("open", async () => {
   });
 
   await Artist.create({
-    artistName: "Feed",
+    _id: "6011afa365dbf441f652e2c3",
+    avatar: "https://fairstreem.s3.us-east-2.amazonaws.com/1611852166158.jpg",
+    artistName: "The Love Leighs",
     bio: "This is a default bio. Tell your listeners more about yourself!",
-    email: "feed@artist.com",
-    password: "12345",
-    genre: "Country",
-    songs: ["600a28d52e97ee7ae2cf63a5"],
-    followers: [],
-  });
-
-  await Artist.create({
-    artistName: "Reboot",
-    bio: "This is a default bio. Tell your listeners more about yourself!",
-    email: "reboot@artist.com",
+    email: "love@artist.com",
     password: "12345",
     genre: "Country",
     songs: ["600a28d52e97ee7ae2cf63a5"],
@@ -83,7 +75,7 @@ db.once("open", async () => {
     email: "concrete_hat@artist.com",
     password: "12345",
     genre: "Country",
-    songs: ["600a28d52e97ee7ae2cf63a5"],
+    songs: [],
     followers: [],
   });
 
@@ -103,6 +95,7 @@ db.once("open", async () => {
     {
       _id: "600b1de76ea21cf63a4db77a",
       title: "Catharsis",
+      album: "Catharsis",
       artistId: "600b1de66ea21cf63a4db76d",
       description:
         "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
@@ -117,6 +110,7 @@ db.once("open", async () => {
     {
       _id: "600b1de76ea21cf63a4db77b",
       title: "Wild Eyes",
+      album: "Undiscovered Country",
       artistId: "600b1de66ea21cf63a4db76e",
       description:
         "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
@@ -124,12 +118,13 @@ db.once("open", async () => {
       price: 0.99,
       genre: genres[2]._id,
       tags: "outlaw",
-      song_url: "empty",
+      song_url: "https://fairstreem.s3.us-east-2.amazonaws.com/1611850291684.mp3",
       likes: 6,
     },
     {
       _id: "600b1de76ea21cf63a4db77c",
       title: "El Toro",
+      album: "Undiscovered Country",
       artistId: "600b1de66ea21cf63a4db76e",
       description:
         "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
@@ -143,6 +138,7 @@ db.once("open", async () => {
     {
       "_id": "600f6827ded0c5264cbe4a28",
       "title": "Rise & Fall",
+      "album": "The Saint and The Sinner",
       "artistId": "600b1de66ea21cf63a4db76c",
       "description": "This is the real song upload test.",
       "image": "https://fairstreem.s3.us-east-2.amazonaws.com/1611627258618.jpg",
@@ -158,6 +154,7 @@ db.once("open", async () => {
     {
       "_id": "600f667905d21d244b5182ea",
       "title": "Porcelain",
+      "album": "Scenes.. Volume 1",
       "artistId": "600b1de66ea21cf63a4db76c",
       "description": "This is the real song upload test.",
       "image": "https://fairstreem.s3.us-east-2.amazonaws.com/1611627397778.jpg",
@@ -170,8 +167,38 @@ db.once("open", async () => {
       ],
       "song_url": "https://fairstreem.s3.us-east-2.amazonaws.com/1611622008635.mp3"
     },
+    {
+      "_id": "600a28d52e97ee7ae2cf63a5",
+      "title": "Memphis",
+      "artistId": "6011afa365dbf441f652e2c3",
+      "description": "This is the real song upload test.",
+      "image": "https://fairstreem.s3.us-east-2.amazonaws.com/1611852310238.JPG",
+      "price": 0.99,
+      "genre": {
+        "_id": "600dfabaebcba48440047d28"
+      },
+      "tags": [
+        "rockabilly"
+      ],
+      "song_url": "https://fairstreem.s3.us-east-2.amazonaws.com/1611775351569.mp3"
+    },
+    {
+      "_id": "600a28d52e97ee7ae2cf63a6",
+      "title": "Yonder",
+      "artistId": "6011afa365dbf441f652e2c3",
+      "description": "This is the real song upload test.",
+      "image": "https://fairstreem.s3.us-east-2.amazonaws.com/1611852310238.JPG",
+      "price": 0.99,
+      "genre": {
+        "_id": "600dfabaebcba48440047d28"
+      },
+      "tags": [
+        "rockabilly"
+      ],
+      "song_url": "https://fairstreem.s3.us-east-2.amazonaws.com/1611852015582.mp3"
+    },
   ]);
-
+ 
   await User.create({
     avatar: "../../public/images/default.png",
     username: "test",

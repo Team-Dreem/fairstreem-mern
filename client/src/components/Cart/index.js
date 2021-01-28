@@ -13,6 +13,8 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { makeStyles } from "@material-ui/core";
 
 const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+
+
 const useStyles = makeStyles((theme) => ({
   button: {
     padding: 0,
@@ -21,10 +23,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 const Cart = () => {
   const [state, dispatch] = useStoreContext();
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
   const classes = useStyles();
+  
 
   useEffect(() => {
     async function getCart() {
@@ -82,6 +86,7 @@ const Cart = () => {
   // Unfortunately, we can't call useQuery(QUERY_CHECKOUT) in the click handler function. The useQuery Hook is meant to run when a component is first rendered, not at a later point in time based on a user action like a button click. Apollo provides another Hook for this exact situation. The useLazyQuery Hook can be declared like any other Hook but won't actually execute until you tell it to. Let's implement this new Hook to call QUERY_CHECKOUT.
   
   //       // You should always wrap emojis (like the shopping cart icon) in a <span> element that includes role and aria-label attributes. Doing so will help screen readers understand the context of the emoji.
+  console.log("state.cart", state.cart);
   return (
     <div className="cart">
       <div className="close" onClick={toggleCart}>
