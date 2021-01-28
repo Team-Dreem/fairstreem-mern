@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
       display: "none"
   },
   sectionHeading: {
-    margin: theme.spacing(2)
+    margin: theme.spacing(2),
+    marginTop: theme.spacing(6)
   },
   songsContainer: {
     padding: '0 !important',
