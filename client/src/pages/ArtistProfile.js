@@ -11,11 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import spinner from "../assets/spinner.gif";
-// import Auth from '../utils/auth'
-
 import Grid from "@material-ui/core/Grid";
-// import Paper from "@material-ui/core/Paper";
-// import Button from "@material-ui/core/Button";
 
 import SongTableSimple from "../components/SongTableSimple";
 import CommentForm from '../components/CommentForm'
@@ -80,14 +76,6 @@ function ArtistProfile() {
         });
       });
     }
-
-    // return () => {
-    //   dispatch({
-    //     type: UPDATE_SELECTED_ARTIST,
-    //     selectedArtist: {},
-    //     // this clears the currenArist object when leaving page(** this mimics "component unmount" **)
-    //   });
-    // };
   }, [loading, selectedArtist, dispatch, data, artistId]);
 
   return (
