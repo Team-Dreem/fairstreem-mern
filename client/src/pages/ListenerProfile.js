@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useStoreContext } from "../utils/GlobalState";
 import Grid from "@material-ui/core/Grid";
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
-import { QUERY_ME } from '../utils/queries';
-import { useQuery } from "@apollo/react-hooks";
-import { UPDATE_CURRENT_USER } from '../utils/actions';
 import getLetterAvatar from '../utils/getLetterAvatar';
-import IconButton from "@material-ui/core/IconButton";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
+import SearchCard from '../components/SearchCard';
+import { UPDATE_USER_AVATAR } from '../utils/mutations';
+import { useMutation } from '@apollo/react-hooks';
+import { post } from 'axios';
+import FileUploadButton from '../components/FileUploadButton';
 
 const useStyles = makeStyles((theme) => ({
     large: {
@@ -19,14 +19,43 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         display: "none"
+    },
+    icon: {
+        position: 'absolute'
     }
 }));
 
 function ListenerProfile() {
+    const [updateUserAvatar] = useMutation(UPDATE_USER_AVATAR);
     const classes = useStyles();
 
     const [state] = useStoreContext();
     const { currentUser } = state;
+
+    const uploadNewAvatar = (files) => {
+        if (files.length === 0) {
+            return
+        }
+
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+
+        const url = "/api/v1/image-upload";
+        const formData = new FormData();
+        formData.append("image", files[0]);
+
+        post(url, formData, config)
+            .then((response) => {
+                return updateUserAvatar({
+                    variables: {
+                        avatarUrl: response.data.imageUrl
+                    }
+                });
+            });
+    };
 
     return (
         <>
@@ -38,15 +67,10 @@ function ListenerProfile() {
             <div className="profile">
                 <div className="profile-header">
                     <h1>{currentUser.username}</h1>
-                    <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
-                    <label htmlFor="icon-button-file">
-                        <IconButton color="primary" aria-label="upload picture" component="span">
-                            <PhotoCamera />
-                        </IconButton>
-                    </label>
+                    <FileUploadButton onChange={uploadNewAvatar} />
                 </div>
                 <Grid>
-
+                    {currentUser.follows && currentUser.follows.map(artist => <SearchCard data={artist} key={artist._id} />)}
                 </Grid>
             </div>
         </>

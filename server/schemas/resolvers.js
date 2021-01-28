@@ -54,17 +54,17 @@ const resolvers = {
 
       for (let i = 0; i < songs.length; i++) {
         // generate song id
-        const product = await stripe.products.create({
+        const song = await stripe.products.create({
           name: songs[i].title,
           description: songs[i].description,
           images: [`${url}/images/${songs[i].image}`],
           // These image thumbnails won't display on the Stripe checkout page when testing locally, because Stripe can't download images that are being served from your personal computer's localhost. You will only see these images when you deploy the app to Heroku.
         });
-        console.log("resolver product:", product);
+        console.log("stripe song:", song);
 
         // generate price id using the song id
         const price = await stripe.prices.create({
-          product: product.id,
+          product: song.id,
           unit_amount: songs[i].price * 100,
           currency: "usd",
         });
@@ -90,8 +90,17 @@ const resolvers = {
     comment: async (parent, { _id }) => {
       return Comment.findOne({ _id });
     },
-    comments: async (parent, { username }) => {
-      const params = username ? { username } : {};
+    comments: async (parent, { username, artistId }) => {
+      const params = {};
+      
+      if (username) { 
+        params.username = username;
+      }
+
+      if (artistId) { 
+        params.artistId = artistId;
+      }
+
       return await Comment.find(params).sort({ createdAt: -1 });
     },
     // Here, we pass in the parent as more of a placeholder parameter. It won't be used, but we need something in that first parameter's spot so we can access the username argument from the second parameter. We use a ternary operator to check if username exists. If it does, we set params to an object with a username key set to that value. If it doesn't, we simply return an empty object.
@@ -131,6 +140,8 @@ const resolvers = {
         const user = await User.findById(context.user._id).populate({
           path: "orders.songs",
           populate: "genre",
+          populate: "title",
+          populate: "price",
         });
 
         return user.orders.id(_id);
@@ -233,15 +244,20 @@ const resolvers = {
         await User.findByIdAndUpdate(context.user._id, {
           $push: { orders: order },
         });
-        const populatedOrder = await Order.findById(order._id).populate(
-          "songs"
-        );
-        console.log("popOrder:", populatedOrder);
-        return populatedOrder;
+        return order;
       }
 
       throw new AuthenticationError("Not logged in");
     },
+    //     const populatedOrder = await Order.findById(order._id).populate(
+    //       "songs"
+    //     );
+    //     console.log("popOrder:", populatedOrder);
+    //     return populatedOrder;
+    //   }
+
+    //   throw new AuthenticationError("Not logged in");
+    // },
     addReaction: async (parent, { commentId, reactionBody }, context) => {
       if (context.user) {
         const updatedComment = await Comment.findOneAndUpdate(
@@ -330,12 +346,29 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
-    addComment: async (parent, args, context) => {
+    updateArtist: async (parent, args, context) => {
+      if (context.user) {
+        return await Artist.findByIdAndUpdate(context.user._id, args, {
+          new: true
+        });
+      }
+
+      throw new AuthenticationError("Not logged in");
+    },
+    addComment: async (parent, { commentText, artistId }, context) => {
+      console.log("context.user", context.user)
       if (context.user) {
         const comment = await Comment.create({
-          ...args,
           username: context.user.username,
+          commentText: commentText,
+          artistId: artistId,
         });
+
+        await Artist.findByIdAndUpdate(
+          { _id: artistId },
+          { $push: { comments: comment._id } },
+          { new: true }
+        );
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
@@ -344,6 +377,23 @@ const resolvers = {
         );
 
         return comment;
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    addReaction: async (parent, { commentId, reactionBody }, context) => {
+      if (context.user) {
+        const updatedComment = await Comment.findOneAndUpdate(
+          { _id: commentId },
+          {
+            $push: {
+              reactions: { reactionBody, username: context.user.username },
+            },
+          },
+          { new: true, runValidators: true }
+        );
+
+        return updatedComment;
       }
 
       throw new AuthenticationError("You need to be logged in!");

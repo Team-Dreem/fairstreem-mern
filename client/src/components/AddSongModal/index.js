@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useMutation } from "@apollo/react-hooks";
 import { ADD_SONG } from '../../utils/mutations'
-import axios, { post } from 'axios'
-import { useStoreContext } from "../../utils/GlobalState";
+import { post } from 'axios'
+// import { useStoreContext } from "../../utils/GlobalState";
 //material ui components
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { Button } from '@material-ui/core';
+import { Select, Button } from "@material-ui/core";
+
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -24,67 +25,85 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const errorMsg = (
+    <React.Fragment>
+        <p>
+            fill out all inputs please
+        </p>
+    </React.Fragment>
+)
+
 
 export default function AddSongModal() {
-    //styles
     const classes = useStyles();
+    //addsong modal state and functions
     const [open, setOpen] = useState(false);
-
     const handleOpen = () => {
         setOpen(true);
     };
-
     const handleClose = () => {
         setOpen(false);
     };
 
+    //success modal state and functions
+    const [successOpen, setSuccessOpen] = useState(false)
+    const handleSuccessClose = () => {
+        setSuccessOpen(false);
+    };
+
+    //error msg state
+    const [errorMsgOpen, setErrorMsgOpen] = useState(false)
+    
     //initialize empty state for all form inputs
-    const [formState, setFormState] = useState({ title: "", price: "", description: "", genre: "", file: "", album: "" });
-    const [addSong] = useMutation(ADD_SONG);
-    //will extract artistId from global state
-    const [state, dispatch] = useStoreContext();
-
-
+    const [formState, setFormState] = useState({ title: "", price: 0, description: "", genre: "", file: "", album: "" });
+    const [addSong, { error }] = useMutation(ADD_SONG);
+    
     //handlers and mutations
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        //    console.log("FORMSTATE", formState.file)
-        //    console.log("FORM", document.getElementById("file").files[0])
 
-        //create variables to send to AWS s3 bucket, receive song url in response
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
+        //check if all inputs are filled out
+        if (formState.title && formState.price && formState.genre && formState.file && formState.album) {
+            //create variables to send to AWS s3 bucket, receive song url in response
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
             }
-        }
-        const url = "/api/v1/song-upload"
-        const formData = new FormData()
-        formData.append("song", document.getElementById("file").files[0])
-        console.log("FORMDATA", formData.get("song"))
-        post(url, formData, config)
-            .then((response) => {
-                console.log("AWS url", response.data.song_url);
+            const url = "/api/v1/song-upload"
+            const formData = new FormData()
+            formData.append("song", document.getElementById("file").files[0])
+            // console.log("FORMDATA", formData.get("song"))
+            post(url, formData, config)
+                .then((response) => {
+                    console.log("AWS url", response.data.song_url);
 
-
-                /// graph ql mutation to add song to mongoDB
-                 addSong({
-                    variables: {
-                        title: formState.title,
-                        price: formState.price,
-                        description: formState.description,
-                        genre: formState.genre,
-                        song_url: response.data.song_url,
-                        artistId: state.currentArtist._id,
-                        album: formState.album,
-                        likes: 0
-                    }
+                    const price = parseFloat(formState.price)
+                    // graph ql mutation to add song to mongoDB
+                    addSong({
+                        variables: {
+                            title: formState.title,
+                            price: price,
+                            description: formState.description,
+                            genre: formState.genre,
+                            song_url: response.data.song_url,
+                            album: formState.album,
+                        }
+                    })
                 })
-            })
 
+            //close addsong modal
+            handleClose()
+            //open success modal
+            setSuccessOpen(true)
+            //reset error msg
+            setErrorMsgOpen(false)
+        } else {
+            setErrorMsgOpen(true)
+        }
     }
-//update the state every time input is changed to keep track of input, to send to mutation
+    //update the state every time input is changed to keep track of input, to send to mutation on submit
     function handleChange(event) {
-        console.log("handleChange");
         const { name, value } = event.target;
         if (name === "file") {
             setFormState({
@@ -138,6 +157,7 @@ export default function AddSongModal() {
                                     id="album"
                                     onChange={handleChange} />
                             </div>
+
                             <div>
                                 <label for="price">Price:</label>
                                 <input placeholder="1.99"
@@ -154,13 +174,29 @@ export default function AddSongModal() {
                                     id="description"
                                     onChange={handleChange} />
                             </div>
+
                             <div>
-                                <label for="genre">Genre:</label>
-                                <input
-                                    name="genre"
-                                    id="genre"
+                                <Select
+                                    required
+                                    native
+                                    fullWidth
                                     onChange={handleChange}
-                                />
+                                    inputProps={{
+                                        name: 'genre',
+                                        id: 'genre',
+                                    }}
+                                >
+                                    <option aria-label="None" value="" />
+                                    <option value={'600dfabaebcba48440047d26'}>Rock/Alternative</option>
+                                    <option value={"600dfabaebcba48440047d2d"}>Classical</option>
+                                    <option value={"600dfabaebcba48440047d2c"}>Blues</option>
+                                    <option value={"600dfabaebcba48440047d2b"}>Jazz</option>
+                                    <option value={"600dfabaebcba48440047d28"}>Country</option>
+                                    <option value={"600dfabaebcba48440047d2a"}>Electronic</option>
+                                    <option value={"600dfabaebcba48440047d29"}>Hip Hop</option>
+                                    <option value={"600dfabaebcba48440047d27"}>R and B</option>
+                                    <option value={"600dfabaebcba48440047d2e"}>Other</option>
+                                </Select>
                             </div>
 
                             <label for="file">Upload song!</label>
@@ -168,9 +204,33 @@ export default function AddSongModal() {
                                 onChange={handleChange}></input>
                         </form>
                         <Button onClick={handleFormSubmit}>Add Song</Button>
+                        {errorMsgOpen ?
+                            <p>please fill out all inputs</p>
+                            : null
+                        }
                     </div>
                 </Fade>
             </Modal>
+
+            {/* success modal */}
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={successOpen}
+                onClose={handleSuccessClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}>
+                <Fade in={successOpen}>
+                    <div className={classes.paper}>
+                        <p>Success!</p>
+                    </div>
+                </Fade>
+            </Modal>
+
         </div>
     );
 }

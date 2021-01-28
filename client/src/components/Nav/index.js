@@ -3,13 +3,14 @@ import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
 import { useStoreContext } from "../../utils/GlobalState";
 import { useQuery } from '@apollo/react-hooks';
-import { QUERY_ME } from '../../utils/queries';
-import { UPDATE_CURRENT_USER } from '../../utils/actions';
+import { QUERY_ME, QUERY_ME_ARTIST } from '../../utils/queries';
+import { UPDATE_CURRENT_USER, UPDATE_CURRENT_ARTIST } from '../../utils/actions';
 import { makeStyles } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
+import Cart from '../Cart';
 
 const useStyles = makeStyles((theme) => ({
-  listenerLink: {
+  userLink: {
     display: 'flex',
     alignItems: 'center'
   },
@@ -20,30 +21,46 @@ const useStyles = makeStyles((theme) => ({
 
 function Nav() {
   const [state, dispatch] = useStoreContext();
-  const { loading, data } = useQuery(QUERY_ME);
-  const { currentUser } = state;
+  const { data: listenerData } = useQuery(QUERY_ME);
+  const { data: artistData } = useQuery(QUERY_ME_ARTIST);
+  const { currentUser, currentArtist } = state;
   const classes = useStyles();
 
   useEffect(() => {
-    if (data && data.me) {
-        const { me } = data;
+    if (listenerData && listenerData.me) {
+      const { me } = listenerData;
 
-        dispatch({
-            type: UPDATE_CURRENT_USER,
-            currentUser: me
-        });
-      }
-    }, [loading, data]);
+      dispatch({
+          type: UPDATE_CURRENT_USER,
+          currentUser: me
+      });
+    }
+  }, [listenerData]);
+
+  useEffect(() => {
+    if (artistData && artistData.meArtist) {
+      const { meArtist } = artistData;
+
+      dispatch({
+          type: UPDATE_CURRENT_ARTIST,
+          currentArtist: meArtist
+      });
+    }
+  }, [artistData]);
 
   function showNavigation() {
     if (Auth.loggedIn()) {
       return (
         <ul className="flex-row">
           <li className="nav-link">
-            <Link to="/listener" className={classes.listenerLink}>
+            { currentUser && currentUser._id && <Link to="/listener" className={classes.userLink}>
               <PersonIcon className={classes.listenerIcon} />
               { currentUser.username }
-            </Link>
+            </Link> }
+            { currentArtist && currentArtist._id && <Link to={`/artists/${currentArtist._id}`} className={classes.userLink}>
+              <PersonIcon className={classes.listenerIcon} />
+              { currentArtist.artistName }
+              </Link>}
           </li>
           <li className="nav-link">
             <Link to="/orderHistory">
@@ -56,6 +73,9 @@ function Nav() {
             <a href="/" onClick={() => Auth.logout()}>
               Logout
             </a>
+          </li>
+          <li className="nav-link">
+            <Cart />
           </li>
         </ul>
       );

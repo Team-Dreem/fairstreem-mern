@@ -4,6 +4,7 @@ import {
   // UPDATE_USERS,
   UPDATE_SONGS,
   UPDATE_CURRENT_GENRE,
+  UPDATE_SELECTED_ARTIST,
   UPDATE_CURRENT_ARTIST,
   UPDATE_CURRENT_USER,
   UPDATE_CURRENT_SONG,
@@ -45,17 +46,22 @@ export const reducer = (state, action) => {
         ...state,
         currentGenre: action.currentGenre
       };
-      case UPDATE_CURRENT_ARTIST:
+    case UPDATE_SELECTED_ARTIST:
       return {
         ...state,
-        currentArtist: { ...action.currentArtist },
+        selectedArtist: { ...action.selectedArtist },
       };
-      case UPDATE_CURRENT_USER:
+    case UPDATE_CURRENT_ARTIST:
+        return {
+          ...state,
+          currentArtist: { ...action.currentArtist }
+        }
+    case UPDATE_CURRENT_USER:
       return {
         ...state,
         currentUser: { ...action.currentUser },
       };
-      case UPDATE_CURRENT_SONG:
+    case UPDATE_CURRENT_SONG:
       return {
         ...state,
         currentSong: { ...action.currentSong },

@@ -10,9 +10,9 @@ import spinner from "../../assets/spinner.gif";
 
 function SongListByArtist() {
   const [state, dispatch] = useStoreContext();
-  const { currentArtist } = state;
+  const { selectedArtist } = state;
 
-  console.log("currentArtist", currentArtist);
+  console.log("selectedArtist", selectedArtist);
   const { loading, data } = useQuery(QUERY_SONGS);
 
   // const songs = data?.songs || [];
@@ -48,10 +48,10 @@ function SongListByArtist() {
   }, [data, loading, dispatch]);
 
   function filterSongs() {
-    return state.songs.filter((song) => song.artistId === currentArtist._id);
+    return state.songs.filter((song) => song.artistId === selectedArtist._id);
   }
   console.log("filterSongs", filterSongs());
-  console.log("currenArtist._id", currentArtist._id);
+  console.log("currenArtist._id", selectedArtist._id);
 
   return (
     <div className="my-2">
@@ -82,7 +82,7 @@ function SongListByArtist() {
 
 export default SongListByArtist;
 
-// Again, we immediately execute the useStoreContext() function to retrieve the current global state object and the dipatch() method to update state. We then destructure the currentArtist data out of the state object so we can use it in the filterSongs() function.
+// Again, we immediately execute the useStoreContext() function to retrieve the selected global state object and the dipatch() method to update state. We then destructure the selectedArtist data out of the state object so we can use it in the filterSongs() function.
 
 // We then implement the useEffect() Hook in order to wait for our useQuery() response to come in. Once the data object returned from useQuery() goes from undefined to having an actual value, we execute our dispatch() function, instructing our reducer function that it's the UPDATE_SONGS action and it should save the array of song data to our global store. When that's done, useStoreContext() executes again, giving us the song data needed display songs to the page.
 

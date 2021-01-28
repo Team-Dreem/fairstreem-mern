@@ -3,28 +3,32 @@ import { useMutation } from '@apollo/react-hooks';
 import { ADD_FOLLOW, ADD_FOLLOWER } from '../../utils/mutations'
 import { useStoreContext } from "../../utils/GlobalState";
 
-import Auth from '../../utils/auth'
+import Auth from '../../utils/auth';
 
-import Button from '@material-ui/core/Button'
-
+import Fab from '@material-ui/core/Fab';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 
 
 export default function LikeButton() {
     const [state, dispatch] = useStoreContext();
+    const [addFollow, { error }] = useMutation(ADD_FOLLOW);
+    const [addFollower, { e }] = useMutation(ADD_FOLLOWER);
 
-    const listenerId = Auth.getProfile().data._id || null
+    const profile = Auth.getProfile();
+
+    // if not logged in, don't show like button
+    if (!profile) {
+        return null;
+    }
+
+    const listenerId = profile.data._id || null;
     
-    
-
-    const [addFollow, { error }] = useMutation(ADD_FOLLOW)
-    const [addFollower, { e }] = useMutation(ADD_FOLLOWER)
-
-        //add Artist to User
-        async function addFollowFunction()  {
+    //add Artist to User
+    async function addFollowFunction()  {
         try {
             await addFollow({
-                variables: { artistId: state.currentArtist._id }
+                variables: { artistId: state.selectedArtist._id }
             })
         }
         catch (e) {
@@ -37,7 +41,7 @@ export default function LikeButton() {
         async function addFollowerFunction() {
         try {
             await addFollower({
-                variables: { artistId: state.currentArtist._id }
+                variables: { artistId: state.selectedArtist._id }
             })
         } catch (e) {
             console.log(e);
@@ -47,8 +51,8 @@ export default function LikeButton() {
 
 
     return (
-        <Button onClick={()=>{
-            console.log("CURRENT ARTIST",state.currentArtist);
+        <Fab size="small" aria-label="like" onClick={()=>{
+            console.log("selected ARTIST",state.selectedArtist);
             console.log("LISTENERID", listenerId);
             addFollowFunction();
             addFollowerFunction()
@@ -62,7 +66,7 @@ export default function LikeButton() {
 
             // try {
             //     await addFollow({
-            //         variables: { artistId: state.currentArtist._id }
+            //         variables: { artistId: state.selectedArtist._id }
             //     })
             // }
             // catch (e) {
@@ -73,6 +77,6 @@ export default function LikeButton() {
 
             
             
-        }}>Like</Button>
+        }}><FavoriteIcon /></Fab>
     )
 }

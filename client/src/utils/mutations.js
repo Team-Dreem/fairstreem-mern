@@ -31,11 +31,9 @@ export const ADD_ORDER = gql`
       songs {
         _id
         title
+        artistName
         description
         price
-        genre {
-          name
-        } 
       }
     }
   }
@@ -93,12 +91,13 @@ mutation addFollower($artistId: ID!){
 `
 
 export const ADD_COMMENT = gql`
-mutation addComment($commentText: String!){
-  addComment(commentText: $commentText){
+mutation addComment($commentText: String!, $artistId: ID!) {
+  addComment(commentText: $commentText, artistId: $artistId) {
     _id
     commentText
     createdAt
     username
+    artistId
     reactionCount
     
   }
@@ -120,11 +119,48 @@ mutation addComment($commentText: String!){
 
 //returns type Song
 export const ADD_SONG = gql`
-mutation addSong($title: String!, $price: Float!, $description: String, $genre: ID, $song_url: String, $album: String){
+mutation addSong($title: String!, $price: Float!, $description: String, $genre: ID!, $song_url: String, $album: String){
   addSong(title: $title, price: $price, description: $description, genre: $genre, song_url: $song_url, album: $album){
       title
       _id
-      artistId
     }
   }
 `
+
+export const UPDATE_USER_AVATAR = gql`
+mutation updateUserAvatar($avatarUrl: String!) {
+  updateUser(avatar: $avatarUrl) {
+    _id
+    avatar
+    username
+    email
+    followCount
+    follows {
+      _id
+      avatar
+      artistName
+    }
+    orders {
+      songs {
+        _id
+      }
+    }
+  }
+}
+`;
+
+export const UPDATE_ARTIST_AVATAR = gql`
+mutation updateArtistAvatar($avatarUrl: String!) {
+  updateArtist(avatar: $avatarUrl) {
+    _id
+    avatar
+    artistName
+    email
+    genre
+    bio
+    website
+    socialMedia
+    followerCount
+  }
+}
+`;

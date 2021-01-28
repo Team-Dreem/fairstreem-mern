@@ -4,7 +4,6 @@ import { LOGIN, ARTIST_LOGIN } from "../utils/mutations"
 import Auth from "../utils/auth";
 import { FormControl, InputLabel, Select, TextField, Button } from "@material-ui/core";
 import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
 
 function Login(props) {
   const [formState, setFormState] = useState({ email: '', password: '', accountType: 'listener' });
@@ -71,7 +70,7 @@ function Login(props) {
 
       <TextField
         className="input"
-        required id="standard-required"
+        required
         label="Password"
         fullWidth
         margin="normal"
@@ -85,7 +84,7 @@ function Login(props) {
           <p className="error-text" >The provided credentials are incorrect</p>
         </div> : null
       }
-      <Button variant="contained" className="btn" onClick={handleFormSubmit}>Submit</Button>
+      <Button variant="contained" color="primary" className="btn" onClick={handleFormSubmit}>Log In</Button>
     </Container>
   );
 }

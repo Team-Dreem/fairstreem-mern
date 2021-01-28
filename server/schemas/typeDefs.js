@@ -3,9 +3,10 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   type Comment {
     _id: ID
-    commentText: String
+    commentText: String!
     createdAt: String
-    username: String
+    username: String!
+    artistId: ID!
     reactionCount: Int
     reactions: [Reaction]
   }
@@ -24,17 +25,17 @@ const typeDefs = gql`
 
   type Song {
     _id: ID
-    title: String!
+    title: String
     artistId: String
     artistName: String
     album: String
     description: String
     image: String
-    price: Float!
+    price: Float
     genre: ID!
     tags: [String]
     song_url: String
-    likes: Int!
+    likes: Int
   }
 
   type Order {
@@ -93,7 +94,7 @@ const typeDefs = gql`
     artists: [Artist]
     artistsByGenre(genre: String): [Artist]
     comment(_id: ID!): Comment
-    comments(username: String): [Comment]
+    comments(username: String, artistId: ID): [Comment]
     genres: [Genre]
     me: User
     meArtist: Artist
@@ -123,24 +124,29 @@ const typeDefs = gql`
       socialMedia: String
       avatar: String
     ): AuthArtist
-    addComment(commentText: String!): Comment
+    addComment(commentText: String!, artistId: ID!): Comment
     addReaction(commentId: ID!, reactionBody: String!): Comment
     addFollow(artistId: ID!): User
     addFollower(artistId: ID!): Artist
     addOrder(songs: [ID]!): Order
     updateUser(
+      avatar: String
       username: String
-      firstName: String
-      lastName: String
       email: String
       password: String
     ): User
+    updateArtist(
+      avatar: String
+      artistName: String
+      email: String
+      password: String
+    ): Artist
     login(email: String!, password: String!): Auth
     artistLogin(email: String!, password: String!): AuthArtist
     addSong(
       title: String!
       album: String
-      genre: ID
+      genre: ID!
       description: String
       price: Float!
       tags: [String]
