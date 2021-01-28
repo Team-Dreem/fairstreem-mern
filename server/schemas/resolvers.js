@@ -339,6 +339,15 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+    updateArtist: async (parent, args, context) => {
+      if (context.user) {
+        return await Artist.findByIdAndUpdate(context.user._id, args, {
+          new: true
+        });
+      }
+
+      throw new AuthenticationError("Not logged in");
+    },
     addComment: async (parent, { commentText, artistId }, context) => {
       console.log("context.user", context.user)
       if (context.user) {

@@ -17,10 +17,12 @@ import {
   TOGGLE_CART,
   UPDATE_SEARCH_LOADING,
   UPDATE_SEARCH_RESULTS,
-  UPDATE_SEARCH_GENRE
+  UPDATE_SEARCH_GENRE,
+  UPDATE_ARTIST_AVATAR_IN_CACHE
 } from "./actions";
 
 import { useReducer } from "react";
+import { UPDATE_ARTIST_AVATAR } from "./mutations";
 
 export const reducer = (state, action) => {
   switch (action.type) {
@@ -46,22 +48,22 @@ export const reducer = (state, action) => {
         ...state,
         currentGenre: action.currentGenre
       };
-      case UPDATE_SELECTED_ARTIST:
+    case UPDATE_SELECTED_ARTIST:
       return {
         ...state,
         selectedArtist: { ...action.selectedArtist },
       };
-      case UPDATE_CURRENT_ARTIST:
+    case UPDATE_CURRENT_ARTIST:
         return {
           ...state,
           currentArtist: { ...action.currentArtist }
         }
-      case UPDATE_CURRENT_USER:
+    case UPDATE_CURRENT_USER:
       return {
         ...state,
         currentUser: { ...action.currentUser },
       };
-      case UPDATE_CURRENT_SONG:
+    case UPDATE_CURRENT_SONG:
       return {
         ...state,
         currentSong: { ...action.currentSong },

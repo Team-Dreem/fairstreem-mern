@@ -150,3 +150,19 @@ mutation updateUserAvatar($avatarUrl: String!) {
   }
 }
 `;
+
+export const UPDATE_ARTIST_AVATAR = gql`
+mutation updateArtistAvatar($avatarUrl: String!) {
+  updateArtist(avatar: $avatarUrl) {
+    _id
+    avatar
+    artistName
+    email
+    genre
+    bio
+    website
+    socialMedia
+    followerCount
+  }
+}
+`;

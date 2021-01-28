@@ -4,12 +4,11 @@ import Grid from "@material-ui/core/Grid";
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import getLetterAvatar from '../utils/getLetterAvatar';
-import IconButton from "@material-ui/core/IconButton";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import SearchCard from '../components/SearchCard';
 import { UPDATE_USER_AVATAR } from '../utils/mutations';
 import { useMutation } from '@apollo/react-hooks';
 import { post } from 'axios';
+import FileUploadButton from '../components/FileUploadButton';
 
 const useStyles = makeStyles((theme) => ({
     large: {
@@ -33,9 +32,7 @@ function ListenerProfile() {
     const [state] = useStoreContext();
     const { currentUser } = state;
 
-    const uploadNewAvater = (event, f) => {
-        const files = document.getElementById('avatar').files;
-
+    const uploadNewAvatar = (files) => {
         if (files.length === 0) {
             return
         }
@@ -70,12 +67,7 @@ function ListenerProfile() {
             <div className="profile">
                 <div className="profile-header">
                     <h1>{currentUser.username}</h1>
-                    <input accept="image/*" className={classes.input} id="avatar" type="file" onChange={uploadNewAvater} accept=".jpg,.jpeg,.png" />
-                    <label htmlFor="avatar">
-                        <IconButton color="primary" aria-label="upload picture" component="span" className={classes.iconLabel}>
-                            <PhotoCamera />
-                        </IconButton>
-                    </label>
+                    <FileUploadButton onChange={uploadNewAvatar} />
                 </div>
                 <Grid>
                     {currentUser.follows && currentUser.follows.map(artist => <SearchCard data={artist} key={artist._id} />)}
