@@ -42,17 +42,16 @@ function ArtistProfile() {
   const classes = useStyles();
   const [state, dispatch] = useStoreContext();
 
-  //artist id with full song data 600b1de66ea21cf63a4db76d
-  //useParams retrieves username from URL
   const { artistId } = useParams();
 
   const { loading, data } = useQuery(QUERY_ARTISTS);
 
-  // const selectedArtist = state.artists.find((artist) => artist._id === artistId);
   const selectedArtist = state.artists.find((artist) => artist._id === artistId);
-  // console.log("data", data);
-  // console.log("state.artists", state.artists)
-  // console.log("selectedArtist", selectedArtist);
+  const self = state.currentArtist
+    && selectedArtist
+    && state.currentArtist._id === selectedArtist._id;
+    
+  console.log('self', self);
 
   useEffect(() => {
     if (data && !selectedArtist) {
