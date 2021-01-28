@@ -3,7 +3,7 @@ import { useStoreContext } from "../utils/GlobalState";
 import { useQuery } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
 import { UPDATE_ARTISTS, UPDATE_SELECTED_ARTIST } from "../utils/actions";
-import { QUERY_ARTISTS } from "../utils/queries";
+import { QUERY_ARTISTS, QUERY_ARTIST_BY_PARAMS } from "../utils/queries";
 import { idbPromise } from "../utils/helpers";
 import { makeStyles } from '@material-ui/core/styles';
 import getLetterAvatar from '../utils/getLetterAvatar';
@@ -43,6 +43,12 @@ function ArtistProfile() {
   const [state, dispatch] = useStoreContext();
 
   const { artistId } = useParams();
+
+  // const { loading: commentLoading, data: commentData } = useQuery(QUERY_ARTIST_BY_PARAMS, {
+  //   variables:{_id: artistId }
+  // })
+  // console.log("COMMENTDATA", commentData);
+  
 
   const { loading, data } = useQuery(QUERY_ARTISTS);
 
@@ -110,15 +116,15 @@ function ArtistProfile() {
 
           <Grid container>
             <AddSongModal></AddSongModal>
-            {/* <SongCard>
-              {" "} */}
             <SongTableSimple />
           </Grid>
           <Grid container justify="center">
             <h1>COMMENT FEED</h1>
-           <CommentForm></CommentForm>
-           <CommentList 
-           comments={selectedArtist.comments}
+           <CommentForm
+           artistId={artistId}></CommentForm>
+           <CommentList
+            comments={selectedArtist.comments}
+           
            title={`Comments for ${selectedArtist.artistName}`}
            />
           </Grid>
