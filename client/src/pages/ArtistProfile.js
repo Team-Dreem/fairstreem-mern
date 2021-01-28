@@ -1,38 +1,103 @@
 import React, { useEffect } from "react";
 import { useStoreContext } from "../utils/GlobalState";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useApolloClient } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
-import { UPDATE_ARTISTS, UPDATE_SELECTED_ARTIST } from "../utils/actions";
+import { UPDATE_ARTISTS, UPDATE_SELECTED_ARTIST, UPDATE_ARTIST_AVATAR_IN_CACHE } from "../utils/actions";
 import { QUERY_ARTISTS } from "../utils/queries";
+import { UPDATE_ARTIST_AVATAR } from "../utils/mutations";
 import { idbPromise } from "../utils/helpers";
+import { makeStyles } from '@material-ui/core/styles';
+import getLetterAvatar from '../utils/getLetterAvatar';
+import Avatar from '@material-ui/core/Avatar';
 import spinner from "../assets/spinner.gif";
 // import Auth from '../utils/auth'
+import Cart from "../components/Cart";
 
 import Grid from "@material-ui/core/Grid";
-// import Paper from "@material-ui/core/Paper";
-// import Button from "@material-ui/core/Button";
+import { useMutation } from "@apollo/react-hooks";
+import { post } from 'axios';
 
 import SongTableSimple from "../components/SongTableSimple";
 import CommentForm from '../components/CommentForm'
 import CommentList from '../components/CommentList'
 import LikeButton from '../components/LikeButton'
+import Auth from '../utils/auth';
 
 import AddSongModal from '../components/AddSongModal'
+import FileUploadButton from "../components/FileUploadButton";
+
+const useStyles = makeStyles((theme) => ({
+  large: {
+      width: 250,
+      height: 250,
+      margin: '50px auto -125px',
+      fontSize: 72
+  },
+  input: {
+      display: "none"
+  }
+}));
 
 function ArtistProfile() {
+  const [updateArtistAvatar] = useMutation(UPDATE_ARTIST_AVATAR);
+  const classes = useStyles();
   const [state, dispatch] = useStoreContext();
+  const profile = Auth.getProfile();
+  const isLoggedIn = !!profile;
 
-  //artist id with full song data 600b1de66ea21cf63a4db76d
-  //useParams retrieves username from URL
   const { artistId } = useParams();
 
+  // const { loading: commentLoading, data: commentData } = useQuery(QUERY_ARTIST_BY_PARAMS, {
+  //   variables:{_id: artistId }
+  // })
+  // console.log("COMMENTDATA", commentData);
+  
+
+  const apolloClient = useApolloClient();
   const { loading, data } = useQuery(QUERY_ARTISTS);
 
-  // const selectedArtist = state.artists.find((artist) => artist._id === artistId);
   const selectedArtist = state.artists.find((artist) => artist._id === artistId);
-  // console.log("data", data);
-  // console.log("state.artists", state.artists)
-  // console.log("selectedArtist", selectedArtist);
+  const isSelf = state.currentArtist
+    && selectedArtist
+    && state.currentArtist._id === selectedArtist._id;
+    
+  const uploadNewAvatar = (files) => {
+    if (files.length === 0) {
+        return;
+    }
+
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    }
+
+    const url = "/api/v1/image-upload";
+    const formData = new FormData();
+    formData.append("image", files[0]);
+
+    post(url, formData, config)
+        .then((response) => {
+            return updateArtistAvatar({
+                variables: {
+                    avatarUrl: response.data.imageUrl
+                }
+            });
+        })
+        .then(() => {
+          return apolloClient.query({
+            query: QUERY_ARTISTS
+          });
+        })
+        .then(({ data }) => {
+          const { artists } = data;
+          
+          dispatch({
+            type: UPDATE_ARTISTS,
+            artists
+          });
+        });
+  };
 
   useEffect(() => {
     if (data && !selectedArtist) {
@@ -57,57 +122,44 @@ function ArtistProfile() {
         });
       });
     }
-
-    // return () => {
-    //   dispatch({
-    //     type: UPDATE_SELECTED_ARTIST,
-    //     selectedArtist: {},
-    //     // this clears the currenArist object when leaving page(** this mimics "component unmount" **)
-    //   });
-    // };
   }, [loading, selectedArtist, dispatch, data, artistId]);
 
   return (
     <>
       {selectedArtist ? (
         <div>
-          <Grid container justify="center">
-            {/* {artist.artistName} */}
-            <h1>
-              {selectedArtist.artistName}{" "}
-              <span>
-                <LikeButton></LikeButton>
-              </span>{" "}
-            </h1>
-          </Grid>
-
-          <Grid container justify="center" spacing={2}>
-            <Grid item md={6}>
-              <img alt="artist" src={selectedArtist.avatar} />
-            </Grid>
-
-            <Grid item md={6}>
-              <p>{selectedArtist.bio}</p>
-            </Grid>
-          </Grid>
+          <Avatar
+            src={selectedArtist.avatar}
+            className={classes.large}>
+            {getLetterAvatar(selectedArtist.artistName)}
+          </Avatar>
+          <div className="artist-profile">
+            
+            <div className="artist-profile-header">
+            <h1>{selectedArtist.artistName}</h1>
+            { isSelf ? <FileUploadButton onChange={uploadNewAvatar} /> : <LikeButton /> }
+              
+            </div>
+            <p className="bio">{selectedArtist.bio}</p>
+          </div>
 
           <Grid container>
-            <AddSongModal></AddSongModal>
-            {/* <SongCard>
-              {" "} */}
-            <SongTableSimple />
+            { isSelf && <AddSongModal /> }
+            <SongTableSimple allowPurchase={!isSelf && isLoggedIn} />
           </Grid>
           <Grid container justify="center">
             <h1>COMMENT FEED</h1>
-           <CommentForm></CommentForm>
-           <CommentList 
-           comments={selectedArtist.comments}
+           { isLoggedIn && <CommentForm artistId={artistId}></CommentForm> }
+           <CommentList
+            comments={selectedArtist.comments}
+           
            title={`Comments for ${selectedArtist.artistName}`}
            />
           </Grid>
         </div>
       ) : null}
       {loading ? <img src={spinner} alt="loading" /> : null}
+ 
     </>
   );
 }

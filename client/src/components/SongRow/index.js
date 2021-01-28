@@ -21,37 +21,43 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import PlayButton from '../PlayButton'
 
-const Styles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    padding: "1rem",
-    margin: ".5rem",
-  },
-  details: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  content: {
-    flex: "1 0 auto",
-  },
-  cover: {
-    width: 151,
-  },
-  controls: {
-    display: "flex",
-    alignItems: "center",
-    paddingLeft: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
-  },
-  playIcon: {
-    height: 38,
-    width: 38,
-  },
-  button: {
-    display: "flex",
-    alignItems: "flex-end",
-  },
-}));
+const useStyles = makeStyles({
+    table: {
+      minWidth: 650,
+    },
+  });
+
+// const Styles = makeStyles((theme) => ({
+//   root: {
+//     display: "flex",
+//     padding: "1rem",
+//     margin: ".5rem",
+//   },
+//   details: {
+//     display: "flex",
+//     flexDirection: "column",
+//   },
+//   content: {
+//     flex: "1 0 auto",
+//   },
+//   cover: {
+//     width: 151,
+//   },
+//   controls: {
+//     display: "flex",
+//     alignItems: "center",
+//     paddingLeft: theme.spacing(1),
+//     paddingBottom: theme.spacing(1),
+//   },
+//   playIcon: {
+//     height: 38,
+//     width: 38,
+//   },
+//   button: {
+//     display: "flex",
+//     alignItems: "flex-end",
+//   },
+// }));
 
 const SongRow = (song) => {
   const [state, dispatch] = useStoreContext();
@@ -128,7 +134,8 @@ console.log("selectedArtist", selectedArtist);
       song.title,
       song.album,
       2,
-      <Button onClick={(song) => {addToCart}}>Buy</Button>
+      // <Button onClick={(song) => {addToCart}}>Buy</Button>
+      <Button onClick={addToCart}>Buy</Button>
     );
   });
 

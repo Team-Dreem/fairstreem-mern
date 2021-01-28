@@ -2,8 +2,11 @@ import React, { useEffect } from "react";
 import { idbPromise } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
 import { useQuery } from "@apollo/react-hooks";
-import { QUERY_SONGS } from "../../utils/queries";
+import { QUERY_SONGS, QUERY_CHECKOUT } from "../../utils/queries";
 import { UPDATE_SONGS } from "../../utils/actions";
+import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
+import { useLazyQuery } from '@apollo/react-hooks';
+import { loadStripe } from "@stripe/stripe-js";
 import spinner from "../../assets/spinner.gif";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -51,8 +54,32 @@ const Styles = makeStyles((theme) => ({
 
 const SongCard = (song) => {
   const [state, dispatch] = useStoreContext();
-const { selectedArtist } = state;
-const { title, description, image, price, song_url, tags } = song;
+  const [getCheckout, { songData }] = useLazyQuery(QUERY_CHECKOUT);
+const { selectedArtist, cart } = state;
+const { _id, title, description, image, price, song_url, tags } = song;
+
+const addToCart = () => {
+  console.log("buy clicked");
+const itemInCart = cart.find((cartItem) => cartItem._id === _id);
+ // if there was a match, call UPDATE with a new purchase quantity
+ if (itemInCart) {
+  dispatch({
+    type: UPDATE_CART_QUANTITY,
+    _id: _id,
+    purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+  });
+  idbPromise("cart", "put", {
+    ...itemInCart,
+    purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+  });
+} else {
+  dispatch({
+    type: ADD_TO_CART,
+    product: { ...song },
+  });
+  idbPromise("cart", "put", { ...song });
+}
+};
 
 console.log("selectedArtist", selectedArtist);
 
@@ -115,7 +142,7 @@ console.log("selectedArtist", selectedArtist);
           image="../../assets/placeholder-cat.jpg"
           title="Live from space album cover"
         />
-        <Button className={classes.button}>buy</Button>
+        <Button onClick={addToCart} className={classes.button}>Buy</Button>
       </Card>
     </div>
   );

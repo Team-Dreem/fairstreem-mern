@@ -14,9 +14,9 @@ function Success() {
       console.log("success songs to saveOrder:", songs);
 
       if (songs.length) {
-        const data  = await addOrder({ variables: { songs } });
+        const { data } = await addOrder({ variables: { songs } });
         console.log("data", data);
-        const songData = data.songs;
+        const songData = data.addOrder.songs;
   
         console.log("songData in saveOrder:", songData);
 

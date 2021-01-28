@@ -8,12 +8,23 @@ import "./style.css";
 import { QUERY_CHECKOUT } from "../../utils/queries";
 import { loadStripe } from "@stripe/stripe-js";
 import { useLazyQuery } from '@apollo/react-hooks';
+import IconButton from '@material-ui/core/IconButton';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import { makeStyles } from "@material-ui/core";
 
 const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+const useStyles = makeStyles((theme) => ({
+  button: {
+    padding: 0,
+    position: 'relative',
+    top: -2
+  },
+}));
 
 const Cart = () => {
   const [state, dispatch] = useStoreContext();
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+  const classes = useStyles();
 
   useEffect(() => {
     async function getCart() {
@@ -27,10 +38,8 @@ const Cart = () => {
   }, [state.cart.length, dispatch]);
   // You may wonder what happens if there's nothing to retrieve from the cached object store and state.cart.length is still 0. Does this useEffect() function just continuously run because of that? Well, it could very easily do that if we neglect to pass the state.cart.length value into useEffect()'s dependency array. That's the whole point of the dependency array. We list all of the data that this useEffect() Hook is dependent on to execute. The Hook runs on load no matter what, but then it only runs again if any value in the dependency array has changed since the last time it ran.
   useEffect(() => {
-    // console.log("Data:", data);
     if (data) {
       stripePromise.then((res) => {
-        // console.log("res:", res);
         res.redirectToCheckout({ sessionId: data.checkout.session });
       });
     }
@@ -42,10 +51,10 @@ const Cart = () => {
   }
   if (!state.cartOpen) {
     return (
-      <div className="cart-closed" onClick={toggleCart}>
-        <span role="img" aria-label="trash">
-          🛒
-        </span>
+      <div onClick={toggleCart}>
+        <IconButton color="primary" className={classes.button} aria-label="add to shopping cart">
+          <AddShoppingCartIcon />
+        </IconButton>
       </div>
     );
   }
@@ -59,20 +68,16 @@ const Cart = () => {
   }
 
   function submitCheckout() {
-    const songIds = [];
+    const productIds = [];
   
     state.cart.forEach((item) => {
       for (let i = 0; i < item.purchaseQuantity; i++) {
-        songIds.push(item._id);
+        productIds.push(item._id);
       }
-      // console.log("songIds in cart:", songIds);
       getCheckout({
-        variables: { songs: songIds }
+        variables: { songs: productIds }
       });      
     });
-    getCheckout({
-      variables: { songs: songIds }
-    });      
   }
   // Unfortunately, we can't call useQuery(QUERY_CHECKOUT) in the click handler function. The useQuery Hook is meant to run when a component is first rendered, not at a later point in time based on a user action like a button click. Apollo provides another Hook for this exact situation. The useLazyQuery Hook can be declared like any other Hook but won't actually execute until you tell it to. Let's implement this new Hook to call QUERY_CHECKOUT.
   

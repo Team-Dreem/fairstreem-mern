@@ -2,30 +2,21 @@ import React, { useEffect } from "react";
 import { idbPromise } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
 import { useQuery } from "@apollo/react-hooks";
-import SongCard from "../SongCard";
-import { QUERY_SONGS } from "../../utils/queries";
+import SongRow from "../SongRow";
+import { QUERY_SONGS, QUERY_CHECKOUT } from "../../utils/queries";
 import { UPDATE_SONGS } from "../../utils/actions";
+import { loadStripe } from "@stripe/stripe-js";
 import spinner from "../../assets/spinner.gif";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-// import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import Button from "@material-ui/core/Button";
-import PlayButton from '../PlayButton'
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
+// const useStyles = makeStyles({
+//   table: {
+//     minWidth: 650,
+//   },
+// });
 
-function SongTableSimple() {
+function SongTableSimple({ allowPurchase = true }) {
   const [state, dispatch] = useStoreContext();
 
   const { selectedArtist } = state;
@@ -64,19 +55,7 @@ function SongTableSimple() {
     return state.songs.filter((song) => song.artistId === selectedArtist._id);
   }
   console.log("filterSongs", filterSongs());
-  console.log("selectedArtist._id", selectedArtist._id);
 
-  const artistSongs = state.songs.filter(
-    (song) => song.artistId === selectedArtist._id
-  );
-
-  console.log("artistSongs", artistSongs);
-
-  const classes = useStyles();
-
-  function createData(playBtn, name, album, playcount, purchase) {
-    return { playBtn, name, album, playcount, purchase };
-  }
   // console.log("SongTableArtist", selectedArtist);
   // console.log("title", title);
   // console.log("image", image);
@@ -87,84 +66,20 @@ function SongTableSimple() {
   // console.log("song_url", song_url);
   // console.log("tags", tags);
 
-  function buyClick() {
-    console.log("buy clicked");
-    //add to cart function here
-  }
-
   function playClick() {
     console.log("play clicked");
   }
 
-  const rows = artistSongs.map((song) => {
-    return createData(
-      // <PlayButton song_url={song.song_url}></PlayButton>,
-        <audio controls> 
-        <source src={song.song_url} type="audio/ogg"/>
-       <source src={song.song_url} type="audio/mpeg"/>
-      </audio>
-     ,
-      // <Button></Button>,
-      song.title,
-      song.album,
-      2,
-      <Button onClick={buyClick}>Buy</Button>
-    );
-  });
-
-  console.log("rows", rows);
-
-  //   const rows = item.map((song) => {
-  //     return createData(
-  //       <Button>
-  //         <PlayArrowIcon onClick={playClick}></PlayArrowIcon>
-  //       </Button>,
-  //       song.title,
-  //       1,
-  //       2,
-  //       <Button onClick={buyClick}>Buy</Button>
-  //     );
-  //   });
-
-  //   console.log(rows);
+  const artistSongs = state.songs.filter(
+    (song) => song.artistId === selectedArtist._id
+  );
 
   return (
-    <div>
-    <h2>Songs by {selectedArtist.artistName}:</h2>
-
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead align="right">
-            <TableRow>
-              <TableCell></TableCell>
-              <TableCell align="left">Title</TableCell>
-              <TableCell align="right">Album</TableCell>
-              <TableCell align="right">Playcount</TableCell>
-              <TableCell align="right">Purchase</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.name}>
-                {/* <TableCell component="th" scope="row">
-                                  {row.name}
-                              </TableCell> */}
-                <TableCell align="center">{row.playBtn}</TableCell>
-                <TableCell align="left">{row.name}</TableCell>
-                <TableCell align="right">{row.album}</TableCell>
-                <TableCell align="right">{row.playcount}</TableCell>
-                <TableCell align="right">{row.purchase}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {/* <h2>Songs Sent to SongCard:</h2> */}
-      
+    <div>    
       {artistSongs.length ? (
         <div className="flex-row">
           {filterSongs().map((song) => (
-            <SongCard
+            <SongRow
               key={song._id}
               _id={song._id}
               title={song.title}

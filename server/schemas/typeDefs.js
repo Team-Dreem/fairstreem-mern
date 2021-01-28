@@ -25,17 +25,17 @@ const typeDefs = gql`
 
   type Song {
     _id: ID
-    title: String!
+    title: String
     artistId: String
     artistName: String
     album: String
     description: String
     image: String
-    price: Float!
+    price: Float
     genre: ID!
     tags: [String]
     song_url: String
-    likes: Int!
+    likes: Int
   }
 
   type Order {
@@ -134,8 +134,13 @@ const typeDefs = gql`
       username: String
       email: String
       password: String
-      avatar: String
     ): User
+    updateArtist(
+      avatar: String
+      artistName: String
+      email: String
+      password: String
+    ): Artist
     login(email: String!, password: String!): Auth
     artistLogin(email: String!, password: String!): AuthArtist
     addSong(
