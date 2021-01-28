@@ -11,6 +11,7 @@ import { useLazyQuery } from '@apollo/react-hooks';
 import IconButton from '@material-ui/core/IconButton';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { makeStyles } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 
 const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
 
@@ -101,7 +102,7 @@ const Cart = () => {
           <div className="flex-row space-between">
             <strong>Total: ${calculateTotal()}</strong>
             {Auth.loggedIn() ? (
-              <button onClick={submitCheckout}>Checkout</button>
+              <Button onClick={submitCheckout}>Checkout</Button>
             ) : (
               <span>(log in to check out)</span>
             )}
@@ -109,9 +110,6 @@ const Cart = () => {
         </div>
       ) : (
         <h3>
-          <span role="img" aria-label="shocked">
-            😱
-          </span>
           You haven't added anything to your cart yet!
         </h3>
       )}
