@@ -1,5 +1,5 @@
 # FairStreem
-
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ## Description
 Fairstreem is a new music streaming application with more enhanced social features. 
 It features:
@@ -9,22 +9,20 @@ It features:
 * Listeners can support their favorite artist directly
 
 ## Table of Contents
-* [Installation](#installation)
 * [Usage](#usage)
 * [License](#license)
 * [Contributing](#contributing)
 * [Questions](#questions)
 
-
-
 ## Link to Deployed Application
 <a href="https://fairstreem.herokuapp.com/">FairStreem</a>
 
 ## Screenshots
-
-<a id="installation"></a>
-## Installation
-
+<img src="./screenshots/home-page.PNG" style="max-width:100%;">
+<img src="./screenshots/artist-query.PNG" style="max-width:100%;">
+<img src="./screenshots/sign-up.PNG" style="max-width:100%;">
+<img src="./screenshots/login.PNG" style="max-width:100%;">
+<img src="./screenshots/artist-profile-full.PNG" style="max-width:100%;">
 
 <a id="usage"></a>
 ## Usage
@@ -42,6 +40,19 @@ AND support my favorite artists
 
 <a id="license"></a>
 ## License
+The MIT License (MIT)
+
+Copyright (c) 2015 Chris Kibble
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Conditions:
+Fairstreem name is copyrighted.
+The concept of the app is free and open and we encourage anyone to pursue similar goals and projects.
 
 <a id="contributing"></a>
 ## Contributing
