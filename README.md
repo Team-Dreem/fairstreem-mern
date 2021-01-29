@@ -78,7 +78,7 @@ Developers who worked on this project are:<br>
 * Established and maintained dual (artist/listener) back end signup and login functionality.
 
 ### `Jeffery Johnston`
-* Development focus: Backend 
+* Development focus: Back end 
 * Creator of concept, brand name, and owner of trademark and copyright. 
 * Established utilization of global state for artist data distribution. 
 * Primary designer of backend organization (models, schemas, etc..)
