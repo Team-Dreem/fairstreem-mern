@@ -81,7 +81,7 @@ Developers who worked on this project are:<br>
 * Development focus: Back end 
 * Creator of concept, brand name, and owner of trademark and copyright. 
 * Established utilization of global state for artist data distribution. 
-* Primary designer of backend organization (models, schemas, etc..)
+* Primary designer of backend organization (models, schemas, etc..).
 * Administrator of AWS S3 bucket storage, authorization assignments and asset management.
 * Established dual (artist/listener) authorization token functionality.
 * Assisted with front and back end debugging.
