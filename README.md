@@ -2,11 +2,12 @@
 This application carries a conditonal and unconventional license. See below for [details](#license).
 
 ## Description
-Fairstreem is a new music streaming application with enhanced social features including:
-* A mission to pursue equitable pay for artists.
-* Connection between listeners and artists.
-* Allows artists to share and control monetization of their music.
-* Listeners can support their favorite artists directly.
+FairStreem is a new music streaming and social media application that provides: 
+* A mission to refine the streaming business model in favor of artists.
+* A template for other developers committed to the mission to build their own streaming apps.
+* Communication and feeback lines between listeners and artists.
+* Increased control by artists regarding how their work is monetized.
+* Direct support to artists by listeners enabled and encouraged.
 
 ## Table of Contents
 * [Usage](#usage)
@@ -26,7 +27,7 @@ Fairstreem is a new music streaming application with enhanced social features in
 
 <a id="usage"></a>
 ## `Usage`
-**IMPORTANT:** Payments and purchases are mock-included for proof-of-concept demonstration only, and are not enabled at this time. Please do not put any actual private payment information into the Stripe inputs while using this application. Please follow the instructions given by [Stripe](https://stripe.com/docs/testing) when testing the cart checkout features.<br>
+**IMPORTANT:** FairStreem is currently in the very early stages of development. Payments and purchases are mock-included for proof-of-concept demonstration only, and are not enabled at this time. Please do not put any actual private payment information into the Stripe inputs while using this application. Please follow the instructions given by [Stripe](https://stripe.com/docs/testing) when testing the cart checkout features.<br>
 
 To share music, sign-up as an Artist on the homepage. Then upload and set prices for indidivual songs on your Artist page. Users will then be able to visit your page and listen to your music and/or mock-purchase and download it. To listen to music, sign-up as a Listener. Use the homepage search bar to find your favorite artist or music genre. Go to the Artist's page to stream or mock-purchase and download music. You can also "like" your favorite Artists.
 
