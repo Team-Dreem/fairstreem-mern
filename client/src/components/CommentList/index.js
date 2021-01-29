@@ -50,9 +50,13 @@ const CommentList = (props) => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small">reply</Button>
+                {/* <ReplyForm></ReplyForm> */}
+                {/* <Button size="small" onClick={handleClick}>reply</Button> */}
               </CardActions>
+              
+              {/* <ReplyList></ReplyList> */}
             </Card>
+            
         ))}
         </Grid>}
     </div>
