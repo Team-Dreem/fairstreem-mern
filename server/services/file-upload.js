@@ -8,10 +8,13 @@ const multerS3 = require("multer-s3");
 const config = require("../config");
 
 aws.config.update({
-  secretAccessKey: config.S3_ACCESS_SECRET,
-  accessKeyId: config.S3_ACCESS_KEY,
+  secretAccessKey: process.env.S3_ACCESS_SECRET,
+  accessKeyId: process.env.S3_ACCESS_KEY,
   region: "us-east-2",
+
 });
+
+
 
 const s3 = new aws.S3();
 let fileExtension;
