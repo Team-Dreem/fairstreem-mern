@@ -7,7 +7,7 @@ FairStreem is a new music streaming and social media application that provides:
 * A template for other developers committed to the mission to build their own streaming apps.
 * Communication and feeback lines between listeners and artists.
 * Increased control by artists regarding how their work is monetized.
-* Direct support to artists by listeners enabled and encouraged.
+* A direct line of support to artists from listeners.
 
 ## Table of Contents
 * [Usage](#usage)
