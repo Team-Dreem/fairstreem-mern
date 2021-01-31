@@ -37,6 +37,7 @@ body {
 
 #root {
   min-height: 100vh;
+  padding-bottom: 50px;
   background-image: var(--heroGradient);
   position: relative;
   flex-grow: 1;
@@ -225,13 +226,33 @@ nav {
 .profile {
   border: solid 1px #666666;
   margin: auto;
-  width: 50%;
+  width: 60%;
   background-color: var(--light);
   border-radius: 5px;
   padding-top: 130px;
+  padding-bottom: 50px;
 
   h1 {
     text-align: center;
+  }
+
+  h2 {
+    text-align: center;
+    padding-top: 20px;
+  }
+
+  p {
+    text-align: center;
+    flex-basis: 100%;
+    padding-top: 20px;
+  }
+
+  .liked {
+    padding: 20px;
+  }
+
+  .liked-artist {
+    flex-wrap: wrap;
   }
 }
 
@@ -248,12 +269,8 @@ nav {
 
 // Artist Profile Start
 .artist-profile {
-  // border: solid 1px #666666;
   margin: 0 auto;
   width: 50%;
-  // height: 400px;
-  // background-color: var(--light);
-  // border-radius: 5px;
   padding-top: 130px;
 
   h1 {
@@ -321,8 +338,6 @@ nav {
 // Song Table End
 
 // Comments Start
-
-
 .comment {
   padding: 10px;
   margin: auto;
@@ -332,6 +347,7 @@ nav {
   align-content: center;
 }
 // Comments End
+
 
 h1,
 h2,
@@ -380,9 +396,7 @@ img {
   max-width: 100%;
 }
 
-form {
-  width: 40%;
-}
+
 
 input {
   font-size: 1rem;
@@ -468,7 +482,84 @@ input:focus {
 }
 
 @media screen and (max-width: 768px) {
+  header {
+    height: auto;
+  }
+
   .card {
+    width: 100%;
+  }
+
+  .profile {
+    width: 90%;
+  }
+
+  .hero {
+    width: 100%;
+
+    .space {
+      display: none;
+    }
+  }
+
+  .btn-group {
+    // flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .cart-link {
+    height: 75%;
+  }
+
+  .MuiButtonGroup-groupedTextHorizontal:not(:last-child) {
+    border: none !important;
+  }
+
+  .search-bar {
+    width: 80%;
+  }
+
+  .artist-profile {
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .profile {
+    width: 90%;
+  }
+
+  nav {
+    display: block;
+    width: calc(100% + (var(--spacing-one) * 2));
+    margin: 0 calc(0px - var(--spacing-one));
+
+    ul {
+      padding-left: 0;
+      background-color: var(--light);
+      margin-top: 10px;
+      justify-content: center;
+    }
+  }
+
+  .nav-link {
+    font-size: 18px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .btn-group {
+    flex-direction: column;
+  }
+
+  .search-bar {
+    width: 90%;
+    padding: 50px 0px 10px;
+  }
+
+  .MuiGrid-grid-sm-3 {
     width: 100%;
   }
 }

@@ -15,7 +15,11 @@ const useStyles = makeStyles((theme) => ({
         width: 250,
         height: 250,
         margin: '50px auto -125px',
-        fontSize: 72
+        fontSize: 72,
+        [theme.breakpoints.down('sm')]: {
+            width: 200,
+            height: 200
+        }
     },
     input: {
         display: "none"
@@ -69,8 +73,10 @@ function ListenerProfile() {
                     <h1>{currentUser.username}</h1>
                     <FileUploadButton onChange={uploadNewAvatar} />
                 </div>
-                <Grid container spacing={2}>
-                    {currentUser.follows && currentUser.follows.map(artist => <Grid item sm={3} key={artist._id}>
+                <h2>Liked Artists</h2>
+                <Grid container className="liked" spacing={2}>
+                    {(!currentUser.follows || currentUser.follows.length === 0) && <p>You haven't liked any artists yet!</p> }
+                    {currentUser.follows && currentUser.follows.map(artist => <Grid className="liked-artist" item md={4} sm={6} xs={12} key={artist._id}>
                         <SearchCard data={artist} />
                     </Grid>)}
                 </Grid>

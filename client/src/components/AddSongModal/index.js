@@ -19,10 +19,19 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
+        border: '1px solid #000',
+        borderRadius: '5px',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    input: {
+        display: 'none',
+    },
+    btn: {
+        width: '100%',
+        marginTop: '10px',
+        marginBottom: '10px'
+    }
 }));
 
 const errorMsg = (
@@ -36,6 +45,7 @@ const errorMsg = (
 
 export default function AddSongModal() {
     const classes = useStyles();
+
     //addsong modal state and functions
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
@@ -53,11 +63,11 @@ export default function AddSongModal() {
 
     //error msg state
     const [errorMsgOpen, setErrorMsgOpen] = useState(false)
-    
+
     //initialize empty state for all form inputs
     const [formState, setFormState] = useState({ title: "", price: 0, description: "", genre: "", file: "", album: "" });
     const [addSong, { error }] = useMutation(ADD_SONG);
-    
+
     //handlers and mutations
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -75,12 +85,12 @@ export default function AddSongModal() {
             formData.append("song", document.getElementById("file").files[0])
             console.log("FORMDATA", formData.get("song"))
             post(url, formData, config)
-                .then((response) => {
+                .then(async (response) => {
                     console.log("AWS url", response.data.song_url);
 
                     const price = parseFloat(formState.price)
                     // graph ql mutation to add song to mongoDB
-                    addSong({
+                    await addSong({
                         variables: {
                             title: formState.title,
                             price: price,
@@ -89,7 +99,7 @@ export default function AddSongModal() {
                             song_url: response.data.song_url,
                             album: formState.album,
                         }
-                    })
+                    });
                 })
 
             //close addsong modal
@@ -110,11 +120,12 @@ export default function AddSongModal() {
                 ...formState,
                 file: event.target.files[0]
             })
+        } else {
+            setFormState({
+                ...formState,
+                [name]: value,
+            });
         }
-        setFormState({
-            ...formState,
-            [name]: value,
-        });
     }
 
     //jsx
@@ -133,8 +144,7 @@ export default function AddSongModal() {
                 BackdropComponent={Backdrop}
                 BackdropProps={{
                     timeout: 500,
-                }}
-            >
+                }}>
                 <Fade in={open}>
                     <div className={classes.paper}>
                         <h2 id="transition-modal-title">Add Song</h2>
@@ -143,7 +153,7 @@ export default function AddSongModal() {
                         </p>
                         <form onSubmit={handleFormSubmit}>
                             <div>
-                                <label for="title">Title:</label>
+                                <label for="title">Title:</label><br/>
                                 <input
                                     name="title"
                                     id="title"
@@ -151,7 +161,7 @@ export default function AddSongModal() {
                             </div>
 
                             <div>
-                                <label for="album">Album:</label>
+                                <label for="album">Album:</label><br/>
                                 <input
                                     name="album"
                                     id="album"
@@ -159,7 +169,7 @@ export default function AddSongModal() {
                             </div>
 
                             <div>
-                                <label for="price">Price:</label>
+                                <label for="price">Price:</label><br/>
                                 <input placeholder="1.99"
                                     name="price"
                                     id="price"
@@ -168,7 +178,7 @@ export default function AddSongModal() {
                             </div>
 
                             <div>
-                                <label for="description">Description:</label>
+                                <label for="description">Description:</label><br/>
                                 <input
                                     name="description"
                                     id="description"
@@ -184,8 +194,7 @@ export default function AddSongModal() {
                                     inputProps={{
                                         name: 'genre',
                                         id: 'genre',
-                                    }}
-                                >
+                                    }}>
                                     <option aria-label="None" value="" />
                                     <option value={'600dfabaebcba48440047d26'}>Rock/Alternative</option>
                                     <option value={"600dfabaebcba48440047d2d"}>Classical</option>
@@ -198,38 +207,50 @@ export default function AddSongModal() {
                                     <option value={"600dfabaebcba48440047d2e"}>Other</option>
                                 </Select>
                             </div>
-
-                            <label for="file">Upload song!</label>
-                            <input id="file" name="file" type="file"
-                                onChange={handleChange}></input>
+                            <div className={classes.root}>
+                                <input
+                                    accept="audio/*"
+                                    className={classes.input}
+                                    id="file"
+                                    multiple
+                                    type="file"
+                                    name="file"
+                                    onChange={handleChange}
+                                />
+                                <label htmlFor="file">
+                                    <Button variant="contained" color="primary" component="span" className={classes.btn}>
+                                        Choose Song
+                                    </Button>
+                                </label>
+                            </div>
                         </form>
-                        <Button onClick={handleFormSubmit}>Add Song</Button>
-                        {errorMsgOpen ?
-                            <p>please fill out all inputs</p>
-                            : null
-                        }
+                            <Button onClick={handleFormSubmit}>Save</Button>
+                            {errorMsgOpen ?
+                                <p>Please fill out all inputs</p>
+                                : null
+                            }
                     </div>
                 </Fade>
             </Modal>
 
-            {/* success modal */}
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={successOpen}
-                onClose={handleSuccessClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}>
-                <Fade in={successOpen}>
-                    <div className={classes.paper}>
-                        <p>Success!</p>
-                    </div>
-                </Fade>
-            </Modal>
+                {/* success modal */}
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={successOpen}
+                    onClose={handleSuccessClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                        timeout: 500,
+                    }}>
+                    <Fade in={successOpen}>
+                        <div className={classes.paper}>
+                            <p>Success!</p>
+                        </div>
+                    </Fade>
+                </Modal>
 
         </div>
     );
