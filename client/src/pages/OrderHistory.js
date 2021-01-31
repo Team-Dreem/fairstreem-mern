@@ -11,8 +11,11 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '50%',
     margin: 'auto',
-    marginTop: theme.spacing(2),
-    padding: theme.spacing(2)
+    marginTop: theme.spacing(5),
+    padding: theme.spacing(2),
+    [theme.breakpoints.down('md')]: {
+      width: '90%'
+    }
   },
   price: {
     marginTop: theme.spacing(2)
@@ -34,8 +37,6 @@ function OrderHistory() {
 
   return user ? (
       <Paper className={classes.root} elevation={1}>
-        <Link to="/">← Back to Songs</Link>
-
         <h2>Order History for {user.username}:</h2>
         {user.orders.map((order) => (
           <div key={order._id} className="my-2">

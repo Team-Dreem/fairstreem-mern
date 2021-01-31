@@ -63,7 +63,7 @@ function GenreMenu() {
 
   return (
     <div className="genre-menu">
-      <ButtonGroup variant="text" aria-label="text primary button group">
+      <ButtonGroup className="btn-group" variant="text" aria-label="text primary button group">
       {genres.map((item) => (<Button className={ item.name === searchGenre ? 'selected' : null } key={item._id}
             onClick={() => {
               handleClick(item.name);

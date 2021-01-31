@@ -74,7 +74,7 @@ function Nav() {
               Logout
             </a>
           </li>
-          { currentUser && currentUser._id && <li className="nav-link">
+          { currentUser && currentUser._id && <li className="nav-link cart-link">
            <Cart />
           </li> }
         </ul>

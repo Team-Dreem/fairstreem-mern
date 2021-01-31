@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className="home-page">
       <div className="hero">
-        <h1>Listen | Connect | Support</h1>
+        <h1>Listen <span className="space">|</span> Connect <span className="space">|</span> Support</h1>
         <h3>Listen to new music while directly supporting the artists who create it</h3>
         <Search />
       </div>
