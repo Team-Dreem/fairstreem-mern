@@ -12,17 +12,17 @@ function Signup(props) {
   const { data: genreData } = useQuery(QUERY_GENRES);
   const [addUser, {error}] = useMutation(ADD_USER);
   const [addArtist, {error: artistError}] = useMutation(ADD_ARTIST);
-  const [state, disaptch] = useStoreContext();
+  const [state, dispatch] = useStoreContext();
   const { genres } = state;
   useEffect(() => {
     if (!genreData || !genreData.genres) {
       return;
     }
-    disaptch({
+    dispatch({
       type: UPDATE_GENRES,
       genres: genreData.genres
     });
-  }, [genreData, disaptch]);
+  }, [genreData, dispatch]);
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     let mutationResponse = "";

@@ -8,7 +8,7 @@ import Container from '@material-ui/core/Container';
 function Login(props) {
   const [formState, setFormState] = useState({ email: '', password: '', accountType: 'listener' });
   const [login, { error }] = useMutation(LOGIN);
-  const [artistLogin] = useMutation(ARTIST_LOGIN);
+  const [artistLogin, { error: artistError }] = useMutation(ARTIST_LOGIN);
 
   const handleFormSubmit = async event => {
     event.preventDefault(); 
@@ -81,6 +81,11 @@ function Login(props) {
       />
       {
         error ? <div>
+          <p className="error-text" >The provided credentials are incorrect</p>
+        </div> : null
+      }
+      {
+        artistError ? <div>
           <p className="error-text" >The provided credentials are incorrect</p>
         </div> : null
       }
