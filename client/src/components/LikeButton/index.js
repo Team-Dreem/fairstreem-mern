@@ -1,82 +1,88 @@
-import React from 'react';
-import { useMutation } from '@apollo/react-hooks';
-import { ADD_FOLLOW, ADD_FOLLOWER } from '../../utils/mutations'
+import React from "react";
+import { useMutation } from "@apollo/react-hooks";
+import { ADD_FOLLOW, ADD_FOLLOWER } from "../../utils/mutations";
 import { useStoreContext } from "../../utils/GlobalState";
 
-import Auth from '../../utils/auth';
+import Auth from "../../utils/auth";
 
-import Fab from '@material-ui/core/Fab';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-
-
+import Fab from "@material-ui/core/Fab";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 export default function LikeButton() {
-    const [state, dispatch] = useStoreContext();
-    const [addFollow, { error }] = useMutation(ADD_FOLLOW);
-    const [addFollower, { e }] = useMutation(ADD_FOLLOWER);
+  const [state] = useStoreContext();
+  const [addFollow, { error }] = useMutation(ADD_FOLLOW);
+  const [addFollower, { error: artistError }] = useMutation(ADD_FOLLOWER);
 
-    const profile = Auth.getProfile();
+  const profile = Auth.getProfile();
 
-    // if not logged in, don't show like button
-    if (!profile) {
-        return null;
+  // if not logged in, don't show like button
+  if (!profile) {
+    return null;
+  }
+
+  const listenerId = profile.data._id || null;
+
+  //add Artist to User
+  async function addFollowFunction() {
+    try {
+      await addFollow({
+        variables: { artistId: state.selectedArtist._id },
+      });
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    const listenerId = profile.data._id || null;
-    
-    //add Artist to User
-    async function addFollowFunction()  {
-        try {
-            await addFollow({
-                variables: { artistId: state.selectedArtist._id }
-            })
-        }
-        catch (e) {
-            console.log(e);
-
-        }
+  //     //add User to Artist
+  async function addFollowerFunction() {
+    try {
+      await addFollower({
+        variables: { artistId: state.selectedArtist._id },
+      });
+    } catch (e) {
+      console.log(e);
     }
+  }
 
-    //     //add User to Artist
-        async function addFollowerFunction() {
-        try {
-            await addFollower({
-                variables: { artistId: state.selectedArtist._id }
-            })
-        } catch (e) {
-            console.log(e);
-        }
+  return (
+    <Fab
+      size="small"
+      aria-label="like"
+      onClick={() => {
+        console.log("selected ARTIST", state.selectedArtist);
+        console.log("LISTENERID", listenerId);
+        addFollowFunction();
+        addFollowerFunction();
+        // try {
+        //     await addFollower({
+        //         variables: { userId: listenerId }
+        //     })
+        // } catch (e) {
+        //     console.log(e);
+        // }
 
-    }
+        // try {
+        //     await addFollow({
+        //         variables: { artistId: state.selectedArtist._id }
+        //     })
+        // }
+        // catch (e) {
+        //     console.log(e);
 
-
-    return (
-        <Fab size="small" aria-label="like" onClick={()=>{
-            console.log("selected ARTIST",state.selectedArtist);
-            console.log("LISTENERID", listenerId);
-            addFollowFunction();
-            addFollowerFunction()
-            // try {
-            //     await addFollower({
-            //         variables: { userId: listenerId }
-            //     })
-            // } catch (e) {
-            //     console.log(e);
-            // }
-
-            // try {
-            //     await addFollow({
-            //         variables: { artistId: state.selectedArtist._id }
-            //     })
-            // }
-            // catch (e) {
-            //     console.log(e);
-    
-            // }
-
-
-            
-            
-        }}><FavoriteIcon /></Fab>
-    )
+        // }
+      }}
+    >
+      <FavoriteIcon />
+      {error ? (
+        <div>
+          <p className="error-text">Something went wrong.</p>
+        </div>
+      ) : null}
+      {artistError ? (
+        <div>
+          <p className="error-text">Something went wrong.</p>
+        </div>
+      ) : null}
+    </Fab>
+  );
 }

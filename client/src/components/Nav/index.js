@@ -35,7 +35,7 @@ function Nav() {
           currentUser: me
       });
     }
-  }, [listenerData]);
+  }, [listenerData, dispatch]);
 
   useEffect(() => {
     if (artistData && artistData.meArtist) {
@@ -46,7 +46,7 @@ function Nav() {
           currentArtist: meArtist
       });
     }
-  }, [artistData]);
+  }, [artistData, dispatch]);
 
   function showNavigation() {
     if (Auth.loggedIn()) {

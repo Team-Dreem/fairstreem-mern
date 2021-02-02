@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 
 function SearchCard({ data }) {
     const classes = useStyles();
-    const placeholder = () => !data.avatar ? <div className="MuiCardMedia-root makeStyles-media-7"/> : null;
+    // const placeholder = () => !data.avatar ? <div className="MuiCardMedia-root makeStyles-media-7"/> : null;
 
     return (
         <Card className={classes.root}>

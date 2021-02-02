@@ -73,7 +73,7 @@ function Search () {
                     });
                 });
 
-    }, [searchGenre, searchTerm]);
+    }, [searchGenre, searchTerm, dispatch, apolloClient]);
 
     return (
         <>

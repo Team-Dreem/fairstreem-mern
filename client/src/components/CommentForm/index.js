@@ -2,14 +2,13 @@
 import React, { useState } from 'react';
 // import { useStoreContext } from "../../utils/GlobalState";
 // import { useQuery } from "@apollo/react-hooks";
-import { useApolloClient, useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { ADD_COMMENT } from "../../utils/mutations";
 // import { idbPromise } from "../../utils/helpers";
 // import Auth from '../../utils/auth'
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles, ThemeProvider } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { useStoreContext } from '../../utils/GlobalState';
 import { UPDATE_ARTIST_COMMENTS } from '../../utils/actions';
 
@@ -27,13 +26,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CommentForm = ({ artistId }) => {
-    const [state, dispatch] = useStoreContext();
+    const [dispatch] = useStoreContext();
     const classes = useStyles();
     const [commentText, setText] = useState('');
     const [characterCount, setCharacterCount] = useState(0);
 
     const [addComment] = useMutation(ADD_COMMENT);
-    const apolloClient = useApolloClient();
 
     const handleFormSubmit = async event => {
         event.preventDefault();

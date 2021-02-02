@@ -11,7 +11,6 @@ import getLetterAvatar from '../utils/getLetterAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import spinner from "../assets/spinner.gif";
 
-import Grid from "@material-ui/core/Grid";
 import { useMutation } from "@apollo/react-hooks";
 import { post } from 'axios';
 

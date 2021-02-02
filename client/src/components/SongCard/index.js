@@ -1,13 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { idbPromise } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
-import { useQuery } from "@apollo/react-hooks";
-import { QUERY_SONGS, QUERY_CHECKOUT } from "../../utils/queries";
-import { UPDATE_SONGS } from "../../utils/actions";
-import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
-import { useLazyQuery } from '@apollo/react-hooks';
-import { loadStripe } from "@stripe/stripe-js";
-import spinner from "../../assets/spinner.gif";
+import { ADD_TO_CART } from "../../utils/actions";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -54,9 +48,8 @@ const Styles = makeStyles((theme) => ({
 
 const SongCard = (song) => {
   const [state, dispatch] = useStoreContext();
-  const [getCheckout, { songData }] = useLazyQuery(QUERY_CHECKOUT);
-const { selectedArtist, cart } = state;
-const { _id, title, description, image, price, song_url, tags } = song;
+const { cart } = state;
+const { _id, title, description, price, song_url, tags } = song;
 
 const addToCart = () => {
   console.log("buy clicked");

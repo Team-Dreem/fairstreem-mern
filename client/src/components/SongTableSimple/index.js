@@ -2,14 +2,11 @@ import React, { useEffect } from "react";
 import { idbPromise } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
 import { useQuery } from "@apollo/react-hooks";
-import { QUERY_SONGS, QUERY_CHECKOUT } from "../../utils/queries";
+import { QUERY_SONGS } from "../../utils/queries";
 import {
   UPDATE_SONGS,
-  UPDATE_CART_QUANTITY,
   ADD_TO_CART,
 } from "../../utils/actions";
-import { loadStripe } from "@stripe/stripe-js";
-import spinner from "../../assets/spinner.gif";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
