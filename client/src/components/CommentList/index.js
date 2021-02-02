@@ -6,8 +6,6 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 
-// import { useStoreContext } from "../../utils/GlobalState";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(4)
@@ -49,13 +47,8 @@ const CommentList = (props) => {
                 </Typography>
               </CardContent>
               <CardActions>
-                {/* <ReplyForm></ReplyForm> */}
-                {/* <Button size="small" onClick={handleClick}>reply</Button> */}
               </CardActions>
-              
-              {/* <ReplyList></ReplyList> */}
-            </Card>
-            
+            </Card>     
         ))}
         </Grid>}
     </div>
@@ -63,25 +56,3 @@ const CommentList = (props) => {
 };
 
 export default CommentList;
-
-
-
-  // const { loading, data } = useQuery(QUERY_COMMENTS, {
-  //   variables:{
-
-  //   }
-  // });
-  // const { currentUser} = state;
-
-  // const [addComment] = useMutation(ADD_COMMENT);
-
-  // useEffect(() => {
-  //   if (data && data.me) {
-  //     const { me } = data;
-
-  //     dispatch({
-  //       type: UPDATE_CURRENT_USER,
-  //       currentUser: me,
-  //     });
-  //   }
-  // }, [loading, data]);

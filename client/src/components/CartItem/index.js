@@ -66,23 +66,3 @@ const CartItem = ({ item }) => {
 };
 
 export default CartItem;
-
-// 0.chunk.js:45521 Warning: Failed prop type: You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.
-//     in input (at CartItem/index.js:16)
-//     in div (at CartItem/index.js:14)
-//     in div (at CartItem/index.js:12)
-//     in div (at CartItem/index.js:5)
-//     in CartItem (at Cart/index.js:42)
-//     in div (at Cart/index.js:40)
-//     in div (at Cart/index.js:36)
-//     in Cart (at Detail.js:109)
-//     in Detail (created by Context.Consumer)
-//     in Route (at App.js:39)
-//     in Switch (at App.js:34)
-//     in StoreProvider (at App.js:32)
-//     in div (at App.js:31)
-//     in Router (created by BrowserRouter)
-//     in BrowserRouter (at App.js:30)
-//     in ApolloProvider (at App.js:29)
-//     in App (at src/index.js:9)
-//     in StrictMode (at src/index.js:8)

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { idbPromise } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
 import { useQuery } from "@apollo/react-hooks";
-import SongTableSimple from "../SongTableSimple";
 import SongCard from "../SongCard";
 import { QUERY_SONGS } from "../../utils/queries";
 import { UPDATE_SONGS } from "../../utils/actions";
@@ -50,8 +49,6 @@ function SongListByArtist() {
   function filterSongs() {
     return state.songs.filter((song) => song.artistId === selectedArtist._id);
   }
-  // console.log("filterSongs", filterSongs());
-  // console.log("currenArtist._id", selectedArtist._id);
 
   return (
     <div className="my-2">

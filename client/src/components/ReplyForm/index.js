@@ -1,11 +1,6 @@
-
 import React, { useState } from 'react';
-// import { useStoreContext } from "../../utils/GlobalState";
-// import { useQuery } from "@apollo/react-hooks";
 import { useApolloClient, useMutation, useQuery } from '@apollo/react-hooks';
 import { ADD_COMMENT } from "../../utils/mutations";
-// import { idbPromise } from "../../utils/helpers";
-// import Auth from '../../utils/auth'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';

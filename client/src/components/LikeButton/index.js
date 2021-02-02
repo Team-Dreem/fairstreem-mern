@@ -53,23 +53,6 @@ export default function LikeButton() {
         console.log("LISTENERID", listenerId);
         addFollowFunction();
         addFollowerFunction();
-        // try {
-        //     await addFollower({
-        //         variables: { userId: listenerId }
-        //     })
-        // } catch (e) {
-        //     console.log(e);
-        // }
-
-        // try {
-        //     await addFollow({
-        //         variables: { artistId: state.selectedArtist._id }
-        //     })
-        // }
-        // catch (e) {
-        //     console.log(e);
-
-        // }
       }}
     >
       <FavoriteIcon />

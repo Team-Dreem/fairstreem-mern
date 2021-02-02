@@ -3,9 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { QUERY_SONGS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 import { Link } from "react-router-dom";
-// import { pluralize } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
-// import "./style.css";
 import { UPDATE_SONGS } from "../../utils/actions";
 
 

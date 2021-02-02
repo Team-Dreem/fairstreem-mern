@@ -59,15 +59,6 @@ const itemInCart = cart.find((cartItem) => cartItem._id === _id);
    return (
      <p>You already have this song in your cart!</p>
    )
-  // dispatch({
-  //   type: UPDATE_CART_QUANTITY,
-  //   _id: _id,
-  //   purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-  // });
-  // idbPromise("cart", "put", {
-  //   ...itemInCart,
-  //   purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-  // });
 } else {
   dispatch({
     type: ADD_TO_CART,
@@ -76,19 +67,6 @@ const itemInCart = cart.find((cartItem) => cartItem._id === _id);
   idbPromise("cart", "put", { ...song });
 }
 };
-
-// console.log("selectedArtist", selectedArtist);
-
-  // const { image, title, _id, price, artistId, tags, song_url } = props;
-  // console.log("SongCardArtist", state.selectedArtist);
-  // console.log("title", title);
-  // console.log("image", image);
-  // console.log("_id", _id);
-  // console.log("price", price);
-  // console.log("artistId", artistId);
-  // console.log("description", description);
-  // console.log("song_url", song_url);
-  // console.log("tags", tags);
 
   const theme = useTheme();
   const classes = Styles();

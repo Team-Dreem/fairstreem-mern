@@ -12,6 +12,12 @@ export const UPDATE_SEARCH_LOADING = "UPDATE_SEARCH_LOADING";
 export const UPDATE_SEARCH_RESULTS = "UPDATE_SEARCH_RESULTS";
 export const UPDATE_SEARCH_GENRE = "UPDATE_SEARCH_GENRE";
 export const UPDATE_ARTIST_COMMENTS = "UPDATE_ARTIST_COMMENTS";
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const ADD_MULTIPLE_TO_CART = 'ADD_MULTIPLE_TO_CART';
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+export const UPDATE_CART_QUANTITY = 'UPDATE_CART_QUANTITY';
+export const CLEAR_CART = 'CLEAR_CART';
+export const TOGGLE_CART = 'TOGGLE_CART';
 
 
 // With these three actions, we're defining how three parts of our state will be maintained and updated:
@@ -22,9 +28,4 @@ export const UPDATE_ARTIST_COMMENTS = "UPDATE_ARTIST_COMMENTS";
 
 //UPDATE_CURRENT_GENRE is sort of the connecting piece of data for the previous two actions we created, in that we want to be able to select a genre from the state created by the UPDATE_GENRES action and display songs for that genre from the list we create from the UPDATE_SONGS action.
 
-export const ADD_TO_CART = 'ADD_TO_CART';
-export const ADD_MULTIPLE_TO_CART = 'ADD_MULTIPLE_TO_CART';
-export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
-export const UPDATE_CART_QUANTITY = 'UPDATE_CART_QUANTITY';
-export const CLEAR_CART = 'CLEAR_CART';
-export const TOGGLE_CART = 'TOGGLE_CART';
+

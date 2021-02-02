@@ -100,8 +100,6 @@ function SongTableSimple({ allowPurchase = true }) {
           <TableRow className={classes.tableHead}>
             <TableCell></TableCell>
             <TableCell align="left">Title</TableCell>
-            {/* <TableCell align="right">Album</TableCell> */}
-            {/* <TableCell align="right">Playcount</TableCell> */}
             <TableCell align="right">Purchase</TableCell>
           </TableRow>
         </TableHead>
@@ -115,8 +113,6 @@ function SongTableSimple({ allowPurchase = true }) {
                 </audio>
               </TableCell>
               <TableCell align="left">{song.title}</TableCell>
-              {/* <TableCell align="right">{row.album}</TableCell> */}
-              {/* <TableCell align="right">{row.playcount}</TableCell> */}
               <TableCell align="right">
                 <Button onClick={addToCart.bind(this, song)}>Buy</Button>
               </TableCell>
